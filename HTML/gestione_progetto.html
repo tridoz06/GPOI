@@ -28,6 +28,14 @@
 				</li>
 			</ul>
 		</nav>
+		<script>
+			let scroll_bar=document.getElementById('scroll');
+			let hg=document.body.scrollHeight-window.innerHeight;
+			window.onscroll=function (){
+				let scrollhg=(window.pageYOffset/hg)*100;
+				scroll_bar.style.height=`${scrollhg}%`;
+			}
+		</script>
 	</body>
 </html>
 
