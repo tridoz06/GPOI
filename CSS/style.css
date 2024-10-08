@@ -1,47 +1,160 @@
-body{
-	margin:0px;
-	padding:0px;
-	background-color:black;
-	color:white;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+	font-family:sans-serif;
 }
-body::-webkit-scrollbar {
-  display:none;
-}
-.bottom_menu{	
-	position:absolute;
-	bottom:0px;
-	border-top:1px solid white;
-	height:10%;
-	width:100%;
-	display:flex;
+.container{
+    padding:50px 0px;
+    height:90vh;
+    display:flex;
+    gap:50px;
     justify-content:center;
     align-items:center;
-    position:fixed;
+    flex-wrap:wrap;
+    transition: .7s;
+}
+.parent{
+    height:400px;
+    width:300px;
+    padding:20px;
+    perspective:1000px;
+}
+.card{
+    padding-top:100px;
+    transform-style:preserve-3d;
+    background-position:center center;
+    width:100%;
+    transition:all 0.5s ease-in-out;
+    border-radius:10px;
+} 
+.card:hover{
+    background-position: 80% 20%;
+    transform: rotate3d(0.5, 1, 0, 20deg);
+}  
+.content-box{
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.811);
+    border-radius: 0px 0px 10px 10px;
+    box-shadow: rgba(0, 115, 255, 0.925) 0px 20px 50px -25px;
+    transition: all 0.5s ease-in-out;
+    padding: 50px 25px 25px 25px;
+    transform-style: preserve-3d;
+}  
+.card-title{
+    color: white;
+    font-size: 25px;
+    font-weight: 900;
+    transition: all 0.5s ease-in-out;
+    transform: translate3d(0px, 0px, 20px);
+} 
+.card-title:hover{
+    transform:translate3d(0px, 0px, 50px);
+}  
+.card-content{
+    padding-top: 15px;
+    font-size: 12px;
+    color: rgb(185, 185, 185);
+    transition: all 0.5s ease-in-out;
+    transform: translate3d(0px, 0px, 20px);
+} 
+.card-content:hover{
+    transform: translate3d(0px, 0px, 60px);
+}  
+.see-more{
+    display:block;
+    font-weight:900;
+    font-size:11px;
+    text-transform:uppercase;
+    color:rgb(0, 136, 255);
+    padding-top:15px;
+    transition:all 0.5s ease-in-out;
+    transform:translate3d(0px, 0px, 20px);
+}
+.see-more:hover{
+    transform:translate3d(0px, 0px, 50px);
+}
+.date-box{
+    position:absolute;
+    top:75px;
+    left:25px;
+    height:60px;
+    width:60px;
     background-color:black;
+    border-radius:10px;
+    padding:12px;
+    box-shadow:rgb(59, 137, 255) 0px 20px 60px 0px, rgb(0, 200, 255) 0px 18px 36px -18px;
+    transform:translate3d(0px, 0px, 50px);
+} 
+.date-box span{
+    display:block;
+    text-align:center;
+}  
+.date-box .month{
+    color:white;
+    font-size:12px;
+    font-weight:700;
+}  
+.date-box .date{
+    font-size:19px;
+    font-weight:900;
+    color:rgb(0, 136, 255);
 }
-.bottom_menu a{
-	text-decoration:none;
-	color:white;
+.card3{
+    filter:hue-rotate(150deg);
 }
-.menu_selection{
-	padding: 10px;
-	margin: 10%;
-	color:white;
-	display:flex;
+.card2{
+    filter:hue-rotate(50deg);
 }
-.menu_selection a{
-	font-size:130%;
-	transition:.7s;
+.card4{
+    filter:hue-rotate(200deg);
 }
-.menu_selection a:hover{
-	color:purple;
-	transition:.7s;
+.container_bg{
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(45deg,rgb(30, 30,30),rgb(32, 32, 32),rgb(34, 34, 34),rgb(36, 36, 36));
+    background-size: 300% 300%;
+    animation: color 12s ease-in-out infinite;
 }
-.title{
-	font-size:300%;
-	color:white;
-	position:absolute;
-	top:20%;
-	left:50%;
-	transform: translate(-50%, -50%);
+@keyframes color{
+    0%{
+        background-position: 0 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100%{
+        background-position: 0 50%;
+    }
+}
+.link-pages{
+    text-decoration: none;
+    color:rgb(0, 136, 255);
+}
+.fade__in{
+    opacity: 0;
+    animation: fade-in 2s ease forwards;
+}
+@keyframes fade-in  {
+    0%{
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+.title-up{
+    position:relative;
+    top:20%;
+    left: 32%;
+    text-transform: uppercase;
+    font-size: 4.2rem;
+    font-weight: bold;
+    /*color: rgb(105, 132, 255);
+    text-shadow:0 0 100px rgb(105, 102, 155);   */
+    color:rgb(4, 220, 58);
+    text-shadow:0 0 100px rgb(4, 220, 58);
 }
