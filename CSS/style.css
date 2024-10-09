@@ -3,6 +3,7 @@
     margin:0;
     padding:0;
 	font-family:sans-serif;
+    font-family: monospace;
 }
 .container{
     padding:50px 0px;
@@ -27,6 +28,7 @@
     width:100%;
     transition:all 0.5s ease-in-out;
     border-radius:10px;
+   
 } 
 .card:hover{
     background-position: 80% 20%;
@@ -54,11 +56,12 @@
 }  
 .card-content{
     padding-top: 15px;
-    font-size: 12px;
+    font-size: 15px;
     color: rgb(185, 185, 185);
     transition: all 0.5s ease-in-out;
     transform: translate3d(0px, 0px, 20px);
-} 
+    min-height: 165px;
+}
 .card-content:hover{
     transform: translate3d(0px, 0px, 60px);
 }  
@@ -129,6 +132,7 @@
     }
 }
 .link-pages{
+    font-size: 13px;
     text-decoration: none;
     color:rgb(0, 136, 255);
 }
@@ -149,12 +153,12 @@
 .title-up{
     position:relative;
     top:20%;
-    left: 32%;
+    left: 35.5%;
     text-transform: uppercase;
-    font-size: 4.2rem;
+    font-size: 5.2rem;
     font-weight: bold;
     /*color: rgb(105, 132, 255);
     text-shadow:0 0 100px rgb(105, 102, 155);   */
-    color:rgb(4, 220, 58);
-    text-shadow:0 0 100px rgb(4, 220, 58);
+    color:rgb(236, 235, 233);
+    text-shadow:0 0 90px rgb(190, 190, 255);
 }
