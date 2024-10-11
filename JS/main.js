@@ -68,3 +68,5 @@ carousel.addEventListener('wheel', (event) => {
 
 // Aggiungi fade in quando la pagina viene caricata
 addFadeIn();
+
+updateCarouselPosition();
