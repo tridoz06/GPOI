@@ -57,6 +57,13 @@ function goToNext() {
 prevButton.addEventListener('click', goToPrevious);
 nextButton.addEventListener('click', goToNext);
 
+carousel.addEventListener('wheel', (event) => {
+    if (event.deltaY > 0) {
+        goToNext(); // Scroll verso il basso, mostra la prossima card
+    } else {
+        goToPrevious(); // Scroll verso l'alto, mostra la card precedente
+    }
+});
 
 
 // Aggiungi fade in quando la pagina viene caricata
