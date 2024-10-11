@@ -4,6 +4,17 @@
     box-sizing:border-box;
     font-family: monospace;
 }
+
+
+b{
+    color:white;
+}
+
+p{
+    font-size:20px;
+    color:#d4d4d4;
+}
+
 body{
     margin:0 auto;
     background-color:rgb(20, 20, 20);
@@ -56,11 +67,19 @@ a{text-decoration:none;}
 }
 .menu_item_link:first-child,
 .menu_link:first-child{
-    filter: hue-rotate(300deg);
+    filter: hue-rotate(0deg);
 }
-.menu_item_link:last-child,
-.menu_link:last-child{
-    filter: hue-rotate(140deg);
+.menu_item:nth-child(1),
+.menu_items:nth-child(1){
+    filter: hue-rotate(150deg);
+}
+.menu_item:nth-child(2),
+.menu_items:nth-child(2){
+    filter: hue-rotate(50deg);
+}
+.menu_item:nth-child(3),
+.menu_items:nth-child(4){
+    filter: hue-rotate(200deg);
 }
 #scroll{
     top:0;
