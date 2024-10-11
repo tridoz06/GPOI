@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="../CSS/stellantis.css">
+		<title>Project</title>
+	</head>
+	<body>
+		<div id="scroll"></div>
+		<nav class="menu">
+			<a href="../index.html" class="menu_link">
+				HOME
+			</a>
+			<ul class="menu_items">
+                <li class="menu_item">
+                    <a href="impresa.html" class="menu_item_link">Impresa</a>
+                </li>
+                <li class="menu_item">
+                    <a href="gestione_progetto.html" class="menu_item_link">Gestione progetto</a>
+                </li>
+                <li class="menu_item">
+                    <a href="leader.html" class="menu_item_link">Leader</a>
+                </li>
+                <li class="menu_item">
+                    <a href="#" class="menu_item_link">Stellantis</a>
+                </li>
+            </ul>
+		</nav>
+
+		<div class="content">
+			<div class="row">
+				<div class="text left">
+					<h2>STELLANTIS TOP O FLOP?</h2>
+					<p>
+                        Il 16 Gennaio nasce Stellantis, una multinazionale nel mondo dei motori. Questa è stata la risposta del mercato ai sempre più emergenti marchi d’auto asiatici.
+                        I quali riescono ad avere una buona qualità ad un prezzo minore riuscendo così ad ottenere una grande fetta di mercato. 
+                        Stellantis è formata da alcuni dei marchi d’auto più famosi al mondo tra i quali: Alfa Romeo, Chrysler, Citroën, FIAT, Jeep, Lancia, Maserati, Peugeot e Opel. 
+                        La si è fondata cercando di abbassare i costi di produzione e ricerca dei vari veicoli, riuscendo ad abbassare i prezzi per far concorrenza ad altri marchi. 
+                        Una mossa strategica la quale però non ha portato i risultati sperati.
+                    </p>
+					
+				</div>
+				<div class="image right">
+					<img src="../IMG/stellants.webp" alt="Leader Image 1">
+				</div>
+			</div>
+			<div class="row">
+				<div class="image left">					<img src="../IMG/500e.jpg" alt="Leader Image 1">
+				</div>
+				<div class="text right">
+				<!--<h2>Visione Ampia</h2>-->
+				<br><br><br><br>
+				<h2>Stellantis e il suo Flop</h2>
+				<p>Nonostante le premesse promettenti Stellantis non è riuscita completamente nel suo intento. Infatti una serie di idee sbagliate hanno portato a un fallimento dopo l’altro.
+                    Questo non ha fatto altro che indebolire il marchio e mettere in ridicolo i suoi vertici. Uno degli ultimi disastri è stata la FIAT 500e, una macchina elettrica.
+                    Questa si poneva l’obiettivo di diventare una city car comoda e facilmente utilizzabile nelle grandi metropoli. Nonostante ciò però il suo lancio è stato un disastro totale.
+                    Vendite inesistenti, pochi modelli venduti nel 2023 per arrivare poi al 2024 con un calo pari al 42% delle vendite.
+                    Questo accade proprio per l’alto prezzo del modello in relazione alle poche opportunità che offre, per intenderci 30’000 euro per 190 km di autonomia.
+                </p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="text left">
+					<h2>Dal flop della 500e alla chiusura dello stabilimento Mirafiori.</h2>
+					<p>
+                        Il calo delle vendite della 500e che ricadute ha avuto però sui dipendenti Stellantis? Prima di tutto bisogna dire che le 500e venivano prodotte nello stabilimento di Mirafiori in Italia.
+                        Questo aveva una capacità produttiva di più di 100’000 veicoli all’anno. Che rispetto ai 20’000 modelli venduti nei primi 6 mesi del 2024 voleva dire lavorare a 1/5 della capacità normale.
+                        Ciò ha portato Stellantis a chiudere lo stabilimento dal 5 Luglio al 4 Agosto mettendo tutti i dipendenti in cassa integrazione, inoltre dal 5 al 25 Agosto le attività saranno sospese per la chiusura estiva.
+                        Ad oggi 11/10/2024 lo stabilimento è chiuso fino al 14/10/2024.
+                        Ecco la disastrosa situazione di Stellantis, la quale crea disagi a ben 2200 lavoratori.
+					</p>
+					
+				</div>
+				<div class="image right">
+					<img src="../IMG/mirafiori.jpg" alt="Leader Image 1">
+				</div>
+			</div>
+		</div>
+		<br><br>
+
+		<script>
+			let scroll_bar=document.getElementById('scroll');
+			let hg=document.body.scrollHeight-window.innerHeight;
+			window.onscroll=function (){
+				let scrollhg=(window.pageYOffset/hg)*100;
+				scroll_bar.style.height=`${scrollhg}%`;
+			}
+		</script>
+		
+	</body>
+</html>
+

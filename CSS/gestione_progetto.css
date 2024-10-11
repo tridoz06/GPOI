@@ -79,8 +79,12 @@ a{text-decoration:none;}
     filter: hue-rotate(25deg);
 }
 .menu_item:nth-child(3),
-.menu_items:nth-child(4){
+.menu_items:nth-child(3){
     filter: hue-rotate(180deg);
+}
+.menu_item:nth-child(4),
+.menu_items:nth-child(4){
+    filter: hue-rotate(305deg);
 }
 #scroll{
     top:0;
