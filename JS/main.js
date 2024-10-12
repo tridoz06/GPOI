@@ -1,44 +1,34 @@
-
 const carousel = document.querySelector('.carousel');
 const prevButton = document.querySelector('.prev-btn');
 const nextButton = document.querySelector('.next-btn');
 const cards = document.querySelectorAll('.parent');
 
-const cardCount = cards.length;
-const cardWidth = document.querySelector('.parent').offsetWidth;
-const gap = 50;  
-
 let currentIndex = 0;
-let how_many_shift = 0;
-
-// Aggiungi la classe fade__in solo alle card all'apertura della pagina
-function addFadeIn() {
-    for (let i = 0; i < cards.length; i++) {
-        cards[i].classList.add('fade__in');
-    }
-}
-
+let timed_shifter = 0;
 // Funzione per rimuovere la classe fade__in
 function removeFadeIn() {
+    console.log("rimuovo");
     for (let i = 0; i < cards.length; i++) {
-        cards[i].classList.remove('fade__in');
+         cards[i].classList.remove('fade__in');
     }
 }
 
 // Funzione per aggiornare la posizione del carosello
 function updateCarouselPosition() {
-    // Incrementa il numero di spostamenti solo se non siamo all'inizio
-    how_many_shift++;
-    
+    // Rimuovi le carte non visibili
     carousel.innerHTML = "";
-    carousel.appendChild(cards[currentIndex % cards.length]);
-    carousel.appendChild(cards[(currentIndex + 1) % cards.length]);
-    carousel.appendChild(cards[(currentIndex + 2) % cards.length]);
+
+    // Aggiungi solo le carte visibili
+    for (let i = 0; i < 3; i++) {
+        const cardToShow = cards[(currentIndex + i) % cards.length];
+        carousel.appendChild(cardToShow);
+    }
 
     // Rimuovi la classe fade__in solo dopo il primo aggiornamento
-    if (how_many_shift > 0) {
-        removeFadeIn();
+    if (timed_shifter > 0) {
+        removeFadeIn(); 
     }
+    timed_shifter++;
 }
 
 // Funzione per andare indietro
@@ -65,8 +55,6 @@ carousel.addEventListener('wheel', (event) => {
     }
 });
 
-
 // Aggiungi fade in quando la pagina viene caricata
-addFadeIn();
 
 updateCarouselPosition();

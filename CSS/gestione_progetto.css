@@ -72,7 +72,7 @@ a{text-decoration:none;}
 }
 .menu_item:nth-child(1),
 .menu_items:nth-child(1){
-    filter: hue-rotate(120deg);
+    filter: hue-rotate(145deg);
 }
 .menu_item:nth-child(2),
 .menu_items:nth-child(2){
