@@ -11,25 +11,63 @@
 				HOME
 			</a>
 			<ul class="menu_items">
-                <li class="menu_item">
-                    <a href="impresa.html" class="menu_item_link">Impresa</a>
-                </li>
-                <li class="menu_item">
-                    <a href="gestione_progetto.html" class="menu_item_link">Gestione progetto</a>
-                </li>
-                <li class="menu_item">
-                    <a href="leader.html" class="menu_item_link">Leader</a>
-                </li>
-                <li class="menu_item">
-                    <a href="#" class="menu_item_link">Stellantis</a>
-                </li>
-            </ul>
-		</nav>
+				<li class="menu_item">
+					<a href="impresa.html" class="menu_item_link">Impresa</a>
+					<div class="hidden-div">
+						<ul>
+							<li class="submenu_item menu_impresa"><a class="submenu_item_link" href="impresa.html#arg1">La parola impresa</a></li>
+							<li class="submenu_item menu_impresa"><a class="submenu_item_link" href="impresa.html#arg2">L'impresa economica </a></li>
+							<li class="submenu_item menu_impresa"><a class="submenu_item_link" href="impresa.html#arg3">Avere successo</a></li>
+						</ul>
+					</div>
+				</li>
 
+
+				<li class="menu_item">
+					<a href="gestione_progetto.html" class="menu_item_link">Gestione progetto</a>
+					<div class="hidden-div">
+						<ul>
+							<li class="submenu_item menu_gestione"><a class="submenu_item_link" href="gestione_progetto.html#arg1">Il progetto</a></li>
+							<li class="submenu_item menu_gestione"><a class="submenu_item_link" href="gestione_progetto.html#arg2">WBS</a></li>
+							<li class="submenu_item menu_gestione"><a class="submenu_item_link" href="gestione_progetto.html#arg3">Mappa di un progetto</a></li>
+						</ul>
+					</div>
+				</li>
+
+
+				<li class="menu_item">
+					<a href="leader.html" class="menu_item_link">Leader</a>
+					<div class="hidden-div">
+						<ul>
+							<li class="submenu_item menu_leader"><a class="submenu_item_link" href="leader.html#arg1">Il ruolo del leader</a></li>
+							<li class="submenu_item menu_leader"><a class="submenu_item_link" href="leader.html#arg2">Caratteristiche di un leader</a></li>
+							<li class="submenu_item menu_leader"><a class="submenu_item_link" href="leader.html#arg3">Vari tipi di leader</a></li>
+						</ul>
+					</div>
+				</li>
+
+
+				<li class="menu_item">
+					<a href="stellantis.html" class="menu_item_link">Stellantis</a>
+
+					<div class="hidden-div">
+						<ul>
+							<li class="submenu_item menu_stellantis"><a class="submenu_item_link" href="stellantis.html#arg1">Stellantis top o flop?</a></li>
+							<li class="submenu_item menu_stellantis"><a class="submenu_item_link" href="stellantis.html#arg2">Stellantis e il suo Flop</a></li>
+							<li class="submenu_item menu_stellantis"><a class="submenu_item_link" href="stellantis.html#arg3">Dal flop della 500 e alla chiusura dello stabilimento Mirafiori</a></li>
+						</ul>
+					</div>
+
+				</li>
+			</ul>
+		</nav>
+		
+		
+		
 		<div class="content">
 			<div class="row">
 				<div class="text left">
-					<h2>Stellantis top o flop?</h2>
+					<h2 id="arg1">Stellantis top o flop?</h2>
 					<p>
                         Il 16 Gennaio nasce <b>Stellantis</b>, una multinazionale nel mondo dei <b>motori</b>. 
 						Questa è stata la risposta del <b>mercato</b> ai sempre più emergenti marchi d’auto asiatici. 
@@ -45,14 +83,15 @@
 					<img src="../IMG/stellants.webp" alt="Leader Image 1">
 				</div>
 			</div>
+			
 			<div class="row">
 				<div class="image left">
 					<img src="../IMG/500e.jpg" alt="Leader Image 1">
 				</div>
 				<div class="text right">
-				<!--<h2>Visione Ampia</h2>-->
+
 				<br><br><br><br>
-				<h2>Stellantis e il suo Flop</h2>
+				<h2 id="arg2">Stellantis e il suo Flop</h2>
 				<p>
 					Nonostante le premesse promettenti <b>Stellantis</b> non è riuscita completamente nel suo intento. 
 					Infatti una serie di idee sbagliate hanno portato a un <b>fallimento</b> dopo l’altro. 
@@ -67,7 +106,7 @@
 			</div>
 			<div class="row">
 				<div class="text left">
-					<h2>Dal flop della 500e alla chiusura dello stabilimento Mirafiori.</h2>
+					<h2 id="arg3">Dal flop della 500e alla chiusura dello stabilimento Mirafiori.</h2>
 					<p>
 						Il calo delle <b>vendite</b> della <b>500e</b> che ricadute ha avuto però sui <b>dipendenti</b> <b>Stellantis</b>? 
 						Prima di tutto bisogna dire che le 500e venivano prodotte nello stabilimento di <b>Mirafiori</b> in <b>Italia</b>. 
@@ -86,7 +125,7 @@
 			</div>
 		</div>
 		<br><br>
-
+	
 		<script>
 			let scroll_bar=document.getElementById('scroll');
 			let hg=document.body.scrollHeight-window.innerHeight;
