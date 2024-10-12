@@ -8,9 +8,8 @@
 .container_bg {
     height: 100vh;
     width: 100%;
-    background: radial-gradient(circle, rgba(10, 40, 40, 1) 0%, rgba(30, 30, 30, 1) 100%);
+    background: radial-gradient(circle, rgb(73, 75, 75) 0%, rgba(30, 30, 30, 1) 100%);
     background-size: 100% 100%;
-
 }
 
 .title-up {
@@ -38,6 +37,7 @@
     justify-content: center; /* Centra gli elementi */
     align-items: center; /* Allinea verticalmente al centro */
 }
+
 .carousel {
     display: flex;
     transition: transform 0.5s ease-in-out;
