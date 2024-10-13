@@ -81,7 +81,7 @@
 }
 
 .card-title {
-    color: white;
+    color: rgba(0, 138, 255, 1);
     font-size: 25px;
     font-weight: 900;
     transition: all 0.5s ease-in-out;
