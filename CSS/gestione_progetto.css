@@ -5,7 +5,6 @@
     font-family: monospace;
 }
 
-
 b{
     color:white;
 }
@@ -13,6 +12,7 @@ b{
 p{
     font-size:20px;
     color:#d4d4d4;
+    text-align: justify;  
 }
 
 body{
@@ -20,9 +20,11 @@ body{
     background-color:rgb(20, 20, 20);
     color:white;
 }
+
 body::-webkit-scrollbar {
     display:none;
-  }
+}
+
 a{text-decoration:none;}
 .menu_items{
     list-style:none;
@@ -148,6 +150,7 @@ a{text-decoration:none;}
 .menu_item:hover .hidden-div {
     display: block;
 }
+
 .menu_link,
 .menu_item_link{
     position: relative;
@@ -170,26 +173,32 @@ a{text-decoration:none;}
                 0 0 60px rgb(0, 136, 255);
     -webkit-box-reflect: below 1px linear-gradient(transparent,#0005);
 }
+
 .menu_item_link:first-child,
 .menu_link:first-child{
     filter: hue-rotate(335deg);
 }
+
 .menu_item:nth-child(1),
 .menu_items:nth-child(1){
     filter: hue-rotate(145deg);
 }
+
 .menu_item:nth-child(2),
 .menu_items:nth-child(2){
     filter: hue-rotate(25deg);
 }
+
 .menu_item:nth-child(3),
 .menu_items:nth-child(3){
     filter: hue-rotate(180deg);
 }
+
 .menu_item:nth-child(4),
 .menu_items:nth-child(4){
     filter: hue-rotate(305deg);
 }
+
 #scroll{
     top:0;
     right:0;
@@ -203,6 +212,7 @@ a{text-decoration:none;}
                 0 0 40px #03e9f4;
     border-radius:10px;
 }
+
 h1{
     font-size:36px;
     font-weight:bold;
@@ -226,29 +236,36 @@ h1{
     width:80%;
     margin:100px 0;
 }
+
 .image{
     width:50%;
     display:flex;
     justify-content:center;
     align-items:center;
 }
+
 .image img{
     max-width:80%;
     height:auto;
     border-radius:10px;
 }
+
 .text{
     width: 50%;
-    padding: 20px;
+    padding: 20px;  
+
 }
+
 .left{
     order:1;
     text-align:left;
 }
+
 .right{
     order:2;
     text-align:right;
 }
+
 .text h2{
     font-size:28px;
     font-weight:bold;
@@ -257,6 +274,7 @@ h1{
     filter:hue-rotate(50deg);
     text-shadow:0 0 100px rgb(4, 220, 58);
 }
+
 .text p{
     font-size: 18px;
 }
