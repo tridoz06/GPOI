@@ -5,7 +5,6 @@
 		<title>Project</title>
 	</head>
 	<body>
-		<div id="scroll"></div>
 		<nav class="menu">
 			<a href="../index.html" class="menu_link">
 				HOME
@@ -126,17 +125,7 @@
 				</div>
 			</div>
 		</div>
-		<br><br>
-
-		<script>
-			let scroll_bar=document.getElementById('scroll');
-			let hg=document.body.scrollHeight-window.innerHeight;
-			window.onscroll=function (){
-				let scrollhg=(window.pageYOffset/hg)*100;
-				scroll_bar.style.height=`${scrollhg}%`;
-			}
-		</script>
-		
+		<br><br>		
 	</body>
 </html>
 

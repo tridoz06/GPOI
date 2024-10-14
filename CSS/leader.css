@@ -169,7 +169,7 @@ a{text-decoration:none;}
                 0 0 5px rgb(0, 136, 255),
                 0 0 40px rgb(0, 136, 255),
                 0 0 60px rgb(0, 136, 255);
-    -webkit-box-reflect: below 1px linear-gradient(transparent,#0005);
+    
 }
 .menu_item_link:first-child,
 .menu_link:first-child{
@@ -190,19 +190,6 @@ a{text-decoration:none;}
 .menu_item:nth-child(4),
 .menu_items:nth-child(4){
     filter: hue-rotate(305deg);
-}
-#scroll{
-    top:0;
-    right:0;  
-    background:rgb(0, 136, 255);
-    filter:hue-rotate(200deg);
-    width:5px;
-    height:100%;
-    position:fixed;
-    box-shadow: 0 0 10px #03e9f4,
-                0 0 20px#03e9f4,
-                0 0 40px #03e9f4;
-    border-radius:10px;
 }
 h1{
     font-size:36px;
