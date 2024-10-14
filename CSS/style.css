@@ -33,19 +33,18 @@
     overflow: hidden;
     padding-top: 5rem;
     top: 10%;
-    display: flex; /* Usa flexbox */
-    justify-content: center; /* Centra gli elementi */
-    align-items: center; /* Allinea verticalmente al centro */
+    display: flex; 
+    justify-content: center;
+    align-items: center;
 }
 
 .carousel {
     display: flex;
     transition: transform 0.5s ease-in-out;
-    gap: 20px; /* Gap tra le carte */
-    padding: 0 20px; /* Riduci il padding per mostrare meglio le carte */
+    gap: 20px;
+    padding: 0 20px;
 }
 
-/* Modificato per mostrare 3 carte intere con le due laterali tagliate */
 .parent {
     flex: 0 0 auto; 
     width: 300px; 
@@ -85,7 +84,7 @@
     font-size: 25px;
     font-weight: 900;
     transition: all 0.5s ease-in-out;
-    transform: translate3d(0px, 0px, 20px);
+    transform: translate3d(0px, 0px, 20px); 
 }
 
 .card-title:hover {
