@@ -9,7 +9,7 @@
 .container_bg {
     height: 100vh;
     width: 100%;
-    background: radial-gradient(circle, rgb(10, 40, 40) 0%, rgba(30, 30, 30, 1) 100%);
+    background: radial-gradient(circle, rgb(49, 49, 49)  0%, rgb(0, 0, 0) 100%);
     background-size: 100% 100%;
 }
 
@@ -20,9 +20,8 @@
     text-transform: uppercase;
     font-size: 5.2rem;
     font-weight: bold;
-    color: rgb(0, 138, 255);
-    text-shadow: 0 0 90px  rgb(0, 138, 255);
-
+    color: rgb(255, 255, 255);
+    text-shadow: 0 0 90px  rgb(255, 255, 255);
 }
 
 .carousel-container {
