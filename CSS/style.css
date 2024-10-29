@@ -157,22 +157,6 @@
     font-size: 13px;
 }
 
-.card3 {
-    filter: hue-rotate(150deg);
-}
-
-.card2 {
-    filter: hue-rotate(50deg);
-}
-
-.card4 {
-    filter: hue-rotate(200deg);
-}
-
-.card5 {
-    filter: hue-rotate(300deg);
-}
-
 .prev-btn, .next-btn {
     background-color: rgba(255, 255, 255, 0.6);
     border: none;

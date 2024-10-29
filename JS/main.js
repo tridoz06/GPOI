@@ -6,6 +6,17 @@ const cards = document.querySelectorAll('.parent');
 let currentIndex = 0;
 let timed_shifter = 0;
 
+function setCardColour(){
+    let j = 0;
+    let increment = 360 / cards.length;
+
+    cards.forEach( elem =>{
+        elem.style.filter = 'hue rotate('+j+');'
+        j+=increment;
+    });
+    
+}
+
 function removeFadeIn() {
     console.log("rimuovo");
     for (let i = 0; i < cards.length; i++) {
@@ -48,5 +59,8 @@ carousel.addEventListener('wheel', (event) => {
         goToPrevious();
     }
 });
+
+
+setCardColour();
 
 updateCarouselPosition();
