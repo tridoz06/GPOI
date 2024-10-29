@@ -61,9 +61,6 @@ carousel.addEventListener('wheel', (event) => {
     }
 });
 
-
-carousel.innerHTML = "";
-/*
 setCardColour();
 updateCarouselPosition();
-*/
+
