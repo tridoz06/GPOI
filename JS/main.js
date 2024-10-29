@@ -26,7 +26,8 @@ function removeFadeIn() {
 }
 
 function updateCarouselPosition() {
-
+    console.log(timed_shifter);
+    
     carousel.innerHTML = "";
 
     for (let i = 0; i < 3; i++) {
