@@ -15,7 +15,6 @@ function setCardColour(){
         j += increment; // Incrementa j ad ogni iterazione, ad esempio di 30 gradi
     }
 
-
 }
 
 function removeFadeIn() {
@@ -27,7 +26,7 @@ function removeFadeIn() {
 
 function updateCarouselPosition() {
     console.log(timed_shifter);
-    
+
     carousel.innerHTML = "";
 
     for (let i = 0; i < 3; i++) {
@@ -63,6 +62,6 @@ carousel.addEventListener('wheel', (event) => {
 });
 
 
+carousel.innerHTML = "";
 setCardColour();
-
 updateCarouselPosition();
