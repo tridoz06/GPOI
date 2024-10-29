@@ -10,10 +10,12 @@ function setCardColour(){
     let j = 0;
     let increment = 360 / cards.length;
 
-    cards.forEach(card => {
-        card.setAttribute('style', `filter: hue-rotate(${j}deg);`); // Applica il filtro con j
+    for(let i = 0 ; i<cards.length ; i++){
+        cards[i].setAttribute('style', `filter: hue-rotate(${j}deg);`); // Applica il filtro con j
         j += increment; // Incrementa j ad ogni iterazione, ad esempio di 30 gradi
-    });
+    }
+
+
 }
 
 function removeFadeIn() {
