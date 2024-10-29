@@ -11,8 +11,8 @@ function setCardColour(){
     let increment = 360 / cards.length;
 
     for(let i = 0 ; i<cards.length ; i++){
-        cards[i].setAttribute('style', `filter: hue-rotate(${j}deg);`); // Applica il filtro con j
-        j += increment; // Incrementa j ad ogni iterazione, ad esempio di 30 gradi
+        cards[i].setAttribute('style', `filter: hue-rotate(${j}deg);`); 
+        j += increment; 
     }
 
 }
@@ -63,5 +63,7 @@ carousel.addEventListener('wheel', (event) => {
 
 
 carousel.innerHTML = "";
+/*
 setCardColour();
 updateCarouselPosition();
+*/
