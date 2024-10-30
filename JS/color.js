@@ -1,5 +1,5 @@
 const menu_items_color = document.querySelectorAll('.menu_item');
-const h2 = document.querySelectorAll('.h2_title');
+const page_titles = document.querySelectorAll('.arg_title');
 
 function setCardColour(){
     let j = 0;
@@ -7,10 +7,16 @@ function setCardColour(){
 
     for(let i = 0 ; i<menu_items_color.length ; i++){
         menu_items_color[i].setAttribute('style', `filter: hue-rotate(${j}deg);`); 
+        
+        for( let k = 3*i ; k< ( (i+1)*3) ; k++){
+            page_titles[k].setAttribute('style', `filter: hue-rotate(${j}deg);`); 
+        }
 
         j += increment; 
     }
 
 }
+
+
 
 setCardColour();
