@@ -110,7 +110,7 @@ a{text-decoration:none;}
                 0 0 4px rgb(0, 136, 255);
 
     color:#000000;
-    filter: hue-rotate(335deg);   
+
 }
 
 .menu_gestione:hover{
@@ -121,7 +121,7 @@ a{text-decoration:none;}
                 0 0 4px rgb(0, 136, 255);
 
     color:#000000;
-    filter: hue-rotate(340deg);   
+
 }
 
 .menu_leader:hover{
@@ -132,7 +132,6 @@ a{text-decoration:none;}
                 0 0 4px rgb(0, 136, 255);
 
     color:#000000;
-    filter: hue-rotate(340deg);   
 }
 
 .menu_stellantis:hover {
@@ -143,12 +142,12 @@ a{text-decoration:none;}
                 0 0 4px rgb(0, 136, 255);
 
     color:#000000;
-    filter: hue-rotate(340deg);
 }
 
 .menu_item:hover .hidden-div {
     display: block;
 }
+
 .menu_link,
 .menu_item_link{
     position: relative;
@@ -160,6 +159,7 @@ a{text-decoration:none;}
     text-transform: uppercase;
     transition: .5s;
 }
+
 .menu_item_link:hover,
 .menu_link:hover{
     background-color: rgb(0, 136, 255);
@@ -169,26 +169,7 @@ a{text-decoration:none;}
                 0 0 40px rgb(0, 136, 255),
                 0 0 60px rgb(0, 136, 255);
 }
-.menu_item_link:first-child,
-.menu_link:first-child{
-    filter: hue-rotate(335deg);
-}
-.menu_item:nth-child(1),
-.menu_items:nth-child(1){
-    filter: hue-rotate(145deg);
-}
-.menu_item:nth-child(2),
-.menu_items:nth-child(2){
-    filter: hue-rotate(25deg);
-}
-.menu_item:nth-child(3),
-.menu_items:nth-child(3){
-    filter: hue-rotate(180deg);
-}
-.menu_item:nth-child(4),
-.menu_items:nth-child(4){
-    filter: hue-rotate(305deg);
-}
+
 h1{
     font-size:36px;
     font-weight:bold;
