@@ -1,0 +1,7 @@
+PER GIOVEDÌ:
+-- dark-light button
+-- link a github
+-- singolo file css
+-- carosello navbar
+-- finire testi PIL, INFLAZIONE e SCUOLA IMPRESA
+
