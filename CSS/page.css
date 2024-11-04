@@ -133,6 +133,8 @@ a{text-decoration:none;}
 
 }
 
+
+
 .menu_leader:hover{
     background-color: rgb(0, 136, 255); 
     box-shadow: 0 0 1px rgb(0, 136, 255),
@@ -157,6 +159,18 @@ a{text-decoration:none;}
     display: block;
 }
 
+.menu_link_div{
+    width: 150px;
+    margin-top: 40px;
+    background-color: rgb(25, 25, 25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    position: absolute;
+    left:11%;
+}
+
 .menu_link,
 .menu_item_link{
     position: relative;
@@ -170,7 +184,7 @@ a{text-decoration:none;}
 }
 
 .menu_item_link:hover,
-.menu_link:hover{
+.menu_link:hover, .menu_link_div:hover{
     background-color: rgb(0, 136, 255);
     color: #050801;
     box-shadow: 0 0 2px rgb(0, 136, 255),
@@ -240,4 +254,27 @@ h1{
 }
 .text p{
     font-size: 18px;
+}
+
+
+.btn{
+    width:70px;
+    height: 70px;
+    background-color: transparent;
+    font-weight: bold;
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    transition: .5s;
+    border-radius: 10px;
+    border: none;
+}
+
+.btn:hover{
+    background-color: rgb(0, 136, 255);
+    color: #050801;
+    box-shadow: 0 0 2px rgb(0, 136, 255),
+                0 0 5px rgb(0, 136, 255),
+                0 0 10px rgb(0, 136, 255),
+                0 0 20px rgb(0, 136, 255);
 }
