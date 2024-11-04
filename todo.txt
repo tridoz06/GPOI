@@ -3,5 +3,6 @@ PER GIOVEDÌ:
 -- link a github
 -- singolo file css
 -- carosello navbar
+-- animation entrata testo e immagini quando si scrolla
 -- finire testi PIL, INFLAZIONE e SCUOLA IMPRESA
 
