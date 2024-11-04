@@ -245,6 +245,7 @@ h1{
     order:2;
     text-align:right;
 }
+
 .text h2{
     font-size:28px;
     font-weight:bold;
@@ -255,6 +256,27 @@ h1{
 .text p{
     font-size: 18px;
 }
+
+.text.left, .image.right, .text.right, .image.left {
+    opacity: 0;
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+
+.text.left, .image.left {
+    transform: translateX(-100%);
+}
+
+.image.right, .text.right {
+    transform: translateX(100%);
+}
+
+.text.left.visible, .image.right.visible,
+.text.right.visible, .image.left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
 
 
 .btn{
@@ -278,3 +300,4 @@ h1{
                 0 0 10px rgb(0, 136, 255),
                 0 0 20px rgb(0, 136, 255);
 }
+
