@@ -1,19 +1,879 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Documentazione Indovina Parola</title>
+        <title>Documentazione Codice Sorgente</title>
 
-        <link rel="stylesheet" href="../CSS/documentazione.css" />
-
+        <link rel="stylesheet" href="../CSS/documentazione.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css">
+  
     </head>
 
     <body>
+
+        <header>
+            <h1>TCP in RUST</h1>
+            <p>Una guida completa al codice sorgente e alle funzionalità del progetto.</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#teoria">Spiegazione Gioco</a></li>
+
+                <li><a href="#client">Spiegazione del Codice Client</a></li>
+
+                <li><a href="#server">Spiegazione del Codice Server</a></li>
+
+
+            </ul>
+        </nav>
+
+        <section id="teoria">
+            <h2>SPIEGAZIONE GIOCO</h2>
+            <pre>
+Il server estrae una parola da un array di stringhe formate da <b>soli caratteri alfabetici minuscoli</b>, di
+max 10 caratteri ciascuna e attende di ricevere dal client i tentativi di indovinare la parola estratta.
+
+Il client chiederà all’utente di inserire <b>una lettera dell’alfabeto</b> per tentare di indovinare oppure di
+inserire il <b>carattere ‘0’</b> se intende interrompere il gioco.
+
+Il client invierà al server il carattere introdotto dall’utente.
+
+In base al carattere ricevuto, il server invierà al client un pacchetto contenente:
+<b>- “Fparola”:</b> se carattere = ‘0’ (Fine partita)
+                    il server chiude la connessione col client e attenderà una nuova connessione
+
+<b>- “Yparola”:</b> se carattere è presente nella parola
+                    il server riceverà un altro tentativo
+
+<b>- “Nparola”:</b> se carattere non è presente nella parola
+                    il server riceverà un altro tentativo
+
+<b>- "Kparola”:</b> se carattere è presente nella parola e la parola è completata
+                    Il server non chiude la connessione col client ed estrae una nuova parola
+
+
+La parola è composta da tanti asterischi corrispondenti alla lunghezza della parola sorteggiata; gli
+asterischi vengono progressivamente sostituiti dalle lettere indovinate.
+            </pre>
+        </section>
+
+
+
+
+
+        <section id="client">
+            <h2>Client</h2>
+
+            <!-- LIBRERIE -->
+            <section>
+                <h3>LIBRERIE</h3>
+                <pre>
+                    <code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;netinet/in.h&gt;
+#include &lt;netinet/ip.h&gt;
+#include &lt;time.h&gt;
+#include &lt;netdb.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;sys/select.h&gt;
+#include &lt;string.h&gt;
+#include &lt;ctype.h&gt;                 
+                    </code>
+                </pre>
+            </section>
+
+            <!-- CONSTANTI -->
+            <section>
+                <h3>DEFINE E COSTANTI</h3>
+                <pre>
+                    <code class="language-c">
+#define BUFLEN 80
+#define DEFAULT_PORT 2000
+#define MAX_CONNECTION_TRY 20
+
+const char SERVICENAME[] = "127.0.0.1";
+                    </code>
+                </pre>
+            </section>
+
+            <!-- MAIN -->
+            <section>
+                <h3>MAIN</h3>
+                
+                <section>
+                    <h4>VARIABILI COMUNICAZIONE E SETTING</h4>
+                    <pre>
+                        <code class="language-c">
+int main(){
+    struct sockaddr_in local, remote;
+    int s;
+
+    ssize_t rcvlen;
+    char rcvbuf [BUFLEN];
+
+    int connected_to_new_port = 0;
+    int connection_try = 0;
+
+    int new_port = 0;
+
+
+    struct hostent *h;
+
+    local.sin_family = AF_INET;
+    local.sin_port = htons(INADDR_ANY);
+    local.sin_addr.s_addr = htons(INADDR_ANY);
+
+    remote.sin_family = AF_INET;
+    h = gethostbyname(SERVICENAME);
+    remote.sin_addr.s_addr = *((int*)h->h_addr_list[0]);
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h4>PRIMA CONNESSIONE</h4>
+                    <pre>
+                        <code class="language-c">
+    while(!connected_to_new_port && (connection_try < MAX_CONNECTION_TRY) ){
+        connection_try++;
+        remote.sin_port = htons(DEFAULT_PORT);
+
+        if( (s = socket(AF_INET, SOCK_STREAM, 0)) < 0){
+            printf("Errore nella creazione del socekt: ");
+            printf("%d %d\n", connection_try, new_port);
+            exit(-1);
+        }else{
+            printf("Socket creato con successo\n");
+        }
+
+        if( bind(s, (struct sockaddr*)&local, sizeof(local)) < 0){
+            printf("Errore nella bind ");
+            printf("%d %d\n", connection_try, new_port);
+            close(s);
+            exit(1);
+        }else{
+            printf("Bind eseguita con successo\n");
+        }
+
+
+
+        if( connect(s, (struct sockaddr*)&remote, sizeof(remote)) < 0 ){
+            printf("la connect è andata in errore: ");
+            printf("%d %d\n", connection_try, new_port);
+            close(s);
+            exit(-1);
+        }else{
+            printf("Connessione alla porta default eseguita con successo\n");
+        }
+
+        rcvlen = recv(s, rcvbuf, BUFLEN, 0);
         
+        if(rcvlen < 0){
+            printf("Errore nella receive della nuova porta: ");
+            printf("%d %d\n", connection_try, new_port);
+            exit(-1);
+        }else{
+            printf("ricevuto risposta con successo\n");
+        }
+
+        rcvbuf[rcvlen] = 0;
+
+        new_port = 0;
+
+        printf("\n\n nuova porta ricevuta dal server: %s \n", rcvbuf);
+
+        for(int i = 0 ; rcvbuf[i] != '\0' ; i++){
+            new_port = (new_port * 10) + (rcvbuf[i] - '0');
+        }
+        printf("new port = %d\n", new_port);
+        close(s);
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h4>SECONDA CONNESSIONE</h4>
+                    <pre>
+                        <code class="language-c">
+        remote.sin_port = htons(new_port);
+
+
+        if( (s = socket(AF_INET, SOCK_STREAM, 0)) < 0){
+            printf("Errore nella creazione del socekt: ");
+            printf("%d %d\n", connection_try, new_port);
+            exit(-1);
+        }else{
+            printf("secondo socket creato successo\n");
+        }
+
+        if( bind(s, (struct sockaddr*)&local, sizeof(local)) < 0){
+            printf("Errore nella bind ");
+            printf("%d %d\n", connection_try, new_port);
+            close(s);
+            exit(1);
+        }else{
+            printf("seconda bind successo\n");
+        }
+
+        sleep(3);
+
+        if( connect(s, (struct sockaddr*)&remote, sizeof(remote)) < 0){
+            perror("errore sulla connect di new port, rimando la connessione a defaultport");
+            printf("%d %d\n\n", connection_try, new_port);
+            close(s);
+        }else{
+            play(s);
+            connected_to_new_port = 1;
+        }
+    }
+
+
+    close(s);
+
+    return 0;
+}
+                        </code>
+                    </pre>
+                </section>
+
+
+            </section>
+
+            <!-- PLAY FUNCTION-->
+            <section>
+                <h3>PLAY</h3>
+                
+                <section>
+                    <h4>VARIABILI PER COMUNICAZIONE</h4>
+                    <pre>
+                        <code class="language-c">
+int play(int s){
+
+    char snd_buf[BUFLEN] = {0};
+    char rcv_buf[BUFLEN] = {0};
+    int playing = 1;
+    char player_guess;
+    int rcvlen;
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h4>INPUT CHECK</h4>
+                    <pre>
+                        <code class="language-c">
+    while(playing){
+        do{
+            printf("Inserisci un carattere (lettera o '0' per uscire): ");
+            scanf("%c", &player_guess);
+            player_guess = tolower(player_guess);
+        }while( !isalpha(player_guess) && player_guess != '0' );
+
+        if(player_guess == '0'){
+            playing = 0;
+        }
+
+        sprintf(snd_buf, "%c", player_guess);
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h4>SEND RECV E MESSAGI CLIENT</h4>
+                    <pre>
+                        <code class="language-c">
+        if( send(s, snd_buf, strlen(snd_buf), 0) < 0){
+            printf("Errore nella send");
+            close(s);
+            exit(2);
+        }
+
+        if ((rcvlen = recv (s, rcv_buf, BUFLEN, 0)) < 0) {
+            perror ("errore receive ");
+            close(s);
+            exit (2);
+        }
+
+        rcv_buf[rcvlen] = '\0';
+        printf("messaggio ricevuto dal server: %s\n", rcv_buf);
+
+    }   
+
+}
+                        </code>
+                    </pre>
+                </section>
+
+
+            </section>
+
+        </section>
+
+
+
+
+
+        <section id="server">
+            <h2>Server</h2>
+
+            <!-- LIBRERIE -->
+            <section>
+                <h3>LIBRERIE</h3>
+                <pre>
+                    <code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;netinet/in.h&gt;
+#include &lt;netinet/ip.h&gt;
+#include &lt;netdb.h&gt;
+#include &lt;time.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/select.h&gt;
+#include &lt;pthread.h&gt;
+#include &lt;ncurses.h&gt;
+                    </code>
+                </pre>
+            </section>
+
+            <!-- DEFINE E COSTANTI-->
+            <section>
+                <h3>DEFINE, COSTANTI E VARIABILI GLOBALI</h3>
+                <pre>
+                    <code class="language-c">
+#define BUFLEN 80
+#define DEFAULT_SERVICEPORT 2000
+#define MAX_CLIENT 20
+
+
+#define NUM_SUBWINDOWS 20
+#define COLS_COUNT 5
+#define ROWS_COUNT 4
+
+const char* paroleImpiccato[20] = {
+    "computer", 
+    "gattino",  
+    "bicicletta",
+    "elefante", 
+    "occhiali", 
+    "zucchero", 
+    "lampione", 
+    "pianoforte",
+    "calciatore",
+    "farfalla", 
+    "razzo",     
+    "libreria", 
+    "canguro",  
+    "dinosauro", 
+    "montagna", 
+    "telefono", 
+    "campanile", 
+    "motocicletta", 
+    "violino",  
+    "chitarra"  
+};
+
+int permits[MAX_CLIENT];
+WINDOW *subwindows[NUM_SUBWINDOWS];
+int num_thread = 0;
+                    </code>
+                </pre>
+            </section>
+
+            <!-- MAIN -->
+            <section>
+                <h3>MAIN</h3>
+
+                <!-- INIZIALIZZAZIONE NCURSES SRAND-->
+                <section>
+                    <h4>INIZIALIZZAZIONE NCURSES SRAND</h4>
+                    <pre>
+                        <code class="language-c">
+int main(){
+
+    srand(time(NULL));
+
+    initscr();
+    cbreak();
+    noecho();
+    curs_set(0);
+
+
+    if (!has_colors()) {
+        endwin();
+        printf("Terminal does not support colors\n");
+        return 1;
+    }
+
+        start_color();
+
+    // Definisci le coppie di colori
+    init_pair(1, COLOR_WHITE, COLOR_BLACK);  
+    init_pair(2, COLOR_WHITE, COLOR_RED);    
+
+    bkgd(COLOR_PAIR(1));
+    clear();
+    refresh();
+
+    create_subwindows(subwindows);
+                            
+                        </code>
+                    </pre>
+                </section>
+
+                <!-- VARIABILI PER COMUNICAZIONE E THREAD E SETTAGGIO -->
+                <section>
+                    <h4>VARIABILI PER COMUNICAZIONE E THREAD E SETTAGGIO</h4>
+                    <pre>
+                        <code class="language-c">
+    pthread_t thread_client[MAX_CLIENT];
+
+    struct sockaddr_in local, remote;
+    unsigned int remote_len;
+
+    int s, sc;
+
+
+
+    memset(permits, 0, sizeof(permits) );
+
+    char snd_buf[BUFLEN];
+
+    local.sin_family = AF_INET;
+    local.sin_port = htons(DEFAULT_SERVICEPORT);
+    local.sin_addr.s_addr = htonl(INADDR_ANY);
+
+    if( ( s = socket(AF_INET, SOCK_STREAM, 0)) < 0){
+        exit(-1);
+    }
+
+    if( bind(s, (struct sockaddr*)&local, sizeof(local)) < 0){
+        close(s);
+        exit(-1);
+    }
+
+    listen(s,MAX_CLIENT);
+                        </code>
+                    </pre>
+                </section>
+
+                <!-- MAIN LOOP -->
+                <section>
+                    <h4>MAIN LOOP </h4>
+                    
+                    <!-- CREATE FIRST COMUNICATION-->
+                    <section>
+                        <h5>CREATE FIRST COMUNICATION</h5>
+                        <pre>
+                            <code class="language-c">
+    while(1){
+
+        remote_len = sizeof(remote);
+        if(num_thread < MAX_CLIENT){ 
+            sc = accept(s, (struct sockaddr*)&remote, &remote_len);
+            if(sc < 0){
+                close(s);
+                exit(-1);
+            }
+
+            int new_client_port = find_free_port();
+                            </code>
+                        </pre>
+                    </section>
+
+                    <!-- CREATE THREAD-->
+                    <section>
+                        <h5>CREATE THREAD</h5>
+                        <pre>
+                            <code class="language-c">
+            if(new_client_port == -1){
+                sprintf(snd_buf, "server pieno");
+            }else{                
+
+                int* new_client_port_ptr = malloc(sizeof(int));
+                *new_client_port_ptr = new_client_port;
+
+                if(  pthread_create(&thread_client[new_client_port], NULL, handle_client, new_client_port_ptr) ){
+                    sprintf(snd_buf, "errore nella creazione del thread\n");
+                }else{
+                    num_thread++;
+                    permits[new_client_port] = 1;
+                    new_client_port = DEFAULT_SERVICEPORT + 1000 + new_client_port;
+                    sprintf(snd_buf, "%d", new_client_port);
+                }
+
+            }
+
+            if( send(sc, snd_buf, BUFLEN, 0) < 0 ){
+                close(s);
+                close(sc);
+                exit(-1);
+            }
+
+
+        }
+
+    }
+                            </code>
+                        </pre>
+                    </section>
+
+                    <!-- DISPOSE ELEMNTS-->
+                    <section>
+                        <h5>DISPOSE ELEMENTS</h5>
+                        <pre>
+                            <code class="language-c">
+    close(s);
+    close(sc);
+
+    for(int i = 0 ; i &lt; MAX_CLIENT ; i++){
+        if(permits[i] == 1){
+            if(  pthread_join(thread_client[i], NULL) != 0){
+                return -1;                
+            }
+        }
+    }
+
+
+    for (int i = 0; i &lt; NUM_SUBWINDOWS; i++) {
+        delwin(subwindows[i]);
+    }
+    endwin();
+
+    return 0;
+
+}
+                            </code>
+                        </pre>
+                    </section>
+
+
+                </section>
+
+
+            </section>
+
+            <!-- FUNCTION HANDLE CLIENT -->
+            <section>
+                <h3>FUNCTION HANDLE_CLIENT</h3>
+
+                <!-- VARIABILI PER COMUNICAZIONE E SETTAGGIO -->
+                <section>
+                    <h4>VARIABILI PER COMUNICAZIONE E SETTAGGIO </h4>
+                    <pre>
+                        <code class="language-c">
+void *handle_client(void* arg){
+
+    int scrive_client = 3;
+    int scrive_server = 4;
+
+    init_pair(scrive_client, COLOR_WHITE, COLOR_GREEN);
+    init_pair(scrive_server, COLOR_BLACK, COLOR_GREEN);
+
+    struct sockaddr_in local, remote;
+
+    int new_port = *((int*)arg);
+    free(arg);
+    int thread_number = new_port;
+
+    new_port = DEFAULT_SERVICEPORT + 1000 + new_port;
+
+    unsigned int rm_len = sizeof(remote);
+    int s = socket(AF_INET, SOCK_STREAM, 0);
+
+    if(s < 0){
+        permits[thread_number] = 0;
+        num_thread--;
+        return NULL;
+    }
+
+    local.sin_family = AF_INET;
+    local.sin_port = htons(new_port);
+    local.sin_addr.s_addr = htonl(INADDR_ANY);
+
+    if( bind(s, (struct sockaddr*)&local, sizeof(local)) < 0){
+        permits[thread_number] = 0;
+        num_thread--;
+        return NULL;
+    }
+
+    if(listen(s, 5) < 0) {
+        permits[thread_number] = 0;
+        num_thread--;
+        return NULL;
+    }
+
+    int sc = accept(s, (struct sockaddr*)&remote, &rm_len);
+    
+    if(sc < 0){
+        permits[new_port - 1000 - DEFAULT_SERVICEPORT] = 0;
+        num_thread--;
+        return NULL;
+    }
+                        </code>
+                    </pre>
+                </section>
+
+                <!-- ETRAZIONE PAROLA E SETTAGIO FINESTRE PER ENTRATA CLIENT -->
+                <section>
+                    <h4>ESTRAI PAROLA E SETTAGGIO FINESTRE PER ENTRATA CLIENT</h4>
+                    <pre>
+                        <code class="language-c">
+    char snd_buf[BUFLEN] = {0};
+    char rcv_buf[BUFLEN] = {0};
+    int rcvlen;
+
+    char parola[10];
+
+    strcpy(parola, paroleImpiccato[rand()%20]);
+    
+    wprintw(subwindows[thread_number], "client accettato su porta %d\n", new_port);
+    wprintw(subwindows[thread_number], "Parola estratta %s\n\n", parola);
+    wbkgd(subwindows[thread_number], COLOR_PAIR(scrive_server));
+
+    wrefresh(subwindows[thread_number]);
+
+    int lunghezza_parola = strlen(parola);
+
+    char *parola_to_send = (char*)malloc(lunghezza_parola * sizeof(char));
+
+    for(int i = 0 ; i&lt;lunghezza_parola ; i++){
+        parola_to_send[i] = '*';
+    }
+
+    int correct_guesses = 0;
+    int client_playing = 1;
+                        </code>
+                    </pre>
+                </section>
+
+                <!-- RICEZIONE TENTATIVO -->
+                <section>
+                    <h4>RICEZIONE TENTATIVO</h4>
+                    <pre>
+                        <code class="language-c">
+    while(client_playing){
+
+        if( (rcvlen = recv(sc, rcv_buf, BUFLEN, 0) ) < 0){
+            permits[thread_number] = 0;
+            num_thread--;
+            close(s);
+            close(sc);
+            return NULL;
+        }
+
+        rcv_buf[rcvlen] = '\0';
+
+        int found = 0; 
+        char guess = rcv_buf[0];
+
+        wprintw(subwindows[thread_number], "client guessed = %c\n", guess);
+        wrefresh(subwindows[thread_number]);
+                        
+                        </code>
+                    </pre>
+                </section>
+
+                <!-- GESTIONE TENTATIVO USCITA -->
+                <section>
+                    <h4>GESTIONE TENTATIVO USCITA</h4>
+                    <pre>
+                        <code class="language-c">
+        if(guess == '0'){
+
+            sprintf(snd_buf, "F%s hai deciso di non gicare", parola);
+            client_playing = 0;
+            
+            wprintw(subwindows[thread_number], "%s\n", snd_buf);
+            wrefresh(subwindows[thread_number]);
+
+            send(sc, snd_buf, strlen(snd_buf), 0);
+            permits[thread_number] = 0;
+                    
+                    
+                        </code>
+                    </pre>
+                </section>
+
+                <!-- GESTIONE CREAZIONE PAROLA DA RIMANDARE-->
+                <section>
+                    <h4>GESTIONE CREAZIONE PAROLA DA RIMANDARE</h4>
+                    <pre>
+                        <code class="language-c">
+        }else{
+            for (int i = 0; i < lunghezza_parola; i++) {
+                if (parola[i] == guess && parola_to_send[i] == '*') {
+                    parola_to_send[i] = guess;
+                    found = 1;
+                    correct_guesses++;
+                }
+            }
+                
+                        </code>
+                    </pre>
+                </section>
+
+                <!-- GESTIONE VITTORIA-->
+                <section>
+                    <h4>GESTIONE VITTORIA</h4>
+                    <pre>
+                        <code class="language-c">
+            if (found && correct_guesses == lunghezza_parola) {
+                sprintf(snd_buf, "K%s (Parola completata!) indovina un altra parola\n", parola_to_send);
+
+                wbkgd(subwindows[thread_number], COLOR_PAIR(scrive_client));                    
+                wprintw(subwindows[thread_number], "%s\n", snd_buf);
+                wrefresh(subwindows[thread_number]);
+
+                strcpy(parola, paroleImpiccato[rand()%20]);
+                lunghezza_parola = strlen(parola);
+                free(parola_to_send);
+                parola_to_send = (char*)malloc(lunghezza_parola * sizeof(char));
+
+                for (int i = 0; i < lunghezza_parola; i++) {
+                    parola_to_send[i] = '*';
+                }
+
+                parola_to_send[lunghezza_parola] = '\0'; 
+                correct_guesses = 0;
+                found = 0;
+
+                wbkgd(subwindows[thread_number], COLOR_PAIR(scrive_client));
+                wprintw(subwindows[thread_number], "nuova parola = %s\n\n", parola);
+                wrefresh(subwindows[thread_number]);
+
+            }
+                        </code>
+                    </pre>
+                </section>
+
+                <!-- GESTIONE LETTERA CORRETTA-->
+                <section>
+                    <h4>GESTIONE LETTERA CORRETTA</h4>
+                    <pre>
+                        <code class="language-c">
+            else if (found) {
+                sprintf(snd_buf, "Y%s (Lettera trovata)\n", parola_to_send);
+
+                wbkgd(subwindows[thread_number], COLOR_PAIR(scrive_client));
+                wprintw(subwindows[thread_number], "%s\n", snd_buf);
+                wrefresh(subwindows[thread_number]);
+
+            }
+                        </code>
+                    </pre>
+                </section>
+
+                <!-- GESTIONE LETTERA SBAGLAITA-->
+                 <section>
+                    <h4>GESTIONE LETTERA SBAGLIATA</h4>
+                    <pre>
+                        <code class="language-c">
+            else {
+                sprintf(snd_buf, "N%s (Lettera non trovata)\n", parola_to_send);
+
+                wbkgd(subwindows[thread_number], COLOR_PAIR(scrive_client));
+                wprintw(subwindows[thread_number], "%s\n", snd_buf);
+                wrefresh(subwindows[thread_number]);
+
+            }
+        }
+
+        send( sc, snd_buf, strlen(snd_buf), 0);
+        
+    } 
+
+    
+
+    wclear(subwindows[thread_number]);
+    wprintw(subwindows[thread_number], "Thread %d", thread_number+1);
+    wbkgd(subwindows[thread_number], COLOR_PAIR(2));
+    wrefresh(subwindows[thread_number]);
+
+
+    permits[thread_number] = 0;
+    num_thread--;
+    close(sc);
+    close(s);
+
+    return NULL;
+}
+                        </code>
+                    </pre>
+                 </section>
+
+            </section>
+
+            <!-- FUNCTION FIND FREE PORT -->
+            <section>
+                <h3>FUNCTION FIND FREE PORT</h3>
+                <pre>
+                    <code class="language-c">
+int find_free_port(){
+    for(int i = 0 ; i&lt;MAX_CLIENT ; i++){
+        if(permits[i] == 0){
+            return i;
+        }
+    }
+
+    return -1;
+}
+                    </code>
+                </pre>
+            </section>
+
+            <!-- FUNCTION CREATE SUBWINDOW -->
+            <section>
+                <h3>FUNCTION CREATE SUBWINDOW</h3>
+                <pre>
+                    <code class="language-c">
+void create_subwindows(WINDOW *subwindows[]) {
+
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+
+    int subwin_height = max_y / ROWS_COUNT;   
+    int subwin_width = max_x / COLS_COUNT;    
+
+    for (int i = 0; i < NUM_SUBWINDOWS; i++) {
+        int start_y = (i / COLS_COUNT) * subwin_height; 
+        int start_x = (i % COLS_COUNT) * subwin_width;  
+        subwindows[i] = newwin(subwin_height - 1, subwin_width - 1, start_y, start_x);
+        wbkgd(subwindows[i], COLOR_PAIR(2));  
+        wprintw(subwindows[i], "Thread %d\n\n", i + 1);  
+        wrefresh(subwindows[i]);  
+        scrollok(subwindows[i], TRUE);
+    }
+}
+                    </code>
+                </pre>
+            </section>
+
+
+        </section>
+
+
+
+        <footer>
+            <p>
+                &copy;   TPC in RUST<br>
+                Tridapali Leonardo - Concaro Davide<br>
+                4BIIN A.S. 2023/2024
+            </p>
+        </footer>
 
         <script src="../JS/documentazione.js"></script>
-    </body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
 
+    </body>
 </html>
