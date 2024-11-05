@@ -34,7 +34,7 @@ a{text-decoration:none;}
 .menu {
     width: 950px;
     margin-top: 40px;
-    background-color: rgb(25, 25, 25);
+    background-color: rgb(35, 35, 35);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -162,7 +162,7 @@ a{text-decoration:none;}
 .menu_link_div{
     width: 150px;
     margin-top: 40px;
-    background-color: rgb(25, 25, 25);
+    background-color: rgb(35, 35, 35);
     display: flex;
     justify-content: center;
     align-items: center;
