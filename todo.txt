@@ -1,5 +1,4 @@
 PER GIOVEDÌ:
 -- dark-light button
--- animation entrata testo e immagini quando si scrolla
 
 
