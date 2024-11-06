@@ -21,7 +21,8 @@ function setCardColour(){
     for(let i = 0 ; i<menu_items_color.length ; i++){
         menu_items_color[i].setAttribute('style', `filter: hue-rotate(${j}deg);`); 
         
-        if( i == numeroIntero){
+        if( i == numeroIntero){ 
+
             for( let k = 0 ;  k< 3 ; k++){
                 page_titles[k].setAttribute('style', `filter: hue-rotate(${j}deg);`); 
             }
