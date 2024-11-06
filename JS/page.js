@@ -148,7 +148,7 @@ function setCardColour(){
         
         if( i == numeroIntero){ 
 
-            for( let k = 0 ;  (page_titles.length==3)? (k<3):(k<2) ; k++){
+            for( let k = 0 ; k<page_titles.length; k++){
                 page_titles[k].setAttribute('style', `filter: hue-rotate(${j}deg);`); 
             }
         }

@@ -16,32 +16,78 @@ header {
     color: #fff;
     padding: 1rem;
     text-align: center;
+    height: 10%;
+    width:100%
 }
 
 header h1 {
     margin-bottom: 0.5rem;
 }
 
-nav ul {
-    list-style-type: none;
-    background-color: #555;
-    display: flex;
+#container{
+    width: 90%;
+    height:90%;
+    position: absolute;
+    top:10%;
+    right: 0%;
+    overflow: auto;
+}
+
+.main{
+    width: 90%;
+    padding: 15px;
+    background-color: #00a7a7;
+    text-align: left;
     justify-content: center;
-    padding: 0.5rem;
+    align-content: center;
+    font-size: 20px;
+    margin:0% 5%;
 }
 
-nav ul li {
-    margin: 0 1rem;
+.submenu{
+    width: 90%;
+    padding: 10px;
+    background-color: #004d4d;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    font-size: 15px;
+    margin:0% 5%;
 }
 
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
+
+.subsubmenu{
+
+    width: 90%;    
+    padding: 5px;
+    background-color: #002525;
+    text-align: right;
+    justify-content: center;
+    align-content: center;
+    font-size: 10px;
+    margin:0% 5%;
 }
 
-nav ul li a:hover {
-    text-decoration: underline;
+.last_button{
+    margin-bottom:15px;
 }
+
+.first_button{
+    margin-top:20px;
+}
+
+
+#menu{
+    width:10%;
+    height: 90%;
+    position: absolute;
+    left:0%;
+    top:10%;
+    background-color: #000000;
+}
+
+
+
 
 section {
     padding: 1.5rem;
@@ -78,4 +124,6 @@ footer {
     background-color: #333;
     color: #fff;
     margin-top: 1rem;
+    height:10%;
+
 }
