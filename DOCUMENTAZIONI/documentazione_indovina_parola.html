@@ -14,7 +14,7 @@
     <body>
 
         <header>
-            <h1>TCP in RUST</h1>
+            <h1>INDOVINA LA PAROLA</h1>
             <p>Una guida completa al codice sorgente e alle funzionalità del progetto.</p>
         </header>
 
@@ -72,20 +72,20 @@ asterischi vengono progressivamente sostituiti dalle lettere indovinate.
                 <h3>LIBRERIE</h3>
                 <pre>
                     <code class="language-c">
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;unistd.h&gt;
-#include &lt;sys/types.h&gt;
-#include &lt;sys/socket.h&gt;
-#include &lt;netinet/in.h&gt;
-#include &lt;netinet/ip.h&gt;
-#include &lt;time.h&gt;
-#include &lt;netdb.h&gt;
-#include &lt;fcntl.h&gt;
-#include &lt;errno.h&gt;
-#include &lt;sys/select.h&gt;
-#include &lt;string.h&gt;
-#include &lt;ctype.h&gt;                 
+#include &lt;stdio.h&gt;       // Libreria standard di input/output in C (printf, scanf, ecc.)
+#include &lt;stdlib.h&gt;      // Libreria standard per funzioni di utilità (malloc, free, exit, ecc.)
+#include &lt;unistd.h&gt;      // Libreria POSIX per le funzioni di sistema (fork, pipe, sleep, ecc.)
+#include &lt;sys/types.h&gt;   // Definisce tipi di dati per variabili usate in socket e sistema (pid_t, size_t, ecc.)
+#include &lt;sys/socket.h&gt;  // Libreria per la creazione e gestione dei socket
+#include &lt;netinet/in.h&gt;  // Definisce strutture per indirizzi di rete e protocolli (sockaddr_in, in_addr, ecc.)
+#include &lt;netinet/ip.h&gt;  // Definisce la struttura per i pacchetti IP (protocollo IP)
+#include &lt;time.h&gt;        // Libreria per la gestione di date e orari (time, localtime, ecc.)
+#include &lt;netdb.h&gt;       // Libreria per la gestione della rete (risoluzione DNS, funzioni per host, ecc.)
+#include &lt;fcntl.h&gt;       // Libreria per il controllo di file descriptor (funzioni come open, fcntl, ecc.)
+#include &lt;errno.h&gt;       // Definisce le macro degli errori di sistema (errno)
+#include &lt;sys/select.h&gt;  // Libreria per la gestione della funzione select (multiplexing di input/output)
+#include &lt;string.h&gt;      // Libreria per la manipolazione delle stringhe (memset, memcpy, strcmp, ecc.)
+#include &lt;ctype.h&gt;       // Libreria per la manipolazione dei caratteri (isalpha, isdigit, tolower, ecc.)
                     </code>
                 </pre>
             </section>
@@ -95,11 +95,11 @@ asterischi vengono progressivamente sostituiti dalle lettere indovinate.
                 <h3>DEFINE E COSTANTI</h3>
                 <pre>
                     <code class="language-c">
-#define BUFLEN 80
-#define DEFAULT_PORT 2000
-#define MAX_CONNECTION_TRY 20
+#define BUFLEN 80 //dimensione massina del buffer sia di lettura che di scrittura
+#define DEFAULT_PORT 2000 //porta di default dove scrivere per essere reindirizzati
+#define MAX_CONNECTION_TRY 20 //numero massimo di tentativi di connessione al server
 
-const char SERVICENAME[] = "127.0.0.1";
+const char SERVICENAME[] = "127.0.0.1"; //indirizzo del server, in questo caso me stess perchè hosto sia server che client
                     </code>
                 </pre>
             </section>
@@ -112,28 +112,31 @@ const char SERVICENAME[] = "127.0.0.1";
                     <h4>VARIABILI COMUNICAZIONE E SETTING</h4>
                     <pre>
                         <code class="language-c">
-int main(){
-    struct sockaddr_in local, remote;
-    int s;
+int main() {
+    struct sockaddr_in local, remote;  // Strutture per gli indirizzi locali e remoti (server e client)
+    int s;  // Variabile per il file descriptor del socket
 
-    ssize_t rcvlen;
-    char rcvbuf [BUFLEN];
+    ssize_t rcvlen;  // Lunghezza dei dati ricevuti
+    char rcvbuf[BUFLEN];  // Buffer per i dati ricevuti
 
-    int connected_to_new_port = 0;
-    int connection_try = 0;
+    int connected_to_new_port = 0;  // Flag per verificare connessione a una nuova porta
+    int connection_try = 0;  // Contatore per i tentativi di connessione
 
-    int new_port = 0;
+    int new_port = 0;  // Variabile per salvare un'eventuale nuova porta
+
+    struct hostent *h;  // Puntatore a una struttura hostent per risolvere l'indirizzo del server
+
+    // Configurazione dell'indirizzo locale
+    local.sin_family = AF_INET;  // Tipo di indirizzo (IPv4)
+    local.sin_port = htons(INADDR_ANY);  // Porta del server (correggere con numero di porta valido)
+    local.sin_addr.s_addr = htons(INADDR_ANY);  // Accetta connessioni da qualsiasi indirizzo IP (indirizzo locale)
+
+    // Configurazione dell'indirizzo remoto
+    remote.sin_family = AF_INET;  // Tipo di indirizzo per il client (IPv4)
+    h = gethostbyname(SERVICENAME);  // Risolve l'indirizzo IP per il nome di servizio (host remoto)
+    remote.sin_addr.s_addr = *((int*)h->h_addr_list[0]);  // Imposta l'indirizzo IP del client
 
 
-    struct hostent *h;
-
-    local.sin_family = AF_INET;
-    local.sin_port = htons(INADDR_ANY);
-    local.sin_addr.s_addr = htons(INADDR_ANY);
-
-    remote.sin_family = AF_INET;
-    h = gethostbyname(SERVICENAME);
-    remote.sin_addr.s_addr = *((int*)h->h_addr_list[0]);
                         </code>
                     </pre>
                 </section>
@@ -142,59 +145,63 @@ int main(){
                     <h4>PRIMA CONNESSIONE</h4>
                     <pre>
                         <code class="language-c">
-    while(!connected_to_new_port && (connection_try < MAX_CONNECTION_TRY) ){
-        connection_try++;
-        remote.sin_port = htons(DEFAULT_PORT);
-
-        if( (s = socket(AF_INET, SOCK_STREAM, 0)) < 0){
-            printf("Errore nella creazione del socekt: ");
-            printf("%d %d\n", connection_try, new_port);
-            exit(-1);
-        }else{
+    while (!connected_to_new_port && (connection_try < MAX_CONNECTION_TRY)) {
+        connection_try++;  // Incrementa il contatore dei tentativi di connessione
+        remote.sin_port = htons(DEFAULT_PORT);  // Imposta la porta predefinita per il server remoto
+    
+        // Crea un socket TCP (SOCK_STREAM) su IPv4 (AF_INET)
+        if ((s = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+            printf("Errore nella creazione del socket: ");
+            printf("%d %d\n", connection_try, new_port);  // Mostra il numero di tentativo e la nuova porta
+            exit(-1);  // Termina il programma in caso di errore nella creazione del socket
+        } else {
             printf("Socket creato con successo\n");
         }
-
-        if( bind(s, (struct sockaddr*)&local, sizeof(local)) < 0){
+    
+        // Associa il socket all'indirizzo locale
+        if (bind(s, (struct sockaddr*)&local, sizeof(local)) < 0) {
             printf("Errore nella bind ");
-            printf("%d %d\n", connection_try, new_port);
-            close(s);
-            exit(1);
-        }else{
+            printf("%d %d\n", connection_try, new_port);  // Mostra il numero di tentativo e la nuova porta
+            close(s);  // Chiude il socket in caso di errore
+            exit(1);   // Termina il programma
+        } else {
             printf("Bind eseguita con successo\n");
         }
-
-
-
-        if( connect(s, (struct sockaddr*)&remote, sizeof(remote)) < 0 ){
+    
+        // Tenta di connettersi al server remoto sulla porta predefinita
+        if (connect(s, (struct sockaddr*)&remote, sizeof(remote)) < 0) {
             printf("la connect è andata in errore: ");
-            printf("%d %d\n", connection_try, new_port);
-            close(s);
-            exit(-1);
-        }else{
+            printf("%d %d\n", connection_try, new_port);  // Mostra il numero di tentativo e la nuova porta
+            close(s);  // Chiude il socket in caso di errore nella connessione
+            exit(-1);  // Termina il programma
+        } else {
             printf("Connessione alla porta default eseguita con successo\n");
         }
-
+    
+        // Riceve dati dal server, presumibilmente la nuova porta di connessione
         rcvlen = recv(s, rcvbuf, BUFLEN, 0);
-        
-        if(rcvlen < 0){
+        if (rcvlen < 0) {
             printf("Errore nella receive della nuova porta: ");
-            printf("%d %d\n", connection_try, new_port);
-            exit(-1);
-        }else{
-            printf("ricevuto risposta con successo\n");
+            printf("%d %d\n", connection_try, new_port);  // Mostra il numero di tentativo e la nuova porta
+            exit(-1);  // Termina il programma in caso di errore nella ricezione
+        } else {
+            printf("Ricevuto risposta con successo\n");
         }
-
-        rcvbuf[rcvlen] = 0;
-
-        new_port = 0;
-
-        printf("\n\n nuova porta ricevuta dal server: %s \n", rcvbuf);
-
-        for(int i = 0 ; rcvbuf[i] != '\0' ; i++){
+    
+        rcvbuf[rcvlen] = 0;  // Termina il buffer ricevuto con un carattere nullo per renderlo una stringa
+    
+        new_port = 0;  // Reimposta la variabile `new_port` per ottenere la nuova porta dal server
+    
+        printf("\n\nNuova porta ricevuta dal server: %s\n", rcvbuf);
+    
+        // Converte la stringa ricevuta in un intero per ottenere la nuova porta
+        for (int i = 0; rcvbuf[i] != '\0'; i++) {
             new_port = (new_port * 10) + (rcvbuf[i] - '0');
         }
         printf("new port = %d\n", new_port);
-        close(s);
+    
+        close(s);  // Chiude il socket dopo aver ricevuto la nuova porta
+    
                         </code>
                     </pre>
                 </section>
@@ -203,43 +210,43 @@ int main(){
                     <h4>SECONDA CONNESSIONE</h4>
                     <pre>
                         <code class="language-c">
-        remote.sin_port = htons(new_port);
+                            remote.sin_port = htons(new_port);  // Imposta la porta remota alla nuova porta ricevuta dal server
 
-
-        if( (s = socket(AF_INET, SOCK_STREAM, 0)) < 0){
-            printf("Errore nella creazione del socekt: ");
-            printf("%d %d\n", connection_try, new_port);
-            exit(-1);
-        }else{
-            printf("secondo socket creato successo\n");
+        // Crea un nuovo socket per connettersi alla nuova porta
+        if ((s = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+            printf("Errore nella creazione del socket: ");
+            printf("%d %d\n", connection_try, new_port);  // Mostra il tentativo e la nuova porta
+            exit(-1);  // Termina il programma in caso di errore nella creazione del socket
+        } else {
+            printf("Secondo socket creato con successo\n");
         }
-
-        if( bind(s, (struct sockaddr*)&local, sizeof(local)) < 0){
+        
+        // Esegue il bind del socket all'indirizzo locale
+        if (bind(s, (struct sockaddr*)&local, sizeof(local)) < 0) {
             printf("Errore nella bind ");
-            printf("%d %d\n", connection_try, new_port);
-            close(s);
-            exit(1);
-        }else{
-            printf("seconda bind successo\n");
+            printf("%d %d\n", connection_try, new_port);  // Mostra il tentativo e la nuova porta
+            close(s);  // Chiude il socket in caso di errore nel bind
+            exit(1);   // Termina il programma
+        } else {
+            printf("Seconda bind eseguita con successo\n");
         }
-
-        sleep(3);
-
-        if( connect(s, (struct sockaddr*)&remote, sizeof(remote)) < 0){
-            perror("errore sulla connect di new port, rimando la connessione a defaultport");
-            printf("%d %d\n\n", connection_try, new_port);
-            close(s);
-        }else{
-            play(s);
-            connected_to_new_port = 1;
+        
+        sleep(3);  // Pausa di 3 secondi prima di tentare la connessione alla nuova porta
+        
+        // Tenta di connettersi al server remoto sulla nuova porta
+        if (connect(s, (struct sockaddr*)&remote, sizeof(remote)) < 0) {
+            perror("Errore sulla connect alla nuova porta, riprovo con la porta predefinita");
+            printf("%d %d\n\n", connection_try, new_port);  // Mostra il tentativo e la nuova porta
+            close(s);  // Chiude il socket in caso di errore nella connessione
+        } else {
+            play(s);  // Funzione `play` chiamata per gestire la connessione dopo aver stabilito con successo
+            connected_to_new_port = 1;  // Indica che la connessione alla nuova porta è stata stabilita con successo
         }
-    }
-
-
-    close(s);
-
-    return 0;
-}
+        
+        close(s);  // Chiude il socket al termine della connessione
+        
+        return 0;  // Termina il programma
+    }                 
                         </code>
                     </pre>
                 </section>
@@ -255,13 +262,12 @@ int main(){
                     <h4>VARIABILI PER COMUNICAZIONE</h4>
                     <pre>
                         <code class="language-c">
-int play(int s){
-
-    char snd_buf[BUFLEN] = {0};
-    char rcv_buf[BUFLEN] = {0};
-    int playing = 1;
-    char player_guess;
-    int rcvlen;
+int play(int s) {
+    char snd_buf[BUFLEN] = {0};  // Buffer per inviare dati al server
+    char rcv_buf[BUFLEN] = {0};  // Buffer per ricevere dati dal server
+    int playing = 1;  // Flag che indica se il gioco è ancora in corso
+    char player_guess;  // Variabile per la congettura o mossa del giocatore
+    int rcvlen;  // Variabile per la lunghezza dei dati ricevuti
                         </code>
                     </pre>
                 </section>
@@ -270,18 +276,18 @@ int play(int s){
                     <h4>INPUT CHECK</h4>
                     <pre>
                         <code class="language-c">
-    while(playing){
-        do{
-            printf("Inserisci un carattere (lettera o '0' per uscire): ");
-            scanf("%c", &player_guess);
-            player_guess = tolower(player_guess);
-        }while( !isalpha(player_guess) && player_guess != '0' );
-
-        if(player_guess == '0'){
+    while (playing) {  // Continua il ciclo finché il gioco è attivo
+        do {
+            printf("Inserisci un carattere (lettera o '0' per uscire): ");  // Chiede all'utente di inserire un carattere
+            scanf("%c", &player_guess);  // Legge il carattere inserito dall'utente
+            player_guess = tolower(player_guess);  // Converte il carattere in minuscolo per standardizzare l'input
+        } while (!isalpha(player_guess) && player_guess != '0');  // Continua se l'input non è una lettera o '0'
+    
+        if (player_guess == '0') {  // Se l'utente inserisce '0', termina il gioco
             playing = 0;
         }
-
-        sprintf(snd_buf, "%c", player_guess);
+    
+        sprintf(snd_buf, "%c", player_guess);  // Memorizza il carattere inserito nel buffer di invio
                         </code>
                     </pre>
                 </section>
@@ -290,20 +296,20 @@ int play(int s){
                     <h4>SEND RECV E MESSAGI CLIENT</h4>
                     <pre>
                         <code class="language-c">
-        if( send(s, snd_buf, strlen(snd_buf), 0) < 0){
-            printf("Errore nella send");
-            close(s);
-            exit(2);
+        if (send(s, snd_buf, strlen(snd_buf), 0) < 0) {  // Invia il contenuto di `snd_buf` al server
+            printf("Errore nella send");  // Messaggio di errore in caso di fallimento dell'invio
+            close(s);  // Chiude il socket in caso di errore
+            exit(2);  // Termina il programma con un codice di errore
         }
-
-        if ((rcvlen = recv (s, rcv_buf, BUFLEN, 0)) < 0) {
-            perror ("errore receive ");
-            close(s);
-            exit (2);
+        
+        if ((rcvlen = recv(s, rcv_buf, BUFLEN, 0)) < 0) {  // Riceve la risposta dal server nel buffer `rcv_buf`
+            perror("Errore nella receive ");  // Messaggio di errore in caso di fallimento nella ricezione
+            close(s);  // Chiude il socket in caso di errore
+            exit(2);  // Termina il programma con un codice di errore
         }
-
-        rcv_buf[rcvlen] = '\0';
-        printf("messaggio ricevuto dal server: %s\n", rcv_buf);
+        
+        rcv_buf[rcvlen] = '\0';  // Termina la stringa ricevuta con il carattere nullo '\0' per evitare buffer overflow
+        printf("Messaggio ricevuto dal server: %s\n", rcv_buf);  // Stampa il messaggio ricevuto dal server
 
     }   
 
@@ -329,19 +335,19 @@ int play(int s){
                 <h3>LIBRERIE</h3>
                 <pre>
                     <code class="language-c">
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;unistd.h&gt;
-#include &lt;sys/types.h&gt;
-#include &lt;sys/socket.h&gt;
-#include &lt;netinet/in.h&gt;
-#include &lt;netinet/ip.h&gt;
-#include &lt;netdb.h&gt;
-#include &lt;time.h&gt;
-#include &lt;string.h&gt;
-#include &lt;sys/select.h&gt;
-#include &lt;pthread.h&gt;
-#include &lt;ncurses.h&gt;
+#include &lt;stdio.h&gt;      // Libreria per input/output standard (es. printf, scanf, etc.)
+#include &lt;stdlib.h&gt;     // Libreria per funzioni generali (es. malloc, free, exit, etc.)
+#include &lt;unistd.h&gt;     // Libreria per l'accesso a funzioni di sistema (es. fork, exec, sleep, etc.)
+#include &lt;sys/types.h&gt;  // Definisce tipi generali per la programmazione di sistema (es. pid_t, size_t, etc.)
+#include &lt;sys/socket.h&gt; // Libreria per la gestione dei socket di rete (es. socket(), bind(), listen(), etc.)
+#include &lt;netinet/in.h&gt; // Libreria per le strutture dati relative alla rete (es. sockaddr_in, INADDR_ANY, htons, etc.)
+#include &lt;netinet/ip.h&gt; // Libreria per la gestione degli indirizzi e protocolli IP (es. IPPROTO_TCP)
+#include &lt;netdb.h&gt;      // Libreria per la gestione dei nomi di dominio (es. gethostbyname, getaddrinfo, etc.)
+#include &lt;time.h&gt;       // Libreria per la gestione del tempo (es. time(), localtime(), difftime, etc.)
+#include &lt;string.h&gt;     // Libreria per le funzioni di manipolazione delle stringhe (es. strlen, strcpy, strcmp, etc.)
+#include &lt;sys/select.h&gt; // Libreria per la gestione della selezione dei descrittori (es. select(), FD_SET, etc.)
+#include &lt;pthread.h&gt;    // Libreria per la gestione dei thread (es. pthread_create(), pthread_join, etc.)
+#include &lt;ncurses.h&gt;    // Libreria per la gestione dell'interfaccia a caratteri (es. creare finestre, gestire input/output in terminale)
                     </code>
                 </pre>
             </section>
@@ -351,15 +357,15 @@ int play(int s){
                 <h3>DEFINE, COSTANTI E VARIABILI GLOBALI</h3>
                 <pre>
                     <code class="language-c">
-#define BUFLEN 80
-#define DEFAULT_SERVICEPORT 2000
-#define MAX_CLIENT 20
+#define BUFLEN 80                    // Definisce la dimensione del buffer per la lettura/scrittura
+#define DEFAULT_SERVICEPORT 2000      // Definisce la porta predefinita del servizio
+#define MAX_CLIENT 20                // Numero massimo di client che possono connettersi
 
+#define NUM_SUBWINDOWS 20            // Numero massimo di sottofinestre per l'interfaccia ncurses
+#define COLS_COUNT 5                 // Numero di colonne delle sottofinestre
+#define ROWS_COUNT 4                 // Numero di righe delle sottofinestre
 
-#define NUM_SUBWINDOWS 20
-#define COLS_COUNT 5
-#define ROWS_COUNT 4
-
+// Array contenente 20 parole da usare nel gioco dell'impiccato
 const char* paroleImpiccato[20] = {
     "computer", 
     "gattino",  
@@ -383,9 +389,10 @@ const char* paroleImpiccato[20] = {
     "chitarra"  
 };
 
-int permits[MAX_CLIENT];
-WINDOW *subwindows[NUM_SUBWINDOWS];
-int num_thread = 0;
+int permits[MAX_CLIENT];            // Array che tiene traccia dei permessi per i client connessi
+WINDOW *subwindows[NUM_SUBWINDOWS]; // Array di puntatori a sottofinestre per ncurses
+int num_thread = 0;                 // Variabile per tenere traccia del numero di thread attivi
+
                     </code>
                 </pre>
             </section>
@@ -399,33 +406,33 @@ int num_thread = 0;
                     <h4>INIZIALIZZAZIONE NCURSES SRAND</h4>
                     <pre>
                         <code class="language-c">
-int main(){
+int main() {
+    srand(time(NULL));   // Inizializza il generatore di numeri casuali con il tempo corrente (utile per randomizzare eventi)
 
-    srand(time(NULL));
-
+    // Inizializza la libreria ncurses per gestire l'interfaccia a caratteri
     initscr();
-    cbreak();
-    noecho();
-    curs_set(0);
+    cbreak();            // Disabilita il buffering dell'input (ogni tasto premuto è subito letto)
+    noecho();            // Impedisce la visualizzazione dei caratteri digitati
+    curs_set(0);         // Nasconde il cursore
 
-
+    // Verifica se il terminale supporta i colori
     if (!has_colors()) {
-        endwin();
-        printf("Terminal does not support colors\n");
-        return 1;
+        endwin();        // Termina ncurses se il terminale non supporta i colori
+        printf("Terminal does not support colors\n"); // Messaggio di errore
+        return 1;        // Esci con codice di errore
     }
 
-        start_color();
+    start_color();       // Abilita l'uso dei colori in ncurses
 
-    // Definisci le coppie di colori
-    init_pair(1, COLOR_WHITE, COLOR_BLACK);  
-    init_pair(2, COLOR_WHITE, COLOR_RED);    
+    // Definisce le coppie di colori (id coppia, colore del testo, colore di sfondo)
+    init_pair(1, COLOR_WHITE, COLOR_BLACK);  // Colori: testo bianco su sfondo nero
+    init_pair(2, COLOR_WHITE, COLOR_RED);    // Colori: testo bianco su sfondo rosso
 
-    bkgd(COLOR_PAIR(1));
-    clear();
-    refresh();
+    bkgd(COLOR_PAIR(1));  // Imposta la coppia di colori predefinita per lo sfondo
+    clear();               // Pulisce lo schermo
+    refresh();             // Rende effettive le modifiche allo schermo
 
-    create_subwindows(subwindows);
+    create_subwindows(subwindows);  // Funzione (presumibilmente definita altrove) per creare sottofinestre ncurses
                             
                         </code>
                     </pre>
@@ -436,33 +443,36 @@ int main(){
                     <h4>VARIABILI PER COMUNICAZIONE E THREAD E SETTAGGIO</h4>
                     <pre>
                         <code class="language-c">
-    pthread_t thread_client[MAX_CLIENT];
+    pthread_t thread_client[MAX_CLIENT];  // Array di thread per gestire i client connessi, con un massimo di MAX_CLIENT client
 
-    struct sockaddr_in local, remote;
-    unsigned int remote_len;
-
-    int s, sc;
-
-
-
-    memset(permits, 0, sizeof(permits) );
-
-    char snd_buf[BUFLEN];
-
-    local.sin_family = AF_INET;
-    local.sin_port = htons(DEFAULT_SERVICEPORT);
-    local.sin_addr.s_addr = htonl(INADDR_ANY);
-
-    if( ( s = socket(AF_INET, SOCK_STREAM, 0)) < 0){
-        exit(-1);
+    struct sockaddr_in local, remote;    // Struct per indirizzo locale e remoto
+    unsigned int remote_len;              // Lunghezza dell'indirizzo remoto
+    
+    int s, sc;                            // Variabili per i descrittori di socket: 's' per il socket principale, 'sc' per un socket di client
+    
+    memset(permits, 0, sizeof(permits));  // Inizializza l'array 'permits' a 0 (probabilmente per tracciare lo stato dei client)
+    
+    char snd_buf[BUFLEN];                 // Buffer per i dati da inviare ai client
+    
+    // Impostazione dell'indirizzo locale per il server
+    local.sin_family = AF_INET;           // Imposta la famiglia di indirizzi a IPv4
+    local.sin_port = htons(DEFAULT_SERVICEPORT);  // Imposta la porta del server
+    local.sin_addr.s_addr = htonl(INADDR_ANY);    // Imposta l'indirizzo IP del server a qualsiasi indirizzo disponibile
+    
+    // Crea un socket per la comunicazione
+    if ((s = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+        exit(-1);                         // Esce in caso di errore nella creazione del socket
     }
-
-    if( bind(s, (struct sockaddr*)&local, sizeof(local)) < 0){
-        close(s);
-        exit(-1);
+    
+    // Associa il socket creato all'indirizzo specificato (locale)
+    if (bind(s, (struct sockaddr*)&local, sizeof(local)) < 0) {
+        close(s);                         // Chiude il socket se la bind fallisce
+        exit(-1);                         // Esce in caso di errore nella bind
     }
-
-    listen(s,MAX_CLIENT);
+    
+    // Mette il server in ascolto delle connessioni in entrata, con un massimo di MAX_CLIENT client in coda
+    listen(s, MAX_CLIENT);
+                            
                         </code>
                     </pre>
                 </section>
@@ -476,16 +486,19 @@ int main(){
                         <h5>CREATE FIRST COMUNICATION</h5>
                         <pre>
                             <code class="language-c">
-    while(1){
-
-        remote_len = sizeof(remote);
-        if(num_thread < MAX_CLIENT){ 
+    while(1) {  // Ciclo infinito per accettare connessioni da client
+        remote_len = sizeof(remote);  // Imposta la lunghezza dell'indirizzo remoto
+    
+        // Controlla se ci sono meno di MAX_CLIENT thread attivi per i client
+        if (num_thread < MAX_CLIENT) {
+            // Accetta una connessione in ingresso dal socket principale 's' e salva l'indirizzo del client in 'remote'
             sc = accept(s, (struct sockaddr*)&remote, &remote_len);
-            if(sc < 0){
-                close(s);
-                exit(-1);
+            if (sc < 0) {
+                close(s);  // Chiude il socket principale in caso di errore nell'accettare la connessione
+                exit(-1);  // Esce con codice di errore
             }
-
+    
+            // Trova una porta libera per il nuovo client
             int new_client_port = find_free_port();
                             </code>
                         </pre>
@@ -496,28 +509,29 @@ int main(){
                         <h5>CREATE THREAD</h5>
                         <pre>
                             <code class="language-c">
-            if(new_client_port == -1){
-                sprintf(snd_buf, "server pieno");
-            }else{                
-
-                int* new_client_port_ptr = malloc(sizeof(int));
-                *new_client_port_ptr = new_client_port;
-
-                if(  pthread_create(&thread_client[new_client_port], NULL, handle_client, new_client_port_ptr) ){
-                    sprintf(snd_buf, "errore nella creazione del thread\n");
-                }else{
-                    num_thread++;
-                    permits[new_client_port] = 1;
-                    new_client_port = DEFAULT_SERVICEPORT + 1000 + new_client_port;
-                    sprintf(snd_buf, "%d", new_client_port);
+                if (new_client_port == -1) {  // Se non c'è una porta disponibile
+                sprintf(snd_buf, "server pieno");  // Imposta il messaggio che indica che il server è pieno
+            } else {  // Se c'è una porta disponibile, crea un thread per il client
+                int* new_client_port_ptr = malloc(sizeof(int));  // Alloca memoria per un intero che conterrà la porta del nuovo client
+                *new_client_port_ptr = new_client_port;  // Assegna la porta trovata a questa variabile
+            
+                // Crea un nuovo thread per gestire il client
+                if (pthread_create(&thread_client[new_client_port], NULL, handle_client, new_client_port_ptr)) {
+                    // Se la creazione del thread fallisce
+                    sprintf(snd_buf, "errore nella creazione del thread\n");  // Imposta il messaggio di errore
+                } else {
+                    num_thread++;  // Incrementa il contatore dei thread attivi (client connessi)
+                    permits[new_client_port] = 1;  // Imposta il permesso per il client (probabilmente per gestire la connessione)
+                    new_client_port = DEFAULT_SERVICEPORT + 1000 + new_client_port;  // Modifica la porta del nuovo client
+                    sprintf(snd_buf, "%d", new_client_port);  // Imposta il buffer con la nuova porta per il client
                 }
-
             }
-
-            if( send(sc, snd_buf, BUFLEN, 0) < 0 ){
-                close(s);
-                close(sc);
-                exit(-1);
+            
+            // Invia il messaggio (errore o nuova porta) al client
+            if (send(sc, snd_buf, BUFLEN, 0) < 0) {
+                close(s);  // Chiude il socket server
+                close(sc);  // Chiude il socket client
+                exit(-1);   // Esce con codice di errore
             }
 
 
@@ -533,25 +547,29 @@ int main(){
                         <h5>DISPOSE ELEMENTS</h5>
                         <pre>
                             <code class="language-c">
-    close(s);
-    close(sc);
-
-    for(int i = 0 ; i &lt; MAX_CLIENT ; i++){
-        if(permits[i] == 1){
-            if(  pthread_join(thread_client[i], NULL) != 0){
-                return -1;                
+    close(s);  // Chiude il socket principale (server) 's' dopo aver terminato la comunicazione con i client
+    close(sc);  // Chiude il socket del client 'sc' dopo aver finito la comunicazione
+    
+    // Ciclo per attendere la fine di tutti i thread attivi per i client
+    for(int i = 0; i < MAX_CLIENT; i++) {
+        if(permits[i] == 1) {  // Se il client ha una connessione attiva (permesso concesso)
+            // Attende che il thread del client finisca, restituisce -1 se fallisce
+            if( pthread_join(thread_client[i], NULL) != 0) {
+                return -1;  // Se non riesce ad aspettare il thread, esce con errore
             }
         }
     }
-
-
-    for (int i = 0; i &lt; NUM_SUBWINDOWS; i++) {
-        delwin(subwindows[i]);
+    
+    // Ciclo per eliminare le sottoventole della finestra ncurses
+    for (int i = 0; i < NUM_SUBWINDOWS; i++) {
+        delwin(subwindows[i]);  // Rimuove ciascuna sottoventola creata
     }
-    endwin();
-
-    return 0;
-
+    
+    // Termina l'utilizzo della libreria ncurses
+    endwin();  // Chiude la finestra ncurses e ripristina lo stato del terminale
+    
+    return 0;  // Restituisce 0, indicando che il programma è terminato correttamente
+    
 }
                             </code>
                         </pre>
@@ -572,50 +590,61 @@ int main(){
                     <h4>VARIABILI PER COMUNICAZIONE E SETTAGGIO </h4>
                     <pre>
                         <code class="language-c">
-void *handle_client(void* arg){
+void *handle_client(void* arg) {
+    // Definizione dei colori per la comunicazione
+    int scrive_client = 3;  // Colore per il messaggio inviato dal client
+    int scrive_server = 4;   // Colore per il messaggio inviato dal server
 
-    int scrive_client = 3;
-    int scrive_server = 4;
+    // Inizializzazione delle coppie di colori per ncurses
+    init_pair(scrive_client, COLOR_WHITE, COLOR_GREEN);  
+    init_pair(scrive_server, COLOR_BLACK, COLOR_GREEN);  
 
-    init_pair(scrive_client, COLOR_WHITE, COLOR_GREEN);
-    init_pair(scrive_server, COLOR_BLACK, COLOR_GREEN);
+    struct sockaddr_in local, remote;  // Strutture per le informazioni del client e del server
 
-    struct sockaddr_in local, remote;
-
+    // Recupera la porta del nuovo client e libera la memoria allocata
     int new_port = *((int*)arg);
     free(arg);
     int thread_number = new_port;
 
+    // Calcola la porta di destinazione, aggiungendo un offset
     new_port = DEFAULT_SERVICEPORT + 1000 + new_port;
 
-    unsigned int rm_len = sizeof(remote);
-    int s = socket(AF_INET, SOCK_STREAM, 0);
+    unsigned int rm_len = sizeof(remote);  // Lunghezza della struttura sockaddr_in per il client
+    int s = socket(AF_INET, SOCK_STREAM, 0);  // Crea un nuovo socket
 
-    if(s < 0){
+    if (s < 0) {
+        // Se la creazione del socket fallisce, dealloca e termina il thread
         permits[thread_number] = 0;
         num_thread--;
         return NULL;
     }
 
+    // Impostazione della struttura sockaddr_in per il server
     local.sin_family = AF_INET;
-    local.sin_port = htons(new_port);
-    local.sin_addr.s_addr = htonl(INADDR_ANY);
+    local.sin_port = htons(new_port);  // Imposta la porta su quella calcolata
+    local.sin_addr.s_addr = htonl(INADDR_ANY);  // Imposta l'indirizzo del server come "qualsiasi" (tutti gli IP)
 
-    if( bind(s, (struct sockaddr*)&local, sizeof(local)) < 0){
+    // Effettua il bind del socket alla porta
+    if (bind(s, (struct sockaddr*)&local, sizeof(local)) < 0) {
+        // Se bind fallisce, dealloca e termina il thread
         permits[thread_number] = 0;
         num_thread--;
         return NULL;
     }
 
-    if(listen(s, 5) < 0) {
+    // Inizia ad ascoltare le connessioni in arrivo sulla porta
+    if (listen(s, 5) < 0) {
+        // Se non riesce a mettere il socket in ascolto, dealloca e termina il thread
         permits[thread_number] = 0;
         num_thread--;
         return NULL;
     }
 
+    // Accetta la connessione in arrivo da un client
     int sc = accept(s, (struct sockaddr*)&remote, &rm_len);
     
-    if(sc < 0){
+    if (sc < 0) {
+        // Se l'accept fallisce, aggiorna lo stato e termina il thread
         permits[new_port - 1000 - DEFAULT_SERVICEPORT] = 0;
         num_thread--;
         return NULL;
@@ -629,30 +658,40 @@ void *handle_client(void* arg){
                     <h4>ESTRAI PAROLA E SETTAGGIO FINESTRE PER ENTRATA CLIENT</h4>
                     <pre>
                         <code class="language-c">
+    // Buffer per invio e ricezione dati
     char snd_buf[BUFLEN] = {0};
     char rcv_buf[BUFLEN] = {0};
     int rcvlen;
-
-    char parola[10];
-
-    strcpy(parola, paroleImpiccato[rand()%20]);
     
+    // Parola da indovinare (impiccato)
+    char parola[10];  // Array per la parola segreta
+    
+    // Seleziona una parola casuale dall'array paroleImpiccato
+    strcpy(parola, paroleImpiccato[rand() % 20]);
+    
+    // Mostra la porta del client e la parola segreta nel subwindow relativo al client
     wprintw(subwindows[thread_number], "client accettato su porta %d\n", new_port);
     wprintw(subwindows[thread_number], "Parola estratta %s\n\n", parola);
     wbkgd(subwindows[thread_number], COLOR_PAIR(scrive_server));
-
+    
+    // Aggiorna il subwindow per mostrare il contenuto
     wrefresh(subwindows[thread_number]);
-
+    
+    // Calcola la lunghezza della parola segreta
     int lunghezza_parola = strlen(parola);
-
+    
+    // Prepara la versione mascherata della parola (tutti asterischi inizialmente)
     char *parola_to_send = (char*)malloc(lunghezza_parola * sizeof(char));
-
-    for(int i = 0 ; i&lt;lunghezza_parola ; i++){
+    for(int i = 0; i < lunghezza_parola; i++) {
         parola_to_send[i] = '*';
     }
-
+    
+    // Contatore per le lettere corrette indovinate
     int correct_guesses = 0;
+    
+    // Variabile per tracciare lo stato del gioco del client
     int client_playing = 1;
+    
                         </code>
                     </pre>
                 </section>
@@ -664,21 +703,27 @@ void *handle_client(void* arg){
                         <code class="language-c">
     while(client_playing){
 
+        // Riceve la risposta dal client (tentativo di indovinare una lettera)
         if( (rcvlen = recv(sc, rcv_buf, BUFLEN, 0) ) < 0){
+            // Se si verifica un errore nella ricezione, termina il thread
             permits[thread_number] = 0;
             num_thread--;
             close(s);
             close(sc);
             return NULL;
         }
-
+    
+        // Assicura che la stringa ricevuta sia terminata con '\0' 
         rcv_buf[rcvlen] = '\0';
-
+    
+        // Estrai la lettera indovinata dal buffer
         int found = 0; 
-        char guess = rcv_buf[0];
-
+        char guess = rcv_buf[0];  // Il primo carattere del buffer è il tentativo del client
+    
+        // Stampa il tentativo indovinato nel subwindow associato al client
         wprintw(subwindows[thread_number], "client guessed = %c\n", guess);
         wrefresh(subwindows[thread_number]);
+                            
                         
                         </code>
                     </pre>
@@ -690,17 +735,20 @@ void *handle_client(void* arg){
                     <pre>
                         <code class="language-c">
         if(guess == '0'){
-
-            sprintf(snd_buf, "F%s hai deciso di non gicare", parola);
+            // Messaggio che indica che il client ha deciso di non giocare
+            sprintf(snd_buf, "F%s hai deciso di non giocare", parola);
             client_playing = 0;
             
+            // Stampa nel subwindow
             wprintw(subwindows[thread_number], "%s\n", snd_buf);
             wrefresh(subwindows[thread_number]);
-
-            send(sc, snd_buf, strlen(snd_buf), 0);
+        
+            // Invia il messaggio di fine partita al client
             permits[thread_number] = 0;
-                    
-                    
+            num_thread--;
+            close(sc);
+            return NULL;
+        }
                         </code>
                     </pre>
                 </section>
@@ -710,15 +758,18 @@ void *handle_client(void* arg){
                     <h4>GESTIONE CREAZIONE PAROLA DA RIMANDARE</h4>
                     <pre>
                         <code class="language-c">
-        }else{
+        }else {
+            // Ciclo su tutte le lettere della parola
             for (int i = 0; i < lunghezza_parola; i++) {
+                // Controllo se il carattere indovinato corrisponde ad una lettera della parola
                 if (parola[i] == guess && parola_to_send[i] == '*') {
+                    // Sostituisci il carattere '*' con la lettera corretta
                     parola_to_send[i] = guess;
-                    found = 1;
-                    correct_guesses++;
+                    found = 1; // Segna che una lettera è stata trovata
+                    correct_guesses++; // Incrementa il numero di lettere corrette
                 }
             }
-                
+            
                         </code>
                     </pre>
                 </section>
@@ -728,31 +779,51 @@ void *handle_client(void* arg){
                     <h4>GESTIONE VITTORIA</h4>
                     <pre>
                         <code class="language-c">
+            // Verifica se la parola è stata completata correttamente
             if (found && correct_guesses == lunghezza_parola) {
+                
+                // Prepara il messaggio che indica che la parola è stata completata e invita a indovinare una nuova parola
                 sprintf(snd_buf, "K%s (Parola completata!) indovina un altra parola\n", parola_to_send);
-
+            
+                // Cambia il colore di sfondo della finestra per il thread corrente per il messaggio del client
                 wbkgd(subwindows[thread_number], COLOR_PAIR(scrive_client));                    
+                
+                // Stampa il messaggio nella finestra associata al thread
                 wprintw(subwindows[thread_number], "%s\n", snd_buf);
+                
+                // Aggiorna la finestra per mostrare il messaggio
                 wrefresh(subwindows[thread_number]);
-
+            
+                // Seleziona una nuova parola casuale dall'array di parole
                 strcpy(parola, paroleImpiccato[rand()%20]);
-                lunghezza_parola = strlen(parola);
+                lunghezza_parola = strlen(parola); // Aggiorna la lunghezza della nuova parola
+            
+                // Libera la memoria della parola precedente e alloca memoria per la nuova parola nascosta
                 free(parola_to_send);
                 parola_to_send = (char*)malloc(lunghezza_parola * sizeof(char));
-
+            
+                // Inizializza la parola nascosta con asterischi
                 for (int i = 0; i < lunghezza_parola; i++) {
                     parola_to_send[i] = '*';
                 }
-
+            
+                // Aggiunge il terminatore di stringa alla fine della parola nascosta
                 parola_to_send[lunghezza_parola] = '\0'; 
+                
+                // Reset delle variabili per il conteggio dei tentativi corretti e per il controllo delle lettere indovinate
                 correct_guesses = 0;
                 found = 0;
-
+            
+                // Cambia il colore di sfondo della finestra per il thread corrente per il messaggio del client
                 wbkgd(subwindows[thread_number], COLOR_PAIR(scrive_client));
+            
+                // Mostra la nuova parola (con gli asterischi) nella finestra
                 wprintw(subwindows[thread_number], "nuova parola = %s\n\n", parola);
+                
+                // Aggiorna la finestra per visualizzare la nuova parola
                 wrefresh(subwindows[thread_number]);
-
             }
+            
                         </code>
                     </pre>
                 </section>
@@ -762,15 +833,22 @@ void *handle_client(void* arg){
                     <h4>GESTIONE LETTERA CORRETTA</h4>
                     <pre>
                         <code class="language-c">
-            else if (found) {
-                sprintf(snd_buf, "Y%s (Lettera trovata)\n", parola_to_send);
-
-                wbkgd(subwindows[thread_number], COLOR_PAIR(scrive_client));
-                wprintw(subwindows[thread_number], "%s\n", snd_buf);
-                wrefresh(subwindows[thread_number]);
-
-            }
-                        </code>
+        // Caso in cui la lettera è stata trovata nella parola
+        else if (found) {
+            // Prepara il messaggio che segnala che la lettera è stata trovata
+            sprintf(snd_buf, "Y%s (Lettera trovata)\n", parola_to_send);
+        
+            // Cambia il colore di sfondo della finestra per il thread corrente, per mostrare il messaggio
+            wbkgd(subwindows[thread_number], COLOR_PAIR(scrive_client));
+        
+            // Stampa il messaggio nella finestra associata al thread
+            wprintw(subwindows[thread_number], "%s\n", snd_buf);
+        
+            // Aggiorna la finestra per visualizzare il messaggio
+            wrefresh(subwindows[thread_number]);
+        }
+                            
+                         </code>
                     </pre>
                 </section>
 
@@ -779,34 +857,47 @@ void *handle_client(void* arg){
                     <h4>GESTIONE LETTERA SBAGLIATA</h4>
                     <pre>
                         <code class="language-c">
-            else {
-                sprintf(snd_buf, "N%s (Lettera non trovata)\n", parola_to_send);
-
-                wbkgd(subwindows[thread_number], COLOR_PAIR(scrive_client));
-                wprintw(subwindows[thread_number], "%s\n", snd_buf);
-                wrefresh(subwindows[thread_number]);
-
-            }
-        }
-
-        send( sc, snd_buf, strlen(snd_buf), 0);
-        
-    } 
-
+        // Caso in cui la lettera non è stata trovata
+        }else {
+        // Prepara il messaggio che segnala che la lettera non è stata trovata
+        sprintf(snd_buf, "N%s (Lettera non trovata)\n", parola_to_send);
     
-
+        // Cambia il colore di sfondo della finestra per il thread corrente, per mostrare il messaggio
+        wbkgd(subwindows[thread_number], COLOR_PAIR(scrive_client));
+    
+        // Stampa il messaggio nella finestra associata al thread
+        wprintw(subwindows[thread_number], "%s\n", snd_buf);
+    
+        // Aggiorna la finestra per visualizzare il messaggio
+        wrefresh(subwindows[thread_number]);
+    }
+    
+    // Invia la risposta al client (sia che la lettera sia stata trovata o meno)
+    send(sc, snd_buf, strlen(snd_buf), 0);
+    
+    // Pulizia della finestra del thread quando il gioco termina o il client si disconnette
     wclear(subwindows[thread_number]);
-    wprintw(subwindows[thread_number], "Thread %d", thread_number+1);
+    
+    // Stampa un messaggio di chiusura del thread nella finestra associata al thread
+    wprintw(subwindows[thread_number], "Thread %d", thread_number + 1);
+    
+    // Imposta il colore di sfondo della finestra a uno predefinito (per esempio il colore di default)
     wbkgd(subwindows[thread_number], COLOR_PAIR(2));
+    
+    // Rinfresca la finestra per mostrare il messaggio
     wrefresh(subwindows[thread_number]);
-
-
+    
+    // Segna che il thread ha finito di eseguire
     permits[thread_number] = 0;
     num_thread--;
+    
+    // Chiude la connessione con il client e il socket server
     close(sc);
     close(s);
-
+    
+    // Termina il thread
     return NULL;
+                            
 }
                         </code>
                     </pre>
@@ -819,15 +910,18 @@ void *handle_client(void* arg){
                 <h3>FUNCTION FIND FREE PORT</h3>
                 <pre>
                     <code class="language-c">
-int find_free_port(){
-    for(int i = 0 ; i&lt;MAX_CLIENT ; i++){
-        if(permits[i] == 0){
-            return i;
+int find_free_port() {
+    // Ciclo attraverso tutti i possibili client
+    for(int i = 0; i < MAX_CLIENT; i++) {
+        // Controlla se il client non è attivo (permesso = 0)
+        if(permits[i] == 0) {
+            return i;  // Restituisce l'indice del client libero
         }
     }
 
-    return -1;
+    return -1;  // Se non ci sono client liberi, restituisce -1 per indicare che il server è pieno
 }
+                        
                     </code>
                 </pre>
             </section>
@@ -838,23 +932,37 @@ int find_free_port(){
                 <pre>
                     <code class="language-c">
 void create_subwindows(WINDOW *subwindows[]) {
-
     int max_y, max_x;
+    // Ottiene le dimensioni del terminale (altezza e larghezza)
     getmaxyx(stdscr, max_y, max_x);
 
+    // Calcola l'altezza e la larghezza di ciascuna sottoventola in base al numero di righe e colonne
     int subwin_height = max_y / ROWS_COUNT;   
     int subwin_width = max_x / COLS_COUNT;    
 
+    // Ciclo per creare tutte le sottoventole
     for (int i = 0; i < NUM_SUBWINDOWS; i++) {
+        // Calcola la posizione di partenza per la sottoventola, basata sulla sua riga e colonna
         int start_y = (i / COLS_COUNT) * subwin_height; 
         int start_x = (i % COLS_COUNT) * subwin_width;  
+
+        // Crea una nuova sottoventola con le dimensioni calcolate e la posizione di partenza
         subwindows[i] = newwin(subwin_height - 1, subwin_width - 1, start_y, start_x);
+
+        // Imposta il colore di sfondo della sottoventola utilizzando una coppia di colori (rosso su bianco)
         wbkgd(subwindows[i], COLOR_PAIR(2));  
+
+        // Aggiunge un messaggio nella sottoventola, che indica il numero del thread
         wprintw(subwindows[i], "Thread %d\n\n", i + 1);  
+
+        // Rende visibile la sottoventola
         wrefresh(subwindows[i]);  
+
+        // Permette lo scorrimento del contenuto della sottoventola (utile se il testo è lungo)
         scrollok(subwindows[i], TRUE);
     }
 }
+                        
                     </code>
                 </pre>
             </section>
@@ -866,9 +974,9 @@ void create_subwindows(WINDOW *subwindows[]) {
 
         <footer>
             <p>
-                &copy;   TPC in RUST<br>
-                Tridapali Leonardo - Concaro Davide<br>
-                4BIIN A.S. 2023/2024
+                &copy;   Indovina Parola  TCP Multiclient<br>
+                Tridapali Leonardo <br>
+                5BIIN A.S. 2024/2025
             </p>
         </footer>
 

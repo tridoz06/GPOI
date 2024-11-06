@@ -1,4 +1,5 @@
 const carousel = document.querySelector('.menu');
+
 const prevButton = document.querySelector('.prev-btn');
 const nextButton = document.querySelector('.next-btn');
 const cards = document.querySelectorAll('.menu_item');
