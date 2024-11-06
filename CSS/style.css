@@ -9,7 +9,7 @@
 .container_bg {
     height: 100vh;
     width: 100%;
-    background: linear-gradient(#131313, #454545);
+    background: linear-gradient(#000000, #999999);
     background-size: 100% 100%;
 }
 
