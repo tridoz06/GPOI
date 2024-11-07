@@ -60,8 +60,13 @@ private:
     void handle_get_requests() {
         std::string filename = std::string( req_.target() );
 
-        filename.erase( filename.begin() );
-        serve_file(filename);
+        if( filename != "/"){
+            filename.erase( filename.begin() );
+            serve_file(filename);
+        }else{
+            serve_html_file("index.html");
+        }
+
 
     }
 
