@@ -68,7 +68,6 @@ private:
             }
 
             requestd_ico = true;
-            std::cout<<std::endl;
             return;
         }
 
