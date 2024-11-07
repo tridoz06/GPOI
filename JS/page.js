@@ -75,9 +75,8 @@ const content = `<button class="prev-btn btn"><</button>
 					<a href="inflazione.html" class="menu_item_link">Inlfazione</a>
 					<div class="hidden-div">
 						<ul>
-							<a class="submenu_item_link" href="inflazione.html#arg1"><li class="submenu_item menu_leader">La parola impresa</li></a>
-							<a class="submenu_item_link" href="inflazione.html#arg2"><li class="submenu_item menu_leader">L'impresa economica </li></a>
-							<a class="submenu_item_link" href="inflazione.html#arg3"><li class="submenu_item menu_leader">Avere successo</li></a>
+							<a class="submenu_item_link" href="inflazione.html#arg1"><li class="submenu_item menu_leader">Cos'è e le sue cause</li></a>
+							<a class="submenu_item_link" href="inflazione.html#arg2"><li class="submenu_item menu_leader">Negativa o positiva per il mercato  </li></a>
 						</ul>
 					</div>
 				</div>
