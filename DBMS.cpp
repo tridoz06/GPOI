@@ -3,6 +3,11 @@
 #include <vector>
 #include <memory>
 #include <stdexcept>
+#include <unordered_map>
+
+#include <boost/algorithm/string.hpp>
+
+#include <string.h>
 
 #include <mysql_driver.h>
 #include <mysql_connection.h>
@@ -13,6 +18,18 @@
 #define DB_OPERATION_FAILED false
 #define DB_OPERATION_SUCCESSFUL true
 
+#define CMDMS_OPERATION_FAILED false
+#define CMDMS_OPERATION_SUCCESSFUL true
+
+
+#define EXIT_CODE -1
+#define CREATEARG_CODE 1
+#define MODIFYPAGENAME_CODE 2
+#define CREATESECTION_CODE 3
+#define ADDIMAGE_CODE 4
+#define DELETEARG_CODE 5
+#define DELETESECTION_CODE 6
+#define DELETEIMAGE_CODE 7
 
 class DB_Connection{
     private:
@@ -70,10 +87,111 @@ class CMD_Manager{
         std::string cmd_text;
         std::string file_path;
 
+        std::unordered_map< std::string, int> command_list;
+        
+
+        std::string to_lower( std::string str ){
+            boost::algorithm::to_lower( str );
+            return str;
+        }
+
+        std::pair< bool, std::string> function_output;
+
         DB_Connection dbconn;
-    
+
+
+        std::pair< bool, std::string > get_commands(){
+
+            while( command_list[ to_lower(cmd)] != EXIT_CODE ){
+                switch( command_list[ to_lower(cmd) ] ){
+
+                    case 0:
+                        command_list.erase( to_lower(cmd) );
+                        std::cout << "COMANDO NON ESISTENTE" <<std::endl;
+                        break;
+                    
+                    case -1:
+                        function_output = {CMDMS_OPERATION_SUCCESSFUL, std::string("all operatiorn were SUCCSESSFUL") };
+                        break;
+
+                    case 1:
+                        try{
+
+                        }catch(std::exception& e){
+                            function_output = {CMDMS_OPERATION_FAILED, std::string("creating a new argument has FAILED")+ e.what() };
+                        }
+
+                        break;
+
+                    case 2:
+                        try{
+
+                        }catch(std::exception& e){
+                            function_output = {CMDMS_OPERATION_FAILED, std::string("modifying the name of a page has FAILED")+ e.what() };
+                        }
+
+                        break;
+
+                    case 3:
+                        break;
+                        try{
+
+                        }catch(std::exception& e){
+                            function_output = {CMDMS_OPERATION_FAILED, std::string("create a new section has FAILED")+ e.what() };
+                        }
+                    case 4:
+                        try{
+
+                        }catch(std::exception& e){
+                            function_output = {CMDMS_OPERATION_FAILED, std::string("adding an image has FAILED")+ e.what() };
+                        }
+                        break;
+
+                    case 5:
+                        try{
+
+                        }catch(std::exception& e){
+                            function_output = {CMDMS_OPERATION_FAILED, std::string("deleting an argument has FAILED")+ e.what() };
+                        }
+                        break;
+
+                    case 6:
+                        try{
+
+                        }catch(std::exception& e){
+                            function_output = {CMDMS_OPERATION_FAILED, std::string("deleting a section has FAILED")+ e.what() };
+                        }
+                        break;
+
+                    case 7:
+                        try{
+
+                        }catch(std::exception& e){
+                            function_output = {CMDMS_OPERATION_FAILED, std::string("deleting an image has FAILED")+ e.what() };
+                        }
+                        break;
+                }
+
+
+            }
+
+
+        }
+
     public:
         CMD_Manager(){
+            this -> cmd = "";
+            this -> cmd_text = "";
+            this -> file_path = "";
+
+            command_list["exit"] = EXIT_CODE;
+            command_list["createarg"] = CREATEARG_CODE;
+            command_list["modifypagename"] = MODIFYPAGENAME_CODE;
+            command_list["createseciont"] = CREATESECTION_CODE;
+            command_list["addimage"] = ADDIMAGE_CODE;
+            command_list["deletearg"] = DELETEARG_CODE;
+            command_list["deletesection"] = DELETESECTION_CODE;
+            command_list["deleteimage"] = DELETEIMAGE_CODE;
 
         }
 
@@ -89,6 +207,11 @@ class CMD_Manager{
                 std::cout << connetion_try_response.second << std::endl;
                 return DB_OPERATION_FAILED;
             }
+
+            function_output = get_commands();
+
+            
+
         }
 
 };
