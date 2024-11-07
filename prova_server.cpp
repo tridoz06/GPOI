@@ -58,7 +58,7 @@ private:
     }
 
     void handle_get_requests() {
-        std::string filename = req_.target();
+        std::string filename = std::string( req_.target() );
 
         if ( filename  == "/" ||  (filename.find( "index.html" ) != std::string::npos ) ) {
             serve_html_file("index.html");
