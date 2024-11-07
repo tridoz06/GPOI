@@ -26,7 +26,9 @@ namespace http = boost::beast::http;
 
 class Session : public std::enable_shared_from_this<Session> {
 public:
-    explicit Session(tcp::socket socket) : socket_(std::move(socket)) {}
+    explicit Session(tcp::socket socket) : socket_(std::move(socket)) {
+        client_ip = socket_.remote_endpoint().address().to_string();
+    }
 
     void start() {
         read_request();
@@ -37,7 +39,7 @@ private:
     boost::beast::flat_buffer buffer_;
     http::request<http::string_body> req_;
     http::response<http::string_body> res_;
-    std::string logged_username;
+    std::string client_ip;
 
     void read_request() {
         auto self = shared_from_this();
@@ -56,6 +58,8 @@ private:
     }
 
     void handle_get_requests() {
+        std::cout<<"request from client: "<<client_ip<<std::endl;
+        
         std::string filename = std::string( req_.target() );
 
         if( filename != "/"){
