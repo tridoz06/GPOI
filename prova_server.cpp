@@ -40,7 +40,7 @@ private:
     http::request<http::string_body> req_;
     http::response<http::string_body> res_;
     std::string client_ip;
-    bool requestd_ico = false;
+
 
     void read_request() {
         auto self = shared_from_this();
@@ -63,16 +63,8 @@ private:
         std::string filename = std::string( req_.target() );
 
         if(filename == "/favicon.ico" ){
-            if( requestd_ico == false){
-                std::cout<<std::endl;
-            }
-
-            requestd_ico = true;
             return;
         }
-
-        requestd_ico = false;
-
 
 
         std::cout<<"request from client: "<<client_ip<<"\t requested: "<<filename<<std::endl;
