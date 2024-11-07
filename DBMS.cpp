@@ -99,10 +99,39 @@ class CMD_Manager{
 
         DB_Connection dbconn;
 
+        std::pair <bool, std::string > create_new_argument(){
+
+        }
+
+        std::pair <bool, std::string > modify_page_name(){
+
+        }
+
+        std::pair <bool, std::string > create_section(){
+
+        }
+
+        std::pair <bool, std::string > add_image(){
+
+        }
+
+        std::pair <bool, std::string > delete_argument(){
+
+        }
+
+        std::pair <bool, std::string > delete_section(){
+
+        }
+
+        std::pair <bool, std::string > delete_image(){
+
+        }
+        
+
 
         std::pair< bool, std::string > get_commands(){
 
-            while( command_list[ to_lower(cmd)] != EXIT_CODE ){
+            while( command_list[ to_lower(cmd)] != EXIT_CODE  && function_output.first == CMDMS_OPERATION_SUCCESSFUL && function_output.first == DB_OPERATION_SUCCESSFUL ){
                 switch( command_list[ to_lower(cmd) ] ){
 
                     case 0:
@@ -115,60 +144,31 @@ class CMD_Manager{
                         break;
 
                     case 1:
-                        try{
-
-                        }catch(std::exception& e){
-                            function_output = {CMDMS_OPERATION_FAILED, std::string("creating a new argument has FAILED")+ e.what() };
-                        }
-
+                            function_output = create_new_argument();
                         break;
 
                     case 2:
-                        try{
-
-                        }catch(std::exception& e){
-                            function_output = {CMDMS_OPERATION_FAILED, std::string("modifying the name of a page has FAILED")+ e.what() };
-                        }
-
+                            function_output = modify_page_name();
                         break;
 
                     case 3:
-                        break;
-                        try{
+                            function_output =  create_section();
+                    break;
 
-                        }catch(std::exception& e){
-                            function_output = {CMDMS_OPERATION_FAILED, std::string("create a new section has FAILED")+ e.what() };
-                        }
                     case 4:
-                        try{
-
-                        }catch(std::exception& e){
-                            function_output = {CMDMS_OPERATION_FAILED, std::string("adding an image has FAILED")+ e.what() };
-                        }
+                            function_output = add_image();
                         break;
 
                     case 5:
-                        try{
-
-                        }catch(std::exception& e){
-                            function_output = {CMDMS_OPERATION_FAILED, std::string("deleting an argument has FAILED")+ e.what() };
-                        }
+                            function_output = delete_argument();
                         break;
 
                     case 6:
-                        try{
-
-                        }catch(std::exception& e){
-                            function_output = {CMDMS_OPERATION_FAILED, std::string("deleting a section has FAILED")+ e.what() };
-                        }
+                            function_output = delete_section();
                         break;
 
                     case 7:
-                        try{
-
-                        }catch(std::exception& e){
-                            function_output = {CMDMS_OPERATION_FAILED, std::string("deleting an image has FAILED")+ e.what() };
-                        }
+                        function_output = delete_image();
                         break;
                 }
 
