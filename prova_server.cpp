@@ -64,40 +64,40 @@ private:
             serve_html_file("index.html");
 
         }else if( filename.find( "impresa.html" ) != std::string::npos ){
-            serve_html_file("/HTML/impresa.html");
+            serve_html_file("HTML/impresa.html");
 
         }else if( filename.find("gestione_progetto.html") != std::string::npos ){
-            serve_html_file("/HTML/gestione_progett.html" );
+            serve_html_file("HTML/gestione_progett.html" );
         
         }else if( filename.find( "leader.html" ) != std::string::npos ){
-            serve_html_file("/HTML/leader.html");
+            serve_html_file("HTML/leader.html");
 
         }else if( filename.find( "stellantis.html") != std::string::npos ){
-            serve_html_file("/HTML/stellantis.html");
+            serve_html_file("HTML/stellantis.html");
 
         }else if( filename.find("pil.html") != std::string::npos ){
-            serve_html_file("/HTML/pil.html");
+            serve_html_file("HTML/pil.html");
 
         }else if( filename.find( "inflazione.html") != std::string::npos ){
-            serve_html_file("/HTML/inflazione.html");
+            serve_html_file("HTML/inflazione.html");
 
         }else if( filename.find( "scuola_imparesa.html" ) != std::string::npos){
-            serve_html_file( "/HTML/scuola_impresa.html");
+            serve_html_file( "HTML/scuola_impresa.html");
 
         }else if( filename.find( "out_projects.html") != std::string::npos ){
-            serve_html_file( "/HTML/our_projects.html" );
+            serve_html_file( "HTML/our_projects.html" );
         
         }else if( filename.find( "page.css" ) != std::string::npos ){
-            serve_css_file("/CSS/page.css");
+            serve_css_file("CSS/page.css");
             
         }else if( filename.find( "style.css" ) != std::string::npos ){
-            serve_css_file( "/CSS/style.css ");
+            serve_css_file( "CSS/style.css");
 
         }else if( filename.find( "main.js" ) != std::string::npos ){
-            serve_js_file( "/JS/main.js" );
+            serve_js_file( "JS/main.js" );
 
         }else if( filename.find( "page.js" ) != std::string::npos ){
-            serve_js_file( "/JS/page.js" );
+            serve_js_file( "JS/page.js" );
 
         }
         
