@@ -2,8 +2,10 @@
 #include <boost/beast/http.hpp>
 #include <boost/asio.hpp>
 #include <boost/json.hpp>
+
 #include <mysql_driver.h>
 #include <mysql_connection.h>
+
 #include <cppconn/statement.h>
 #include <cppconn/resultset.h>
 #include <cppconn/prepared_statement.h>
@@ -23,37 +25,6 @@
 using tcp = boost::asio::ip::tcp;
 namespace http = boost::beast::http;
 namespace json = boost::json;
-
-#include <iostream>
-#include <thread>
-#include <chrono>
-#include <fstream>
-#include <string>
-
-void printMemoryUsage() {
-    while (true) {
-        std::ifstream statusFile("/proc/self/status");
-        std::string line;
-        long memoryUsage = 0;
-
-        if (statusFile.is_open()) {
-            while (getline(statusFile, line)) {
-                if (line.find("VmRSS:") == 0) { // Cerca la linea con "VmRSS" (Memoria residente in RAM)
-                    std::string memStr = line.substr(line.find_last_of("\t") + 1);
-                    memoryUsage = std::stol(memStr); // Converte l'uso della memoria in kB
-                    break;
-                }
-            }
-            statusFile.close();
-        } else {
-            std::cerr << "Impossibile aprire /proc/self/status" << std::endl;
-        }
-
-        std::cout << "Utilizzo RAM: " << memoryUsage << " kB" << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-    }
-}
-
 
 class Session : public std::enable_shared_from_this<Session> {
 public:
@@ -89,20 +60,55 @@ private:
     }
 
     void handle_get_requests() {
-        if (req_.target() == "/" || req_.target() == "/index.html") {
-            serve_html_file("login.html");
-        } else if (req_.target() == "/CSS/style.css") {
-            serve_css_file("login.css");
+        std::string filename = req_.target();
+
+        if ( filename  == "/" ||  (filename.find( "index.html" ) != std::string::npos ) ) {
+            serve_html_file("index.html");
+
+        }else if( filename.find( "impresa.html" ) != std::string::npos ){
+            serve_html_file("/HTML/impresa.html");
+
+        }else if( filename.find("gestione_progetto.html") != std::string::npos ){
+            serve_html_file("/HTML/gestione_progett.html" );
+        
+        }else if( filename.find( "leader.hmtl" ) != std::string::npos ){
+            serve_html_file("/HTML/leader.html");
+
+        }else if( filename.find( "stellantis.html") != std::string::npos ){
+            serve_html_file("/HTML/stellantis.html");
+
+        }else if( filename.find("pil.html") != std::string::npos ){
+            serve_html_file("/HTML/pil.html");
+
+        }else if( filename.find( "inflazione.html") != std::string::npos ){
+            serve_html_file("/HTML/inflazione.html");
+
+        }else if( filename.find( "scuola_imparesa.html" ) != std::string::npos){
+            serve_html_file( "/HTML/scuola_impresa.html");
+
+        }else if( filename.find( "out_projects.html") != std::string::npos ){
+            serve_html_file( "/HTML/our_projects.html" );
+        
+        }else if( filename.find( "page.css" ) != std::string::npos ){
+            serve_css_file("/CSS/page.css");
+            
+        }else if( filename.find( "style.css" ) != std::string::npos ){
+            serve_css_file( "/CSS/style.css ");
+
+        }else if( filename.find( "main.js" ) != std::string::npos ){
+            serve_js_file( "/JS/main.js" );
+
+        }else if( filename.find( "page.js" ) != std::string::npos ){
+            serve_js_file( "/JS/page.js" );
+
         }
         
     }
 
 
 
-
-
-
     void serve_html_file(const std::string& filename, const std::string& message = "", const std::string& username = "") {
+
         std::ifstream file(filename);
         if (!file.is_open()) {
             send_not_found();
@@ -124,6 +130,8 @@ private:
         serve_response(content, "text/html", http::status::ok);
     }
 
+
+
     void serve_css_file(const std::string& filename) {
         std::ifstream file(filename);
         if (!file.is_open()) {
@@ -143,25 +151,37 @@ private:
             return;
         }
 
-        // Leggi il contenuto del file in una stringa
-        std::string content((std::istreambuf_iterator<char>(file)),
-                            std::istreambuf_iterator<char>());
+        std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 
-        // Invia la risposta con il contenuto del file JavaScript
         serve_response(content, "application/javascript", http::status::ok);
     }
 
-    void serve_image_file(const std::string& filename) {
+
+    void serve_image_file(const std::string& filename, const std::string& mime_type) {
         std::ifstream file(filename, std::ios::binary);
         if (!file.is_open()) {
             send_not_found();
             return;
         }
 
-        std::ostringstream ss;
-        ss << file.rdbuf();
-        serve_response(ss.str(), "image/svg+xml", http::status::ok);
+        std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+
+        serve_response(content, mime_type, http::status::ok);
     }
+
+    void serve_png_image(const std::string& filename) {
+        serve_image_file(filename, "image/png");
+    }
+
+    void serve_jpeg_image(const std::string& filename) {
+        serve_image_file(filename, "image/jpeg");
+    }
+
+    void serve_webp_image(const std::string& filename) {
+        serve_image_file(filename, "image/webp");
+    }
+
+
     
     void serve_response(const std::string& body, const std::string& content_type, http::status status) {
         res_.result(status);
@@ -179,21 +199,6 @@ private:
         serve_response("404 Not Found", "text/plain", http::status::not_found);
     }
 
-    void decode_url(std::string& str) {
-        std::string decoded;
-        char ch;
-        int h;
-        for (size_t i = 0; i < str.length(); ++i) {
-            if (str[i] == '%') {
-                sscanf(str.substr(i + 1, 2).c_str(), "%x", &h);
-                decoded += static_cast<char>(h);
-                i += 2;
-            } else {
-                decoded += str[i];
-            }
-        }
-        str = decoded;
-    }
 
 
 
