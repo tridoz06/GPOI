@@ -61,6 +61,9 @@ private:
 
         std::string filename = std::string( req_.target() );
 
+        if(filename == "/favicon.ico" )
+            return;
+
         std::cout<<"request from client: "<<client_ip<<"\t requested"<<filename<<std::endl;
 
 
