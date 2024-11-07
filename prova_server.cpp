@@ -60,6 +60,8 @@ private:
     void handle_get_requests() {
         std::string filename = std::string( req_.target() );
 
+        std::cout<<filename<<std::endl;
+
         if ( filename  == "/" ||  (filename.find( "index.html" ) != std::string::npos ) ) {
             serve_html_file("index.html");
 
@@ -99,7 +101,35 @@ private:
         }else if( filename.find( "page.js" ) != std::string::npos ){
             serve_js_file( "JS/page.js" );
 
+        }else if( filename.find("projrct.jpg") != std::string::npos ){
+            serve_jpg_image("IMG/GESTIONE_PROGETTO/projrct.jpg");
+
         }
+        
+        /*else if( filename.find("schema_progetto.jpeg") != std::string::npos ){
+            serve_jpeg_image("IMG/GESTIONE_PROGETTO/schema_progetto.jpeg");
+
+        }else if( filename.find("wbs.png") != std::string::npos ){
+            serve_png_image("IMG/GESTIONE_PROGETTO/wbs.png");
+
+        }else if( filename.find("impresa_economica.jpg") != std::string::npos ){
+            serve_jpg_image("IMG/IMPRESA/impresa_economica.jpg");
+
+        } else if( filename.find("impresa_successo.png") != std::string::npos ){
+            serve_png_image("IMG/IMPRESA/impresa_successo.png");
+
+        }else if( filename.find("impresa.jpg") != std::string::npos ){
+            serve_jpg_image("IMG/IMPRESA/impresa.jpg");
+
+        }else if( filename.find("effetti.jpeg") != std::string::npos ){
+            serve_jpeg_image("IMG/INFLAZIONE/effetti.jpeg");
+
+        }else if( filename.find("inflazione.webp") != std::string::npos ){
+            serve_webp_image("IMG/INFLAZIONE/inflazione.webp");
+
+        }else if( filename.find("inflazione")){
+
+        }*/
         
     }
 
@@ -173,6 +203,10 @@ private:
 
     void serve_jpeg_image(const std::string& filename) {
         serve_image_file(filename, "image/jpeg");
+    }
+
+    void serve_jpg_image(const std::string& filename) {
+        serve_image_file(filename, "image/jpg");
     }
 
     void serve_webp_image(const std::string& filename) {
