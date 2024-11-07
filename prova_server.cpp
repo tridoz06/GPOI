@@ -45,9 +45,7 @@ private:
             [self](boost::beast::error_code ec, std::size_t) {
                 if (!ec) {
                     self->process_request();
-                } else {
-                    std::cerr << "Error reading request: " << ec.message() << std::endl;
-                }
+                } 
             });
     }
 
