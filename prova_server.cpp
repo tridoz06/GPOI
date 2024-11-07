@@ -69,7 +69,7 @@ private:
         }else if( filename.find("gestione_progetto.html") != std::string::npos ){
             serve_html_file("/HTML/gestione_progett.html" );
         
-        }else if( filename.find( "leader.hmtl" ) != std::string::npos ){
+        }else if( filename.find( "leader.html" ) != std::string::npos ){
             serve_html_file("/HTML/leader.html");
 
         }else if( filename.find( "stellantis.html") != std::string::npos ){
