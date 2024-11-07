@@ -60,78 +60,34 @@ private:
     void handle_get_requests() {
         std::string filename = std::string( req_.target() );
 
-        std::cout<<filename<<std::endl;
+        filename.erase( filename.begin() );
+        serve_file(filename);
 
-        if ( filename  == "/" ||  (filename.find( "index.html" ) != std::string::npos ) ) {
-            serve_html_file("index.html");
-
-        }else if( filename.find( "impresa.html" ) != std::string::npos ){
-            serve_html_file("HTML/impresa.html");
-
-        }else if( filename.find("gestione_progetto.html") != std::string::npos ){
-            serve_html_file("HTML/gestione_progetto.html" );
-        
-        }else if( filename.find( "leader.html" ) != std::string::npos ){
-            serve_html_file("HTML/leader.html");
-
-        }else if( filename.find( "stellantis.html") != std::string::npos ){
-            serve_html_file("HTML/stellantis.html");
-
-        }else if( filename.find("pil.html") != std::string::npos ){
-            serve_html_file("HTML/pil.html");
-
-        }else if( filename.find( "inflazione.html") != std::string::npos ){
-            serve_html_file("HTML/inflazione.html");
-
-        }else if( filename.find( "scuola_imparesa.html" ) != std::string::npos){
-            serve_html_file( "HTML/scuola_impresa.html");
-
-        }else if( filename.find( "out_projects.html") != std::string::npos ){
-            serve_html_file( "HTML/our_projects.html" );
-        
-        }else if( filename.find( "page.css" ) != std::string::npos ){
-            serve_css_file("CSS/page.css");
-            
-        }else if( filename.find( "style.css" ) != std::string::npos ){
-            serve_css_file( "CSS/style.css");
-
-        }else if( filename.find( "main.js" ) != std::string::npos ){
-            serve_js_file( "JS/main.js" );
-
-        }else if( filename.find( "page.js" ) != std::string::npos ){
-            serve_js_file( "JS/page.js" );
-
-        }else if( filename.find("projrct.jpg") != std::string::npos ){
-            serve_jpg_image("IMG/GESTIONE_PROGETTO/projrct.jpg");
-
-        }
-        
-        /*else if( filename.find("schema_progetto.jpeg") != std::string::npos ){
-            serve_jpeg_image("IMG/GESTIONE_PROGETTO/schema_progetto.jpeg");
-
-        }else if( filename.find("wbs.png") != std::string::npos ){
-            serve_png_image("IMG/GESTIONE_PROGETTO/wbs.png");
-
-        }else if( filename.find("impresa_economica.jpg") != std::string::npos ){
-            serve_jpg_image("IMG/IMPRESA/impresa_economica.jpg");
-
-        } else if( filename.find("impresa_successo.png") != std::string::npos ){
-            serve_png_image("IMG/IMPRESA/impresa_successo.png");
-
-        }else if( filename.find("impresa.jpg") != std::string::npos ){
-            serve_jpg_image("IMG/IMPRESA/impresa.jpg");
-
-        }else if( filename.find("effetti.jpeg") != std::string::npos ){
-            serve_jpeg_image("IMG/INFLAZIONE/effetti.jpeg");
-
-        }else if( filename.find("inflazione.webp") != std::string::npos ){
-            serve_webp_image("IMG/INFLAZIONE/inflazione.webp");
-
-        }else if( filename.find("inflazione")){
-
-        }*/
-        
     }
+
+    void serve_file(const std::string& filename) {
+
+        size_t dot_pos = filename.find_last_of(".");
+        if (dot_pos == std::string::npos) {
+            send_not_found();
+            return;
+        }
+
+        std::string extension = filename.substr(dot_pos + 1);
+
+        if (extension == "js") {
+            serve_js_file(filename);
+        } else if (extension == "png" || extension == "jpeg" || extension == "jpg" || extension == "webp") {
+            serve_image_file(filename, "image/" + extension);
+        } else if (extension == "css") {
+            serve_css_file(filename);
+        } else if (extension == "html") {
+            serve_html_file(filename);
+        } else {
+            send_not_found();
+        }
+    }
+
 
 
 
