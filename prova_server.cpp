@@ -1,7 +1,6 @@
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/asio.hpp>
-#include <boost/json.hpp>
 
 #include <mysql_driver.h>
 #include <mysql_connection.h>
@@ -24,7 +23,6 @@
 
 using tcp = boost::asio::ip::tcp;
 namespace http = boost::beast::http;
-namespace json = boost::json;
 
 class Session : public std::enable_shared_from_this<Session> {
 public:
