@@ -58,9 +58,11 @@ private:
     }
 
     void handle_get_requests() {
-        std::cout<<"request from client: "<<client_ip<<std::endl;
-        
+
         std::string filename = std::string( req_.target() );
+
+        std::cout<<"request from client: "<<client_ip<<"\t requested"<<filename<<std::endl;
+
 
         if( filename != "/"){
             filename.erase( filename.begin() );
