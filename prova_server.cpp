@@ -83,8 +83,10 @@ private:
             serve_css_file(filename);
         } else if (extension == "html") {
             serve_html_file(filename);
-        } else {
-            send_not_found();
+        } else if(extension == "ico"){
+        
+        } else{
+
         }
     }
 
