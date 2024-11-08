@@ -88,3 +88,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Osserva tutti gli elementi con le classi specificate
     document.querySelectorAll('.text.left, .image.right, .text.right, .image.left').forEach((el) => observer.observe(el));
 });
+
+setCardColour();
+updateCarouselPosition();
