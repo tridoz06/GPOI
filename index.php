@@ -14,7 +14,7 @@
         <div class="container_bg">
 			<span class="title-up fade__in">INDEX.PHP</span>
 
-
+            <button class="btn prev-btn">&#10094;</button>
 			<div class="carousel-container">
 			
 			
@@ -31,16 +31,16 @@
                     ?>
                 
                 </div>
+                <button class="btn next-btn">&#10095;</button>
 
 			</div>
 	
 
 		</div>
 
-        </div>
-            <button class="btn prev-btn">&#10094;</button>
-            <button class="btn next-btn">&#10095;</button>
-        </div>
+
+
+
 
         <div class="who_we_are">
                 Made by<br>
