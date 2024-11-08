@@ -15,10 +15,10 @@
 			<span class="title-up fade__in">INDEX.PHP</span>
 
 
-			<div class="carousel-container">
+			<form class="carousel-container">
 			
 			
-				<form class="carousel">
+				<div class="carousel">
 
 					<?php
 
@@ -30,9 +30,9 @@
 
                     ?>
                 
-                </form>
+                </div>
 
-			</div>
+			</form>
 	
 
 		</div>
