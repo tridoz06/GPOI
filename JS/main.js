@@ -29,6 +29,17 @@ function removeFadeIn() {
     }
 }
 
+function set_event_listener(){
+    const links = document.querySelectorAll('.see-more');
+    for(let i = 0 ; i<links.length ; i++){
+        links[i].addEventListener("click", function(e){
+            e.preventDefault();
+            const idForm = "form" + links[i].getAttribute("number");
+            document.getElementById(idForm).submit();
+        });
+    }
+}
+
 function updateCarouselPosition() {
     console.log(timed_shifter);
 
@@ -41,6 +52,7 @@ function updateCarouselPosition() {
 
     if (timed_shifter > 0) {
         removeFadeIn(); 
+        set_event_listener();
     }
     timed_shifter++;
 }
@@ -66,15 +78,7 @@ carousel.addEventListener('wheel', (event) => {
     }
 });
 
-document.querySelectorAll('.see-more').forEach( function(link){
-    console.log("aggiongo event listener a " + link);
-    link.addEventListener("click", function(e){
-        e.preventDefault();
-        let idform =  "form" + link.getAttribute("number");
-        console.log(idform)
-        document.getElementByID(idform).submit();
-    });
-});
+
 
 updateCarouselPosition();
 
