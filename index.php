@@ -31,10 +31,10 @@
                     ?>
                 
                 </div>
-                <button class="btn next-btn">&#10095;</button>
+
 
 			</div>
-	
+            <button class="btn next-btn">&#10095;</button>
 
 		</div>
 
