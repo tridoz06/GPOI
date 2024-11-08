@@ -30,8 +30,8 @@
                 return $nav_bar_content;
             }
 
-            function create_content(){
-                $table_rows_cards = read("SELECT Id FROM Cards");
+            function create_content($title_search){
+                $table_rows_cards = read("SELECT Id FROM Cards WHERE Title=\"{$title_search}\"");
                 $content = "<div class=\"content\">";
 
                 foreach($table_rows_cards as $main_data){
@@ -97,7 +97,7 @@
             ";
 
             echo create_navbar();
-            echo create_content();
+            echo create_content($page_title);
             echo " <script src=\"JS/page.js\"></script>	";
             
 
