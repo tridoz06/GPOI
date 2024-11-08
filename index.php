@@ -86,7 +86,7 @@
                 5BIIN 2024-2025<br>
         </div>
 
-		<!-- <script src="JS/main.js"></script> -->
+		<script src="JS/main.js"></script>
 
 
     </body>
