@@ -86,7 +86,7 @@
 
             $page_title = $_POST["page_name"];
 
-            set_page_number($page_title);
+            echo set_page_number($page_title);
 
             echo "
             <div class=\"menu_link_div\">
