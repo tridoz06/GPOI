@@ -30,9 +30,17 @@
                             $password = "Sito2024_";
                             $dbname = "DB_Sito";
 
-                            $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                            $pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
 
+
+                            try{
+                                $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                                $pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+                            }catch(PDOException $e){
+                                return "errore lettura DB";
+                            }
+                            
                             $stmt = $pdo -> prepare("SELECT Id, Title, Arg_Desc, Link from Cards");
                             $stmt->execute();
 
