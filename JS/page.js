@@ -12,9 +12,6 @@ let timed_shifter = 0;
 
 function setCardColour(){
 
-    const classi = numero.classList;
-
-
     let j = 0;
     let increment = 360 / cards.length;
 
