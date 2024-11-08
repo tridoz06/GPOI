@@ -24,7 +24,6 @@
 
                         include "PHP_FUNCTIONS/cards.php";
 
-
                         $content = create_cards();
                         echo $content;
 
