@@ -61,10 +61,10 @@
                             
                             return $content;
                         }
-                        
-                        $content = create_cards();
+
+                        //$content = create_cards();
                         echo "ciaooo";
-                        echo $content;
+                        //echo $content;
                     ?>
                 
                 </div>
