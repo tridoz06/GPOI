@@ -113,6 +113,8 @@ input{
     font-weight: 900;
     font-size: 11px;
     text-transform: uppercase;
+    background-color: transparent;
+    border: none;
     color: rgb(0, 136, 255);
     padding-top: 5px;
     transition: all 0.5s ease-in-out;
