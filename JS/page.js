@@ -38,7 +38,9 @@ function updateCarouselPosition() {
     carousel.appendChild(prevButton);
 
     for (let i = 0; i < 3; i++) {
+        console.log( cards[(currentIndex + i) % cards.length] );
         const cardToShow = cards[(currentIndex + i) % cards.length];
+        console.log( cardToShow );
         carousel.appendChild(cardToShow);
     }
 

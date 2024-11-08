@@ -12,7 +12,7 @@
 
                 $table_rows_main_arg = read("SELECT Title from Cards");
                 
-                $nav_bar_content  = "<nav class = \"menu\">
+                $nav_bar_content  = "<nav class =\"menu\">
                 <button class=\"prev-btn btn\">&#10094;</button>";
 
                 foreach( $table_rows_main_arg as $data){
