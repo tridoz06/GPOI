@@ -85,12 +85,6 @@
                 return "<div class=\"page number" . " _{$number}\"></div>";
             }
 
-            function get_page_number($page_title){
-                $table_rows_selection_id_page = read("SELECT Id FROM Cards WHERE Title=\"{$page_title}\" ");
-                $number = $table_rows_selection_id_page[0]["Id"] - 1;
-                return $number;             
-            }
-
 
 
             $page_title = $_POST["page_name"];
@@ -106,13 +100,13 @@
             ";
 
             echo create_navbar();
+
             echo create_content($page_title);
-            $nmb = get_page_number($page_title);
-            echo " <script src=\"JS/page.js\"></script>	";
-            
+
 
         ?>
 
+        <script src=\"JS/page.js\"></script>
     </body>
 
 </html>
