@@ -108,7 +108,7 @@
             echo create_navbar();
             echo create_content($page_title);
             $nmb = get_page_number($page_title);
-            echo " <script src=\"JS/page.js\"> const numeroIntero = {$nmb};</script>	";
+            echo " <script src=\"JS/page.js\"></script>	";
             
 
         ?>

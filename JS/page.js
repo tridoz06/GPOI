@@ -8,9 +8,10 @@ const  page_titles = document.querySelectorAll('.arg_title');
 let currentIndex = 0;
 let timed_shifter = 0;
 
+const numeroIntero = 1;
 
 function setCardColour(){
-
+    console.log("setto i colori");
     let j = 0;
     let increment = 360 / cards.length;
 
@@ -32,7 +33,7 @@ function setCardColour(){
 }
 
 function updateCarouselPosition() {
-
+    console.log("aggiorno il carosello");
     carousel.innerHTML = "";
 
     carousel.appendChild(prevButton);
@@ -77,6 +78,5 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('.text.left, .image.right, .text.right, .image.left').forEach((el) => observer.observe(el));
 });
 
-console.log(numeroIntero);
 setCardColour();
 updateCarouselPosition();
