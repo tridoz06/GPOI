@@ -33,11 +33,12 @@
             }
 
             function create_content($title_search){
+
                 $table_rows_cards = read("SELECT Id FROM Cards WHERE Title=\"{$title_search}\"");
                 $content = "<div class=\"content\">";
 
                 foreach($table_rows_cards as $main_data){
-                    $table_rows_arguments = read("SELECT * FROM Args WHERE numero_pagina={$main_data["Id"]}" );
+                    $table_rows_arguments = read("SELECT * FROM Args WHERE numero_pagina=\"{$main_data["Id"]}\"" );
                     $content .= "<div class\"row\">";
 
                     foreach( $table_rows_arguments as $subdata){
