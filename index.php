@@ -18,7 +18,7 @@
 			<div class="carousel-container">
 			
 			
-				<div class="carousel">
+				<form class="carousel">
 
 					<?php
 
@@ -30,7 +30,7 @@
 
                     ?>
                 
-                </div>
+                </form>
 
 			</div>
 	
