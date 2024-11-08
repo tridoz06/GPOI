@@ -77,5 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('.text.left, .image.right, .text.right, .image.left').forEach((el) => observer.observe(el));
 });
 
+console.log(numeroIntero);
 setCardColour();
 updateCarouselPosition();
