@@ -1,6 +1,6 @@
 <?php
 
-function create_cards(): string{
+function create_cards() {
 
     $content = "";
     $servername = "localhost";
