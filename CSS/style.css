@@ -114,16 +114,13 @@ input{
     text-transform: uppercase;
     background: none;
     border: none;
-    background-color: rgba(0, 0, 0, 0.811);
+    background-color: #000000;
     color: rgb(0, 136, 255);
     padding-top: 5px;
-    transition: all 0.5s ease-in-out;
 
 }
 
-.see-more:hover {
-    transform: translate3d(0px, 0px, 50px);
-}
+
 
 
 
