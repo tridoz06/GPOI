@@ -118,7 +118,7 @@ input{
     color: rgb(0, 136, 255);
     padding-top: 5px;
     transition: all 0.5s ease-in-out;
-    transform: translate3d(0px, 0px, 20px);
+
 }
 
 .see-more:hover {
