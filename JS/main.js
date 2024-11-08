@@ -69,7 +69,9 @@ carousel.addEventListener('wheel', (event) => {
 document.querySelectorAll('.see-more').forEach( function(link){
     link.addEventListener("click", function(e){
         e.preventDefault();
-        document.getElementByID( "form" + link.getAttribute("number")).submit();
+        let idform =  "form" + link.getAttribute("number");
+        console.log(idform)
+        document.getElementByID(idform).submit();
     });
 });
 
