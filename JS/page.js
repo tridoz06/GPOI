@@ -69,10 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }, {
-        threshold: 0.01// Trigger quando il 10% dell'elemento è visibile
+        threshold: 0.01
     });
 
-    // Osserva tutti gli elementi con le classi specificate
+
     document.querySelectorAll('.text.left, .image.right, .text.right, .image.left').forEach((el) => observer.observe(el));
 });
 
