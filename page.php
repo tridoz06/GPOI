@@ -106,7 +106,7 @@
 
         ?>
 
-        <script src=\"JS/page.js\"></script>
+        <script src="JS/page.js"></script>
     </body>
 
 </html>
