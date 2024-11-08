@@ -35,7 +35,6 @@ function setCardColour(){
 function updateCarouselPosition() {
 
     carousel.innerHTML = "";
-        
 
     carousel.appendChild(prevButton);
 
