@@ -24,9 +24,8 @@
 
 
 
-                        //$content = create_cards();
-                        echo "ciaooo";
-                        //echo $content;
+                        $content = create_cards();
+                        echo $content;
                     ?>
                 
                 </div>
@@ -47,7 +46,7 @@
                 5BIIN 2024-2025<br>
         </div>
 
-
+		<!-- <script src="JS/main.js"></script> -->
 
 
     </body>
