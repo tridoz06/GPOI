@@ -1,5 +1,4 @@
 const carousel = document.querySelector('.menu');
-const numero = document.querySelector('.page_number');
 
 let prevButton;
 let nextButton ;
@@ -14,14 +13,6 @@ let timed_shifter = 0;
 function setCardColour(){
 
     const classi = numero.classList;
-
-    let numeroIntero = null;
-    for (let classe of classi) {
-        if (classe.startsWith('_')) {
-            numeroIntero = parseInt(classe.substring(1), 10);
-            break;
-        }
-    }
 
 
     let j = 0;
