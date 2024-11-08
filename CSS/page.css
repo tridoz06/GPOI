@@ -179,6 +179,7 @@ a{text-decoration:none;}
     padding: 20px 30px;
     border: none;
     background: none;
+    background-color: transparent;
     font-weight: bold;
     color: white;
     font-size: 20px;
@@ -188,6 +189,7 @@ a{text-decoration:none;}
 
 .menu_item_link:hover,
 .menu_link:hover, .menu_link_div:hover{
+    border: none;
     background-color: rgb(0, 136, 255);
     color: #050801;
     box-shadow: 0 0 2px rgb(0, 136, 255),
