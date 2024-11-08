@@ -17,7 +17,7 @@
 
                 foreach( $table_rows_main_arg as $data){
                     
-                    $content .= "
+                    $nav_bar_content .= "
                         <div class=\"menu_item\">
                             <form action=\"page.php\" method=\"POST\">
                                 <input name=\"page_name\" value=\"{$data["Title"]}\" type=\"hidden\">
