@@ -67,6 +67,7 @@ carousel.addEventListener('wheel', (event) => {
 });
 
 document.querySelectorAll('.see-more').forEach( function(link){
+    console.log("aggiongo event listener a " + link);
     link.addEventListener("click", function(e){
         e.preventDefault();
         let idform =  "form" + link.getAttribute("number");
