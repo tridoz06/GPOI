@@ -15,7 +15,7 @@
 			<span class="title-up fade__in">INDEX.PHP</span>
 
 
-			<form class="carousel-container">
+			<div class="carousel-container">
 			
 			
 				<div class="carousel">
@@ -32,7 +32,7 @@
                 
                 </div>
 
-			</form>
+			</div>
 	
 
 		</div>

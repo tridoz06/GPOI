@@ -13,6 +13,10 @@
     background-size: 100% 100%;
 }
 
+input{
+    display: none;
+}
+
 .title-up {
     position: relative;
     top: 20%;

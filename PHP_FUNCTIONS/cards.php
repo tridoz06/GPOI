@@ -3,7 +3,7 @@
 function create_cards() {
 
     $content = "";
-    
+
     $table_rows = read("SELECT Id, Title, Arg_Desc, Link FROM Cards");
 
     foreach( $table_rows as $data){
@@ -15,7 +15,12 @@ function create_cards() {
                         <p class=\"card-content\">
                             {$data['Arg_Desc']}
                         </p>
-                        <span class=\"see-more\"><a href=\"{$data['Link']}\" class=\"link-pages\">More Info</a></span>
+                        <form action=\"page.php\" method=\"POST\" >
+                            <input name=\"page_name\" value=\"{$data['Title']}\" type=\"hidden\">
+                            <span class=\"see-more\"><a href=\"{$data['Link']}\" class=\"link-pages\">More Info</a></span>
+                        </form>
+
+
                     </div>
                     <div class=\"date-box\">
                         <span class=\"month\">ARG</span>
