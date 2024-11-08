@@ -11,7 +11,7 @@ let timed_shifter = 0;
 const numeroIntero = 1;
 
 function setCardColour(){
-    console.log("setto i colori");
+
     let j = 0;
     let increment = 360 / cards.length;
 
@@ -33,15 +33,15 @@ function setCardColour(){
 }
 
 function updateCarouselPosition() {
-    console.log("aggiorno il carosello");
+
     carousel.innerHTML = "";
 
     carousel.appendChild(prevButton);
 
     for (let i = 0; i < 3; i++) {
-        console.log( cards[(currentIndex + i) % cards.length] );
+
         const cardToShow = cards[(currentIndex + i) % cards.length];
-        console.log( cardToShow );
+
         carousel.appendChild(cardToShow);
     }
 
