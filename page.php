@@ -79,7 +79,8 @@
 
             function set_page_number($page_title){
                 $table_rows_selection_id_page = read("SELECT Id FROM Cards WHERE Title=\"{$page_title}\" ");
-                return "<div class=\"page number" . " _{$table_rows_selection_id_page[0]["Id"]}\"></div>";
+                $number = $table_rows_selection_id_page[0]["Id"] - 1;
+                return "<div class=\"page number" . " _{$number}\"></div>";
             }
 
 
