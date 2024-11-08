@@ -29,17 +29,6 @@ function removeFadeIn() {
     }
 }
 
-function set_event_listener(){
-    const links = document.querySelectorAll('.see-more');
-    for(let i = 0 ; i<links.length ; i++){
-        links[i].addEventListener("click", function(e){
-            e.preventDefault();
-            const idForm = "form" + links[i].getAttribute("number");
-            document.getElementById(idForm).submit();
-        });
-    }
-}
-
 function updateCarouselPosition() {
     console.log(timed_shifter);
 

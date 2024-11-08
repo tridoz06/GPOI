@@ -78,5 +78,27 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('.text.left, .image.right, .text.right, .image.left').forEach((el) => observer.observe(el));
 });
 
+function goToPrevious() {
+    currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+    updateCarouselPosition();
+}
+
+function goToNext() {
+    currentIndex = (currentIndex + 1) % cards.length;
+    updateCarouselPosition();
+}
+
+prevButton.addEventListener('click', goToPrevious);
+nextButton.addEventListener('click', goToNext);
+
+carousel.addEventListener('wheel', (event) => {
+    if (event.deltaY > 0) {
+        goToNext();
+    } else {
+        goToPrevious();
+    }
+});
+
+
 setCardColour();
 updateCarouselPosition();
