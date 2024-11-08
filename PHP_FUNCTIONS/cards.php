@@ -15,9 +15,9 @@ function create_cards() {
                         <p class=\"card-content\">
                             {$data['Arg_Desc']}
                         </p>
-                        <form action=\"page.php\" method=\"POST\" >
+                        <form action=\"page.php\" method=\"POST\" id=\"form{$data['Id'] }\" >
                             <input name=\"page_name\" value=\"{$data['Title']}\" type=\"hidden\">
-                            <span class=\"see-more\"><a href=\"#\" class=\"link-pages\">More Info</a></span>
+                            <span class=\"see-more\"><a number=\"{$data['Id']}\" href=\"#\" class=\"link-pages\">More Info</a></span>
                         </form>
 
 

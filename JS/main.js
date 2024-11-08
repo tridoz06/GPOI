@@ -3,6 +3,7 @@ const prevButton = document.querySelector('.prev-btn');
 const nextButton = document.querySelector('.next-btn');
 const cards = document.querySelectorAll('.parent');
 
+
 let currentIndex = 0;
 let timed_shifter = 0;
 
@@ -63,6 +64,13 @@ carousel.addEventListener('wheel', (event) => {
     } else {
         goToPrevious();
     }
+});
+
+document.querySelectorAll('.see-more').forEach( function(link){
+    link.addEventListener("click", function(e){
+        e.preventDefault();
+        document.getElementByID( "form" + link.getAttribute("number")).submit();
+    });
 });
 
 updateCarouselPosition();
