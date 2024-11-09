@@ -29,10 +29,12 @@
             </div>            
             ";
 
-            echo create_navbar();
+            $navbar = create_navbar();
+            echo $navbar;
 
-            echo create_content($page_title);
-
+            $content =  create_content($page_title);
+            echo $content;
+            
         ?>
 
         <script src="JS/page.js"></script>
