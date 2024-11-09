@@ -102,9 +102,9 @@
             ";
 
             $navbar = create_navbar();
-            echo $navbar;
-
             $content =  create_content($page_title);
+
+            echo $navbar;
             echo $content;
 
 
