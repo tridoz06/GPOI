@@ -4,6 +4,8 @@ const nextButton = document.querySelector('.next-btn');
 const cards = document.querySelectorAll('.menu_item');
 const numeroIntero = document.querySelector('.page_number_anchor').getAttribute('number_page');
 
+console.log(numeroIntero);
+
 const  page_titles = document.querySelectorAll('.arg_title');
 
 let currentIndex = 0;
