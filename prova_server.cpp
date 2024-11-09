@@ -17,9 +17,6 @@
 #include <stdexcept>
 #include <iomanip>
 
-#define DB_User "trida"
-#define DB_Password "Mogg4356%#TRIDAPALI"
-#define DB_Name "DB_Capolavoro"
 
 using tcp = boost::asio::ip::tcp;
 namespace http = boost::beast::http;
