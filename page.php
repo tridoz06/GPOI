@@ -101,11 +101,13 @@
             </div>            
             ";
 
-            $navbar = create_navbar();
-            echo $navbar;
 
             $content =  create_content($page_title);
             echo $content;
+
+            $navbar = create_navbar();
+            echo $navbar;
+
 
         ?>
 
