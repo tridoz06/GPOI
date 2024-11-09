@@ -10,18 +10,6 @@
 
             include "PHP_FUNCTIONS/read_database.php";
 
-
-            function set_page_number($page_title){
-                $table_rows_selection_id_page = read("SELECT Id FROM Cards WHERE Title=\"{$page_title}\" ");
-                $number = $table_rows_selection_id_page[0]["Id"] - 1;
-                return "<div class=\"page number" . " _{$number}\"></div>";
-            }
-
-            $page_title = $_POST["page_name"];
-
-            echo set_page_number($page_title);
-
-
             function create_navbar(){
 
                 $table_rows_main_arg = read("SELECT Title from Cards");
@@ -93,6 +81,16 @@
                 return $content;
             }
 
+            function set_page_number($page_title){
+                $table_rows_selection_id_page = read("SELECT Id FROM Cards WHERE Title=\"{$page_title}\" ");
+                $number = $table_rows_selection_id_page[0]["Id"] - 1;
+                return "<div class=\"page number" . " _{$number}\"></div>";
+            }
+
+            $page_title = "Progetto";
+            
+            echo set_page_number($page_title);
+
             echo "
             <div class=\"menu_link_div\">
                 <a href=\"index.php\" class=\"menu_link\">
@@ -106,8 +104,6 @@
 
             echo $navbar;
             echo $content;
-
-
 
 
         ?>
