@@ -1,5 +1,7 @@
 <?php
 
+include "read_database.php";
+
 function create_content($title_search){
 
     $table_rows_cards = read("SELECT Id FROM Cards WHERE Title=\"{$title_search}\"");
