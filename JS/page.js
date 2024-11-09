@@ -12,7 +12,6 @@ let currentIndex = 0;
 let timed_shifter = 0;
 
 
-
 function setCardColour(){
 
     let j = 0;
