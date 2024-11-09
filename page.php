@@ -41,9 +41,9 @@
             
                 foreach($table_rows_cards as $main_data){
                     $table_rows_arguments = read("SELECT * FROM Args WHERE numero_pagina=\"{$main_data["Id"]}\"" );
-                    $content .= "<div class=\"row\">";
             
                     foreach( $table_rows_arguments as $subdata){
+                        $content .= "<div class=\"row\">";
                         $id = $subdata["numero_argomento"];
             
                         if($id % 2 == 1){
@@ -71,9 +71,9 @@
                                 </div>
                             ";
                         }
+
+                        $content .= "</div>";
                     }
-            
-                    $content .= "</div>";
                 }
             
                 $content .= "</div>";
