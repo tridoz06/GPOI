@@ -29,7 +29,7 @@
                         ";
                 }
 
-                $nav_bar_content .= "<button class=\"next-btn btn\">&#10095;</button
+                $nav_bar_content .= "<button class=\"next-btn btn\">&#10095;</button>
                 </nav>";
                 return $nav_bar_content;
             }
@@ -41,7 +41,7 @@
             
                 foreach($table_rows_cards as $main_data){
                     $table_rows_arguments = read("SELECT * FROM Args WHERE numero_pagina=\"{$main_data["Id"]}\"" );
-                    $content .= "<div class\"row\">";
+                    $content .= "<div class=\"row\">";
             
                     foreach( $table_rows_arguments as $subdata){
                         $id = $subdata["numero_argomento"];
@@ -88,7 +88,7 @@
             }
 
             $page_title = "Progetto";
-            
+
             echo set_page_number($page_title);
 
             echo "
