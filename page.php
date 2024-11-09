@@ -87,7 +87,7 @@
                 return "<div class=\"page number" . " _{$number}\"></div>";
             }
 
-            $page_title = "Progetto";
+            $page_title = $_POST["page_name"];
 
             echo set_page_number($page_title);
 

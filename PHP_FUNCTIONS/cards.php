@@ -15,11 +15,11 @@ function create_cards() {
                         <p class=\"card-content\">
                             {$data['Arg_Desc']}
                         </p>
+
                         <form action=\"page.php\" method=\"POST\" >
                             <input name=\"page_name\" value=\"{$data['Title']}\" type=\"hidden\">
                             <button type=\"submit\" class=\"see-more\">MORE INFO</button>
                         </form>
-
 
                     </div>
                     <div class=\"date-box\">
