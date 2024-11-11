@@ -219,7 +219,7 @@ h1{
 .btn:hover{
     color: rgb(0, 136, 255);
     background-color: transparent;
-    box-shadow: 0 0 2px rgb(0, 136, 255),
+    text-shadow: 0 0 2px rgb(0, 136, 255),
                 0 0 5px rgb(0, 136, 255),
                 0 0 10px rgb(0, 136, 255),
                 0 0 20px rgb(0, 136, 255);
