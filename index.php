@@ -12,7 +12,7 @@
     <body>
 
         <div class="container_bg">
-			<span class="title-up fade__in">INDEX.PHP</span>
+			<span class="title-up fade__in">GESTIONE IMPRESA </span>
 
             <button class="btn prev-btn">&#10094;</button>
 			<div class="carousel-container">
