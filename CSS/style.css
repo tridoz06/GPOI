@@ -183,19 +183,20 @@ input{
     background-color: transparent;
     font-weight: bold;
     color: white;
-    font-size: 20px;
+    font-size: 50px;
     text-transform: uppercase;
     transition: .5s;
     border-radius: 50%;
 }
 
 .btn:hover {
-    background-color: rgb(0, 136, 255);
-    color: #050801;
-    box-shadow: 0 0 2px rgb(0, 136, 255),
+    color: rgb(0, 136, 255);
+    background-color: transparent;
+    text-shadow: 0 0 2px rgb(0, 136, 255),
         0 0 5px rgb(0, 136, 255),
         0 0 10px rgb(0, 136, 255),
         0 0 20px rgb(0, 136, 255);
+    font-size: 70px;
 }
 
 .fade__in {
