@@ -24,13 +24,16 @@
 
                         include "PHP_FUNCTIONS/cards.php";
 
-                        $content = create_cards();
+                        if( isset($_POST["Table_Name"])){
+                            $content = create_cards("Projects");  
+                        }else{
+                            $content = create_cards("Cards");
+                        }
                         echo $content;
 
                     ?>
                 
                 </div>
-
 
 			</div>
             <button class="btn next-btn">&#10095;</button>
