@@ -45,7 +45,7 @@ header p {
 }
 
 .project-card {
-    background: #222;
+    background: #3f3f3f;
     padding: 1.5rem;
     border-radius: 8px;
     transition: transform 0.3s, background 0.3s;
@@ -60,11 +60,11 @@ header p {
 .project-card h2 {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
-    color: #ffcb05;
+    color: #4db412;
 }
 
 .project-card p {
-    color: #cccccc;
+    color: #e7e7e7;
     margin-bottom: 1rem;
     font-size: 1rem;
     line-height: 1.5;
@@ -74,8 +74,9 @@ header p {
     display: inline-block;
     padding: 0.8rem 1.5rem;
     border-radius: 5px;
+    border:none;
     color: #fff;
-    background: #ffcb05;
+    background: #136979;
     text-decoration: none;
     font-weight: bold;
     transition: background 0.3s;
