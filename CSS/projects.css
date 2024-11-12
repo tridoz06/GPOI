@@ -75,6 +75,7 @@ header p {
     padding: 0.8rem 1.5rem;
     border-radius: 5px;
     border:none;
+    border-color: transparent;
     color: #fff;
     background: #136979;
     text-decoration: none;
