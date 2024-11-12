@@ -1,12 +1,16 @@
-/* Reset */
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Nova+Mono&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
+    font-family: "Nova Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
 }
 
 body {
-    font-family: Arial, sans-serif;
     background: linear-gradient(to bottom, #131313, #333333, #131313);
     color: #fff;
     display: flex;
