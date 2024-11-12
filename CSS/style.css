@@ -1,13 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Nova+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sono:wght@200..800&display=swap');
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 
-    font-family: "Nova Mono", monospace;
-    font-weight: 400;
-    font-style: normal;
+    font-family: "Sono", monospace;
+
 
     user-select: none;
 }
