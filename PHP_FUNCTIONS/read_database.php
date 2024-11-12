@@ -2,7 +2,7 @@
 
 function read( $query) {
 
-    $servername = "localhost";
+    $servername = "185.229.236.208";
     $username = "sito";
     $password = "Sito2024_";
     $dbname = "DB_Sito";
