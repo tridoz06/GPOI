@@ -8,7 +8,7 @@ function read( $query) {
     $dbname = "DB_Sito";
 
     try{
-        $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
         $pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     }catch(PDOException $e){
