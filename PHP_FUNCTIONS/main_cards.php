@@ -8,6 +8,22 @@ function create_cards($table_name) {
 
     foreach( $table_rows as $data){
 
+        $form = "";
+        if( $data['Ttle'] == "Our Projects"){
+            $form = "
+                <form action=\"projects.php\" method=\"POST\" >
+                    <button type=\"submit\" class=\"see-more\">MORE INFO</button>
+                </form>            
+            ";
+        }else{
+            $form = "
+                <form action=\"page.php\" method=\"POST\" >
+                    <input name=\"page_name\" value=\"{$data['Title']}\" type=\"hidden\">
+                    <button type=\"submit\" class=\"see-more\">MORE INFO</button>
+                </form>
+            ";
+        }
+
 
         $content .= "
             <div class=\"parent fade__in\">
@@ -19,10 +35,7 @@ function create_cards($table_name) {
                             {$data['Arg_Desc']}
                         </p>
 
-                        <form action=\"page.php\" method=\"POST\" >
-                            <input name=\"page_name\" value=\"{$data['Title']}\" type=\"hidden\">
-                            <button type=\"submit\" class=\"see-more\">MORE INFO</button>
-                        </form>
+                        {$form}
 
                     </div>
                     <div class=\"date-box\">

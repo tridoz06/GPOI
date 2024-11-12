@@ -22,13 +22,10 @@
 
 					<?php
 
-                        include "PHP_FUNCTIONS/cards.php";
+                        include "PHP_FUNCTIONS/main_cards.php";
 
-                        if( isset($_POST["Table_Name"])){
-                            $content = create_cards("Projects");  
-                        }else{
-                            $content = create_cards("Cards");
-                        }
+                        $content = create_cards("Cards");
+
                         echo $content;
 
                     ?>
