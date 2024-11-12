@@ -60,7 +60,7 @@ header p {
 .project-card h2 {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
-    color: #4db412;
+    color: #13dddd;
 }
 
 .project-card p {
@@ -77,15 +77,21 @@ header p {
     border:none;
     border-color: transparent;
     color: #fff;
-    background: #136979;
+    background: #000000;
     text-decoration: none;
     font-weight: bold;
     transition: background 0.3s;
 }
 
 .btn:hover {
-    background: #e0b100;
-}
+    background-color: #13dddd;
+    color:#ffffff;
+
+    box-shadow: 0 0 2px #13dddd,
+            0 0 5px #13dddd,
+            0 0 10px #13dddd,
+            0 0 20px #13dddd;
+    }
 
 footer {
     padding: 1rem;
