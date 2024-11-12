@@ -10,6 +10,9 @@
     <header>
         <h1>I miei progetti su GitHub</h1>
         <p>Esplora i miei ultimi lavori e contributi.</p>
+        <form action="index.php" method="POST">
+            <button class="btn">HOME</button>
+        </form>
     </header>
 
     <section class="projects-grid">
