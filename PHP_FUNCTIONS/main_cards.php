@@ -9,7 +9,7 @@ function create_cards($table_name) {
     foreach( $table_rows as $data){
 
         $form = "";
-        if( $data['Ttle'] == "Our Projects"){
+        if( $data['Title'] == "Our Projects"){
             $form = "
                 <form action=\"projects.php\" method=\"POST\" >
                     <button type=\"submit\" class=\"see-more\">MORE INFO</button>
