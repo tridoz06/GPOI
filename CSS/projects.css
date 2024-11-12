@@ -50,6 +50,9 @@ header p {
     border-radius: 8px;
     transition: transform 0.3s, background 0.3s;
     text-align: center;
+
+    box-shadow: -7px 13px 15px 7px #000000
+
 }
 
 .project-card:hover {
@@ -85,7 +88,7 @@ header p {
 
 .btn:hover {
     background-color: #13dddd;
-    color:#ffffff;
+    color:#000000;
 
     box-shadow: 0 0 2px #13dddd,
             0 0 5px #13dddd,
