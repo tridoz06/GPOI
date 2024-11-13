@@ -29,8 +29,7 @@
         </section>
 
         <footer>
-            <p>© 2024 Concaro Davide - Popa Sebastiano - Tridapali Leonardo 5BIIN ITIS E. Fermi.<br>
-            Tutti i diritti riservati.</p>
+            <p>Made by Concaro Davide - Popa Sebastiano - Tridapali Leonardo 5BIIN ITIS E. Fermi.</p>
         </footer>
 
     </body>
