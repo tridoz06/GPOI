@@ -27,7 +27,7 @@
                         ";
                     }else{
                         $form = "
-                             form action=\"page.php\" method=\"POST\">
+                             <form action=\"page.php\" method=\"POST\">
                                 <input name=\"page_name\" value=\"{$data["Title"]}\" type=\"hidden\">
                                 <button type=\"submit\" class=\"menu_item_link\">{$data["Title"]}</button>
                             </form>
