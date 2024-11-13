@@ -217,6 +217,10 @@ input{
     align-content: center;
     text-align: center;
 
+    text-shadow: 0 0 2px #ffffff,
+                            0 0 5px #ffffff;
+
+
     position: absolute;
     bottom: 0%;
 
