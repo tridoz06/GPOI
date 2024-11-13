@@ -10,8 +10,6 @@
 
             include "PHP_FUNCTIONS/read_database.php";
 
-            include "PHP_FUNCTIONS/write_request.php";
-
             function create_navbar(){
 
                 $table_rows_main_arg = read("SELECT Title from Cards");
@@ -96,7 +94,6 @@
             }
 
 
-            write_log();
 
             $page_title = $_POST["page_name"];
 

@@ -19,9 +19,7 @@
 
         <?php
             include "PHP_FUNCTIONS/projects_card.php";
-            include "PHP_FUNCTIONS/write_request.php";
 
-            write_log();
             
             $content = create_cards();
             

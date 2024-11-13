@@ -23,9 +23,7 @@
 					<?php
 
                         include "PHP_FUNCTIONS/main_cards.php";
-                        include "PHP_FUNCTIONS/write_request.php";
 
-                        write_log();
 
                         $content = create_cards("Cards");
 
