@@ -45,6 +45,8 @@ header p {
     grid-template-columns: repeat(2, 1fr); /* Due colonne */
     width: 100%;
     max-width: 1200px;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .project-card {
