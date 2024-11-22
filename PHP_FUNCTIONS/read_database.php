@@ -9,8 +9,6 @@ Class db_credentials{
 function read( $query) {
 
 
-
-
     try{
         $dsn = "mysql:host=" . db_credentials::$servername . ";dbname=" . db_credentials::$dbname . ";charset=utf8";
 
@@ -18,12 +16,16 @@ function read( $query) {
         $pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     }catch(PDOException $e){
+
         return "errore lettura DB";
+    
     }
 
     $stmt = $pdo -> prepare($query );
     $stmt->execute();
 
     $table_rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
     return $table_rows;
+
 }
