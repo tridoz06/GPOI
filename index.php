@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
     <head>
-        <title>Gestore Impresa</title>
+        <title>Gestione Impresa</title>
 		<link rel="stylesheet" href="CSS/style.css" />
 		
 		<meta charset="UTF-8">
