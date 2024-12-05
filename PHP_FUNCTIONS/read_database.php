@@ -7,8 +7,7 @@ Class db_credentials{
 }
 
 function read( $query) {
-
-
+    
     try{
         $dsn = "mysql:host=" . db_credentials::$servername . ";dbname=" . db_credentials::$dbname . ";charset=utf8";
 
