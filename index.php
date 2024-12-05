@@ -15,8 +15,8 @@
 			<span class="title-up fade__in">GESTIONE IMPRESA </span>
 
             <button class="btn prev-btn">&#10094;</button>
+
 			<div class="carousel-container">
-			
 			
 				<div class="carousel">
 
@@ -34,13 +34,10 @@
                 </div>
 
 			</div>
+
             <button class="btn next-btn">&#10095;</button>
 
 		</div>
-
-
-
-
 
         <div class="who_we_are">
                 Made by<br>
