@@ -41,7 +41,6 @@ function updateCarouselPosition() {
 
     if (timed_shifter > 0) {
         removeFadeIn(); 
-        set_event_listener();
     }
     timed_shifter++;
 }
