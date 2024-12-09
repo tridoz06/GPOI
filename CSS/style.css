@@ -50,7 +50,7 @@ input{
 .carousel {
     display: flex;
     transition: transform 0.5s ease-in-out;
-    gap: 20px;
+    flex-direction: column;
     padding: 0 20px;
     height: 100%;
 }
