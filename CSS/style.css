@@ -99,7 +99,7 @@ input{
     transition: all 0.5s ease-in-out;
     transform: translate3d(0px, 0px, 20px);
     position: relative;
-    top:7%;
+    top:5%;
 }
 
 .card-title:hover {
@@ -109,6 +109,8 @@ input{
 .card-content {
     padding-top: 5px;
     font-size: 15px;
+    position: relative;
+    top:7%;
     height:75%;
     color: rgb(185, 185, 185);
     transition: all 0.5s ease-in-out;
