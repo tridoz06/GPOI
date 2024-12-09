@@ -105,6 +105,7 @@ input{
 .card-content {
     padding-top: 5px;
     font-size: 15px;
+    height:80%;
     color: rgb(185, 185, 185);
     transition: all 0.5s ease-in-out;
     transform: translate3d(0px, 0px, 20px);
