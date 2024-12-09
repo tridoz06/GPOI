@@ -52,7 +52,7 @@ input{
     transition: transform 0.5s ease-in-out;
     gap: 20px;
     padding: 0 20px;
-    height: 40%;
+    height: 100%;
 }
 
 .parent {
