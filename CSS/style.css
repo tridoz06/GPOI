@@ -52,12 +52,14 @@ input{
     transition: transform 0.5s ease-in-out;
     gap: 20px;
     padding: 0 20px;
+    height: 40%;
 }
 
 .parent {
     flex: 0 0 auto;
     width: 20%;
     height:100%;
+
     position: relative;
 }
 
