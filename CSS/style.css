@@ -59,8 +59,9 @@ input{
     flex: 0 0 auto;
     width: 15%;
     height:100%;
-    perspective: 1000px;
+    
     position: relative;
+    left:10%;
 }
 
 .card {
