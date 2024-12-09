@@ -61,7 +61,8 @@ input{
     height:100%;
     
     position: relative;
-    left:20%;
+    left:25%;
+    top:2%;
 }
 
 .card {
