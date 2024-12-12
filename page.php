@@ -58,10 +58,10 @@
                         $content .= "<div class=\"row\">";
 
                         $id = $subdata["numero_argomento"];
-                        $content = $subdata["Content_Type"];
+                        $content_type = $subdata["Content_Type"];
                         $direction = $id%2;
 
-                        switch($content){
+                        switch($content_type){
                             case "IMG":
 
                                 switch( $direction){
