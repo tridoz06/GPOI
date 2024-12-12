@@ -50,9 +50,11 @@
                 $content = "<div class=\"content\">";
             
                 foreach($table_rows_cards as $main_data){
+            
                     $table_rows_arguments = read("SELECT * FROM Args WHERE numero_pagina=\"{$main_data["Id"]}\"" );
             
                     foreach( $table_rows_arguments as $subdata){
+
                         $content .= "<div class=\"row\">";
                         $id = $subdata["numero_argomento"];
             
@@ -64,6 +66,7 @@
                                         {$subdata["testo"]}
                                     </p>
                                 </div>
+                                
                                 <div class=\"image right\">
                                     <img src=\"{$subdata["link_immagine"]}\">
                                 </div>

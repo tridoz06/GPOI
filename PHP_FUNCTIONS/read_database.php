@@ -1,6 +1,6 @@
 <?php
 Class db_credentials{
-    public static $servername = "185.229.236.208";
+    public static $servername = "localhost";
     public static $username = "sito";
     public static $password = "Sito2024_";
     public static $dbname = "DB_Sito";
