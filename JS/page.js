@@ -1,3 +1,12 @@
+import('https://cdn.plot.ly/plotly-2.25.2.min.js')
+  .then((Plotly) => {
+    console.log('Plotly importato:', Plotly);
+  })
+  .catch((error) => {
+    console.error('Errore durante l\'importazione:', error);
+  });
+
+
 const carousel = document.querySelector('.menu');
 const prevButton = document.querySelector('.prev-btn');
 const nextButton = document.querySelector('.next-btn');

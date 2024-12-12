@@ -151,7 +151,8 @@ h1{
     width:80%;
     margin:100px 0;
 }
-.image{
+
+.image, .plot {
     width:50%;
     display:flex;
     justify-content:center;

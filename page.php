@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="CSS/page.css">
     </head>
 
-    <body>
+    <>
         <?php
 
             include "PHP_FUNCTIONS/read_database.php";
@@ -56,33 +56,83 @@
                     foreach( $table_rows_arguments as $subdata){
 
                         $content .= "<div class=\"row\">";
+
                         $id = $subdata["numero_argomento"];
-            
-                        if($id % 2 == 1){
-                            $content .= "
-                                <div class=\"text left\">
-                                    <h2 class=\"arg_title\">{$subdata["titolo"]}</h2>
-                                    <p>
-                                        {$subdata["testo"]}
-                                    </p>
-                                </div>
-                                
-                                <div class=\"image right\">
-                                    <img src=\"{$subdata["link_immagine"]}\">
-                                </div>
-                            ";
-                        }else if($id % 2 == 0){
-                            $content .= "
-                                <div class=\"image left\">
-                                    <img src=\"{$subdata["link_immagine"]}\">
-                                </div>
-                                <div class=\"text right\">
-                                    <h2 class=\"arg_title\">{$subdata["titolo"]}</h2>
-                                    <p>
-                                        {$subdata["testo"]}
-                                    </p>
-                                </div>
-                            ";
+                        $content = $subdata["content"];
+                        $direction = $id%2;
+
+                        switch($content){
+                            case "IMG":
+
+                                switch( $direction){
+
+                                    case 1:
+                                        $content .= "
+                                        <div class=\"text left\">
+                                            <h2 class=\"arg_title\">{$subdata["titolo"]}</h2>
+                                            <p>
+                                                {$subdata["testo"]}
+                                            </p>
+                                        </div>
+                                        
+                                        <div class=\"image right\">
+                                            <img src=\"{$subdata["link_immagine"]}\">
+                                        </div>
+                                        ";
+                                        break;
+
+                                    case 0:
+                                        $content .= "
+                                        <div class=\"image left\">
+                                            <img src=\"{$subdata["link_immagine"]}\">
+                                        </div>
+                                        <div class=\"text right\">
+                                            <h2 class=\"arg_title\">{$subdata["titolo"]}</h2>
+                                            <p>
+                                                {$subdata["testo"]}
+                                            </p>
+                                        </div>
+                                        ";
+                                        break;
+
+                                }
+
+                                break;
+
+                            case "PLOTLY":
+                                switch( $direction ){
+                                    case 1:
+                                        $content .= "
+                                        <div class=\"text left\">
+                                            <h2 class=\"arg_title\">{$subdata["titolo"]}</h2>
+                                            <p>
+                                                {$subdata["testo"]}
+                                            </p>
+                                        </div>
+                                        
+                                        <div class=\"plot right\">
+                                            
+                                        </div>
+                                        ";
+                                        break;
+
+                                    case 0:
+                                        $content .= "
+                                        <div class=\"plot left\">
+                                            
+                                        </div>
+                                        <div class=\"text right\">
+                                            <h2 class=\"arg_title\">{$subdata["titolo"]}</h2>
+                                            <p>
+                                                {$subdata["testo"]}
+                                            </p>
+                                        </div>
+                                        ";
+                                        break;
+                                }
+                                break;
+
+                            
                         }
 
                         $content .= "</div>";
@@ -132,7 +182,8 @@
 
         ?>
 
-        <script src="JS/page.js"></script>
+        <script type="module" src="JS/page.js"></script>
+        
     </body>
 
 </html>
