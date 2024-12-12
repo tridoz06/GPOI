@@ -58,7 +58,7 @@
                         $content .= "<div class=\"row\">";
 
                         $id = $subdata["numero_argomento"];
-                        $content = $subdata["content"];
+                        $content = $subdata["Content_Type"];
                         $direction = $id%2;
 
                         switch($content){
