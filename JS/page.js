@@ -1,10 +1,35 @@
+var isPlottable = false;
+const plotContainer = document.querySelectorAll('.plot');
+
+const data = [
+    {
+        x: [1, 2, 3, 4],
+        y: [10, 15, 13, 17],
+        mode: 'lines',
+        type: 'scatter'
+    }
+];
+
+const layout = {
+    title: 'prova plotly',
+    xaxis: {title: 'X Axis'},
+    yaxis: {tutle: 'Y Axis'}
+};
+
 import('https://cdn.plot.ly/plotly-2.25.2.min.js')
   .then((Plotly) => {
     console.log('Plotly importato:', Plotly);
+    isPlottable = true;
   })
   .catch((error) => {
     console.error('Errore durante l\'importazione:', error);
   });
+
+if( isPlottable){
+    plotContainer.forEach((container, index) => {
+        Plotly.newPlot(container, data, layout);
+    })
+}
 
 
 const carousel = document.querySelector('.menu');
