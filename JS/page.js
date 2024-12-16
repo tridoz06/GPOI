@@ -1,3 +1,4 @@
+/*
 var isPlottable = false;
 const plotContainer = document.querySelectorAll('.plot');
 
@@ -31,6 +32,7 @@ if( isPlottable){
     })
 }
 
+*/
 
 const carousel = document.querySelector('.menu');
 const prevButton = document.querySelector('.prev-btn');
@@ -59,11 +61,11 @@ function setCardColour(){
             for( let k = 0 ; k<page_titles.length; k++){
                 page_titles[k].setAttribute('style', `filter: hue-rotate(${j}deg);`); 
             }
+
         }
 
-        
-
         j += increment; 
+        
     }
 
 }
