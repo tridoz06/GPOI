@@ -19,7 +19,6 @@ function setCardColour(){
 }
 
 function removeFadeIn() {
-    console.log("rimuovo");
     for (let i = 0; i < cards.length; i++) {
          cards[i].classList.remove('fade__in');
     }
