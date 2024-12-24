@@ -18,10 +18,6 @@ function setCardColour(){
 
 }
 
-setCardColour();
-
-
-
 function removeFadeIn() {
     console.log("rimuovo");
     for (let i = 0; i < cards.length; i++) {
@@ -67,6 +63,6 @@ carousel.addEventListener('wheel', (event) => {
 });
 
 
+setCardColour();
 
 updateCarouselPosition();
-
