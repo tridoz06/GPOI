@@ -5,7 +5,7 @@ container.innerHTML = `
 <label>Costi Variabili (per unità):<input type="number" id="variableCost" value="5"></label>
 <label>Prezzo di Vendita (per unità):<input type="number" id="salePrice" value="10"></label>
 </div>
-<canvas id="bepCanvas" width="800" height="400" style="border:1px solid #000;"></canvas>
+<canvas id="bepCanvas" width="800" height="400" style="border:1px solid #fff;"></canvas>
 `;
 document.querySelector('.canva').appendChild(container);
 
