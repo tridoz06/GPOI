@@ -6,7 +6,7 @@ const container=document.createElement('div');container.innerHTML=`
 </div>
 <canvas id="bepCanvas" width="800" height="400" style="border:1px solid #000;"></canvas>
 `;
-document.body.appendChild(container);
+document.querySelector('canva').appendChild(container);
 const fixedCostInput=document.getElementById('fixedCost');
 const variableCostInput=document.getElementById('variableCost');
 salePriceInput=document.getElementById('salePrice');
