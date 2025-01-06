@@ -13,7 +13,7 @@
 
                 $table_rows_main_arg = read("SELECT Title from Cards");
                 
-                $nav_bar_content  = "<nav class =\"menu\">
+                $nav_bar_content  = "<nav class =\"menu\"><br>
                 <button class=\"prev-btn btn\">&#10094;</button>";
 
                 foreach( $table_rows_main_arg as $data){
@@ -40,7 +40,7 @@
                 }
 
                 $nav_bar_content .= "<button class=\"next-btn btn\">&#10095;</button>
-                </nav>";
+                </nav><br>br>";
                 return $nav_bar_content;
             }
 
@@ -99,7 +99,7 @@
 
                                 break;
 
-                            case "PLOTLY":
+                            case "CANVA":
                                 switch( $direction ){
                                     case 1:
                                         $content .= "
@@ -110,15 +110,16 @@
                                             </p>
                                         </div>
                                         
-                                        <div class=\"plot right\">
+                                        <div class=\"canva right\">
                                             
                                         </div>
+                                        <script src=\"JS/bep.js\"></script>
                                         ";
                                         break;
 
                                     case 0:
                                         $content .= "
-                                        <div class=\"plot left\">
+                                        <div class=\"canva left\">
                                             
                                         </div>
                                         <div class=\"text right\">
@@ -127,6 +128,7 @@
                                                 {$subdata["testo"]}
                                             </p>
                                         </div>
+                                        <script src=\"JS/bep.js\"></script>
                                         ";
                                         break;
                                 }
@@ -144,23 +146,13 @@
                 return $content;
             }
 
-            function set_page_number($page_title){
-                $table_rows_selection_id_page = read("SELECT Id FROM Cards WHERE Title=\"{$page_title}\" ");
-                $number = $table_rows_selection_id_page[0]["Id"] - 1;
-                return "<div class=\"page number" . " _{$number}\"></div>";
-            }
-
             function get_page_number($page_title){
                 $table_rows_selection_id_page = read("SELECT Id FROM Cards WHERE Title=\"{$page_title}\" ");
                 $number = $table_rows_selection_id_page[0]["Id"] - 1;
                 return $number;            
             }
 
-
-
             $page_title = $_POST["page_name"];
-
-            echo set_page_number($page_title);
 
             $page_number = get_page_number($page_title);
 
