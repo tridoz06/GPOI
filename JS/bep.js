@@ -7,13 +7,19 @@ const container=document.createElement('div');container.innerHTML=`
 <canvas id="bepCanvas" width="800" height="400" style="border:1px solid #000;"></canvas>
 `;
 document.querySelector('.canva').appendChild(container);
+
 const fixedCostInput=document.getElementById('fixedCost');
+
 const variableCostInput=document.getElementById('variableCost');
 salePriceInput=document.getElementById('salePrice');
+
 const canvas=document.getElementById('bepCanvas');
 const ctx=canvas.getContext('2d');
+
 function calculateBEP(fixedCost,variableCost,salePrice){return fixedCost/(salePrice-variableCost);}
+
 function drawGraph(){
+
   const fixedCost=parseFloat(fixedCostInput.value);
   const variableCost=parseFloat(variableCostInput.value);
   const salePrice=parseFloat(salePriceInput.value);
@@ -33,7 +39,7 @@ function drawGraph(){
 
   const xStep=700/maxUnits;
   const yStep=300/maxCost;
-  ctx.strokeStyle='#ddd';
+  ctx.strokeStyle='#fff';
   ctx.font='12px Arial';
   for(let i=0;i<=maxUnits;i+=Math.ceil(maxUnits/10)){
     const x=50+i*xStep;
