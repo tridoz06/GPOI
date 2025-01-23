@@ -30,7 +30,7 @@
                         $content = create_cards("Cards");
 
                         echo $content;
-
+                        
                     ?>
                 
                 </div>

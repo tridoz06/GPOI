@@ -2,7 +2,7 @@ const carousel = document.querySelector('.carousel');
 const prevButton = document.querySelector('.prev-btn');
 const nextButton = document.querySelector('.next-btn');
 const cards = document.querySelectorAll('.parent');
-
+let i = 0;
 
 let currentIndex = 0;
 let timed_shifter = 0;
