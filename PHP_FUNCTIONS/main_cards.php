@@ -7,7 +7,7 @@ function create_cards($table_name) {
     $table_rows = read("SELECT Id, Title, Arg_Desc, Link FROM {$table_name}");
 
     foreach( $table_rows as $data){
-
+        //prova
         $form = "";
         if( $data['Title'] == "Our Projects"){
             $form = "
