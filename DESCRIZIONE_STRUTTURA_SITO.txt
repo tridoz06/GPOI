@@ -1,0 +1,155 @@
+Struttura del sito e suddivisione in cartelle:
+//curier
+
+GPOI
+|
+├── CSS
+│   ├── page.css
+│   ├── projects.css
+│   └── style.css
+|
+├── IMG
+│   ├── DOMANDA_OFFERTA
+│   │   ├── domanda.jpeg
+│   │   ├── equilibrio.jpg
+│   │   └── offerta.jpeg
+|   |
+│   ├── GESTIONE_PROGETTO
+│   │   ├── projrct.jpg
+│   │   ├── schema_progetto.jpeg
+│   │   └── wbs.png
+|   |
+│   ├── IMPRESA
+│   │   ├── impresa_economica.jpg
+│   │   ├── impresa.jpg
+│   │   └── impresa_successo.png
+|   |
+│   ├── INFLAZIONE
+│   │   ├── effetti.jpeg
+│   │   └── inflazione.webp
+|   |
+│   ├── LEADER
+│   │   ├── leader_autorevole.jpeg
+│   │   ├── leader_autoritario.jpeg
+│   │   └── leader_pic.jpg
+|   |
+│   ├── PIL
+│   │   ├── calcolo_pil.jpg
+│   │   ├── criticità_pil.webp
+│   │   └── pil.jpg
+|   |
+│   ├── SCUOLA_IMPRESA
+│   │   ├── dibattito.jpeg
+│   │   └── scuola.png
+|   |
+│   └── STELLANTIS
+│       ├── 500e.jpg
+│       ├── mirafiori.jpg
+│       └── stellants.webp
+|
+├── JS
+│   ├── bep.js
+│   ├── documentazione.js
+│   ├── main.js
+│   └── page.js
+|
+├── PHP_FUNCTIONS
+│   ├── main_cards.php
+│   ├── projects_card.php
+│   └── read_database.php
+|
+├── index.php
+└── page.php
+
+
+CSS
+
+
+JS
+
+
+
+PHP
+
+
+SQL
+Utilizziamo un database gestito con MySql in modo da rendere più facile la creazione di nuove pagine o di nuovi paragrafi perchè dobbiamo solamente 
+inserire i dati all'interno dal database e poi penserà alla creazione di tutte la pagine in modo dinamico e in tempo reale i file .php, che leggono
+i dati dal database (di cui ne esistono 2 copie, una in locale sul computer di Tridapali Leonardo e una su un server pubblico, in modo da poter 
+visualizzare il sito qual'ora non si abbia a disposizione una connessione ad internet).
+
+Il database contiene due tabelle: Cards e Args, strutturati come segue:
+CARDS:
++----------+------+------+-----+---------+----------------+
+| Field    | Type | Null | Key | Default | Extra          |
++----------+------+------+-----+---------+----------------+
+| Id       | int  | NO   | PRI | NULL    | auto_increment |
+| Title    | text | NO   |     | NULL    |                |
+| Arg_Desc | text | NO   |     | NULL    |                |
+| Link     | text | NO   |     | NULL    |                |
++----------+------+------+-----+---------+----------------+
+Id
+  -indica il numero della carta ed il numero dell'argomento all'interno del carosello dinamico
+
+Title
+  -indica il titolo dell'argomento e di cosa si parlerà all'interno della pagina di 
+
+Args_Desc
+  -è una piccola descrizione generale che spiega di cosa si parla nell'immagine, in modo
+   che l'utente non debba per forza aprire la pagine per capire se gli interessa di cosa 
+   si andrà a parlare, ma lo decide semplicemente leggendo una breve descrizione di qualche 
+   riga
+
+Link
+  -rappresenta a quale pagina bisogna collegarsi. È un campo che viene utilizzato per la 
+   creazione dei form con all'interno i bottoni che chiamono il file "page.php" per fargli
+   capire quali dati deve andare a prelevare dal database. 
+
+ARGS:
++------------------+------+------+-----+---------+-------+
+| Field            | Type | Null | Key | Default | Extra |
++------------------+------+------+-----+---------+-------+
+| numero_argomento | int  | NO   |     | NULL    |       |
+| numero_pagina    | int  | NO   |     | NULL    |       |
+| titolo           | text | NO   |     | NULL    |       |
+| testo            | text | NO   |     | NULL    |       |
+| link_immagine    | text | NO   |     | NULL    |       |
+| Content_Type     | text | YES  |     | NULL    |       |
++------------------+------+------+-----+---------+-------+
+
+numero_argomento
+  -Indica la posizione dell'argomento di cui si andrà a parlare all'interno della pagina, per esempio 
+   il numero 1 sarà il primo paragrafo, mentre il numero 2 sarà il secondo e così via. Utilizziamo anche 
+   i numeri per capire se il testo va posizionato a sinistra con un immagine a destra o viceversa. Infatti
+   se il numero è dispari sarà "testo immagine" mentre se il numero è pari sarà "immagine testo"
+
+numero_pagina
+  -Il numero della pagina riprende gli Id presenti nella tabella Cards, per capire a quale pagina appartiene
+   l'argomento presente.   
+
+
+titolo
+  -rappresenta il tiolo del paragrafo
+
+testo
+  -rappresenta il contenuto del paragrafo. Dentro al testo sono già presenti i tag HTML <b> e <br> per mettere
+   in grassetto e alcune parole e andare a capo a piacere, quindi non deve essere fatto in modo dinamico in PHP.
+
+link_immagine
+  -il path relativo per andare a trovare l'immaginea all'interno della cartella del sito per capire a quale paragrafo
+   viene assegnata tot immagine
+
+content_type
+  -indica il tipo di contenuto e può essere "IMG" "VOID" o "CANVA".
+     -IMG: indica che di fianco al testo ci andrà posizionata un immagine.
+     -CANVA: indica che di fianco al testo ci andrà posizionato un canvas (attraverso il javascript, nel php verrà solamente creato un div di classe "canva"
+             per far capire dove andrà inserito il canvas) dinamico per grafico come per esempio quello del BEP
+
+
+
+
+
+
+
+
+
