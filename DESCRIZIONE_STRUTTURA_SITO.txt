@@ -66,6 +66,8 @@ GPOI
 HTML
 Il nostro sito genera solamente 2 pagine html, una per la "home page" e una per la pagina degli argomenti. Entrambe vengono generate attraverso 
 dei file php, rispettivamente uno per la home page chiamato "index.php" e uno per le pagine dei vari argomenti chiamata "page.php"
+
+HOME PAGE
 La home page è formata principalmente da due div, uno chiamato "container-bg" che contiente il titolo e il carosello, e un div chiamato 
 "who we are", che utilizziamo come footer. 
 Il "container-bg" al suo interno contiene il titolo, i 2 bottoni per scorrere il carosello e il contenitore del caroselli, chiamato "carousel-container".
@@ -111,6 +113,13 @@ Il codice è questo (è presente solamente una card per il semplice fatto che le
 		</div>
 
 </div>
+
+PAGES
+Le altre pagine invece sono formate da una navbar che permette navigare tra le varie pagine, e tornare alla home. Dopo la navbar sono presenti i vari paragrafi, ognuno 
+contenuto in un div chiamato "row", formato dal un div "text" che contiene il titolo e il testo del paragrafo, e da un div che varia tra "image", "canva", o "void". 
+"image" server per contenere un immagine, "canva" per contenere un canvas per grafici dinamico (come per esempio quello del bep), mentre "void" indica che quello spazio
+deve essere tenuto vuoto. 
+
 CSS
 
 
