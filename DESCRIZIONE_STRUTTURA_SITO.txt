@@ -62,7 +62,20 @@ GPOI
 └── page.php
 
 
+
+HTML
+Il nostro sito genera solamente 2 pagine html, una per la "home page" e una per la pagina degli argomenti. Entrambe vengono generate attraverso 
+dei file php, rispettivamente uno per la home page chiamato "index.php" e uno per le pagine dei vari argomenti chiamata "page.php"
+La home page è formata principalmente da due div, uno chiamato "container-bg" che contiente il titolo e il carosello, e un div chiamato 
+"who we are", che utilizziamo come footer. 
+Il "container-bg" al suo interno contiene il titolo, i 2 bottoni per scorrere il carosello e il contenitore del caroselli, chiamato "carousel-container".
+"Carousel Container" al suo interno contiene il vero e proprio div che gestisce il carosello, e al interno di esso le 3 carte che vengono rappresentate. 
+Le carte sono a loro volta composte da 2 div, un "content-box" ed un "num-box. "Content-box" contiene  il titol dell'argomento, una piccola descrzione di esso 
+e il form per farsi generare la pagine dell'argomento. Mentre "num-box" contiene il numero dell'argomento. 
+
+
 CSS
+
 
 
 JS
