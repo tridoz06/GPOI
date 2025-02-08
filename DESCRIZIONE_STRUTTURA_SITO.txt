@@ -72,8 +72,45 @@ Il "container-bg" al suo interno contiene il titolo, i 2 bottoni per scorrere il
 "Carousel Container" al suo interno contiene il vero e proprio div che gestisce il carosello, e al interno di esso le 3 carte che vengono rappresentate. 
 Le carte sono a loro volta composte da 2 div, un "content-box" ed un "num-box. "Content-box" contiene  il titol dell'argomento, una piccola descrzione di esso 
 e il form per farsi generare la pagine dell'argomento. Mentre "num-box" contiene il numero dell'argomento. 
+Il codice è questo (è presente solamente una card per il semplice fatto che le altre due sono completamente copia incolla). 
 
+<div class="container_bg">
+			<span class="title-up fade__in">GESTIONE IMPRESA </span>
 
+      <button class="btn prev-btn">❮</button>
+
+			<div class="carousel-container">
+			
+				<div class="carousel">
+
+            <div class="parent fade__in" style="filter: hue-rotate(72deg);">
+                <div class="card">
+                    <div class="content-box">
+                        <h1 class="card-title">Leader</h1>
+
+                        <p class="card-content">
+                            La figura più importante dell'impresa. Deve essere in grado di farsi seguire e deve guidare il proprio team alla buona riuscita del progetto.
+                        </p>    
+                <form action="page.php" method="POST">
+                    <input name="page_name" value="Leader" type="hidden">
+                    <button type="submit" class="see-more">MORE INFO</button>
+                </form>
+
+                    </div>
+                    <div class="num-box">
+                        <span class="arg">ARG</span>
+                        <span class="num">3</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+			</div>
+            <button class="btn next-btn">❯</button>
+		</div>
+
+</div>
 CSS
 
 
