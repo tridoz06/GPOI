@@ -121,6 +121,35 @@ contenuto in un div chiamato "row", formato da un div "text" che contiene il tit
 deve essere tenuto vuoto. 
 La navbar ha un sistema di carosello esattamente come le card della home page, e ne vengono sempre visualizzate tre alla volta. 
 
+<nav class="menu">
+  <button class="prev-btn btn">❮</button>
+  <div class="menu_item" style="filter: hue-rotate(0deg);">
+    <form action="page.php" method="POST">
+        <input name="page_name" value="Impresa" type="hidden">
+        <button type="submit" class="menu_item_link">Impresa</button>
+    </form>
+  </div>
+    
+  <div class="menu_item" style="filter: hue-rotate(36deg);">                            
+    <form action="page.php" method="POST">
+      <input name="page_name" value="Progetto" type="hidden">
+      <button type="submit" class="menu_item_link">Progetto</button>
+    </form>
+  </div>
+    
+  <div class="menu_item" style="filter: hue-rotate(72deg);">
+    <form action="page.php" method="POST">
+      <input name="page_name" value="Leader" type="hidden">
+      <button type="submit" class="menu_item_link">Leader</button>
+    </form>
+  </div>
+  
+  <button class="next-btn btn">❯</button>
+</nav>
+
+"menu" è la classe principale, che contiente i div "menu_item", i veri e propri elementi del carosello che vengno visualizzati. 
+
+
 CSS
 
 
