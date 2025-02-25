@@ -116,9 +116,10 @@ Il codice è questo (è presente solamente una card per il semplice fatto che le
 
 PAGES
 Le altre pagine invece sono formate da una navbar che permette navigare tra le varie pagine, e tornare alla home. Dopo la navbar sono presenti i vari paragrafi, ognuno 
-contenuto in un div chiamato "row", formato dal un div "text" che contiene il titolo e il testo del paragrafo, e da un div che varia tra "image", "canva", o "void". 
+contenuto in un div chiamato "row", formato da un div "text" che contiene il titolo e il testo del paragrafo, e da un div che varia tra "image", "canva", o "void". 
 "image" server per contenere un immagine, "canva" per contenere un canvas per grafici dinamico (come per esempio quello del bep), mentre "void" indica che quello spazio
 deve essere tenuto vuoto. 
+La navbar ha un sistema di carosello esattamente come le card della home page, e ne vengono sempre visualizzate tre alla volta. 
 
 CSS
 
