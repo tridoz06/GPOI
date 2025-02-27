@@ -13,16 +13,17 @@ b{
     color:white;
 }
 
-p, pre{
-    font-size:14px;
-    color:#8e8e8e;
+p{
+    font-size:20px;
+    color:white;
     text-align: justify;
 }
 
 pre, code {
-    background-color: transparent !important; /* Rende lo sfondo trasparente */
-    color: inherit; /* Mantiene il colore del testo originale */
-    padding: px; /* Dà un po' di spazio interno al codice */
+    color:white;
+    background-color: #202020 !important; /* Rende lo sfondo trasparente */
+    border-radius: 20px;
+    padding: 15px; /* Dà un po' di spazio interno al codice */
     overflow: auto; /* Gestisce eventuali contenuti che escono */
 }
 
@@ -160,19 +161,9 @@ h1{
     margin:100px 0;
 }
 
-.image, .plot {
-    width:50%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-.image img{
-    max-width:80%;
-    height:auto;
-    border-radius:10px;
-}
+
 .text{
-    width: 50%;
+    width: 100%;
     padding: 20px;
 }
 .left{
@@ -195,13 +186,13 @@ h1{
     font-size: 18px;
 }
 
-.text.left, .image.right, .text.right, .image.left {
+.text.left,  .text.right {
     opacity: 0;
     transition: transform 0.5s ease-out, opacity 0.5s ease-out;
 }
 
 
-.text.left, .image.left {
+.text.left {
     transform: translateX(-100%);
 }
 
@@ -209,8 +200,7 @@ h1{
     transform: translateX(100%);
 }
 
-.text.left.visible, .image.right.visible,
-.text.right.visible, .image.left.visible {
+.text.left.visible, .text.right.visible {
     opacity: 1;
     transform: translateX(0);
 }

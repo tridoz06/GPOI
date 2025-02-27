@@ -1,5 +1,3 @@
-Struttura del sito e suddivisione in cartelle:
-//curier
 
 GPOI
 |
@@ -159,6 +157,507 @@ JS
 
 
 PHP
+Appiamo decido di generare il contenuto delle pagine in modo dinamico attraverso php e la lettura dei dati
+da un database per rendere il tutto più efficiente nella modifica, sia di eliminazione che di aggiunta
+
+MAIN CARDS
+Si occupa di creare le carte per la home page.
+<?php
+    // Includiamo il file per la lettura del database
+    include "read_database.php";
+
+/**
+ * Funzione per generare le card HTML basate sui dati estratti dal database.
+ * 
+ * @param string $table_name Il nome della tabella da cui recuperare i dati.
+ * @return string Il contenuto HTML generato con le card.
+ */
+
+ 
+function create_cards($table_name) {
+
+    // Inizializziamo una stringa vuota per contenere le card
+    $content = "";
+
+    // Recuperiamo i dati dal database (Id, Title, Arg_Desc e Link) per la tabella specificata
+    $table_rows = read("SELECT Id, Title, Arg_Desc, Link FROM {$table_name}");
+
+    // Iteriamo su ogni riga dei risultati del database
+    foreach ($table_rows as $data) {
+        
+        // Inizializziamo il form vuoto
+        $form = "";
+
+        // Se il titolo della card è "Our Projects", indirizziamo il form a "projects.php"
+        if ($data['Title'] == "Our Projects") {
+            $form = "
+                <form action=\"projects.php\" method=\"POST\" >
+                    <button type=\"submit\" class=\"see-more\">MORE INFO</button>
+                </form>            
+            ";
+        } else {
+            // Altrimenti, il form invierà i dati a "page.php"
+            $form = "
+                <form action=\"page.php\" method=\"POST\" >
+                    <input name=\"page_name\" value=\"{$data['Title']}\" type=\"hidden\">
+                    <button type=\"submit\" class=\"see-more\">MORE INFO</button>
+                </form>
+            ";
+        }
+
+        // Costruiamo il contenuto HTML della card con titolo, descrizione e form
+        $content .= "
+            <div class=\"parent fade__in\">
+                <div class=\"card\">
+                    <div class=\"content-box\">
+                        <h1 class=\"card-title\">{$data['Title']}</h1>
+
+                        <p class=\"card-content\">
+                            {$data['Arg_Desc']}
+                        </p>
+
+                        {$form}
+
+                    </div>
+                    <div class=\"date-box\">
+                        <span class=\"month\">ARG</span>
+                        <span class=\"date\">{$data['Id']}</span>
+                    </div>
+                </div>
+            </div>
+        ";
+    }
+    
+    // Ritorniamo il contenuto HTML generato
+    return $content;
+}
+?>
+
+
+PROJECTSS_CARDS
+Si occupa di creare le carte per i nostri progetti personali
+<?php
+
+// Includiamo il file per la lettura del database
+include "read_database.php";
+
+/**
+ * Funzione per generare card HTML basate sui dati della tabella "Projects".
+ * 
+ * Questa funzione recupera tutti i record dalla tabella "Projects" e genera
+ * un blocco HTML per ciascun progetto, con titolo, descrizione e link esterno.
+ *
+ * @return string Il contenuto HTML generato con le card dei progetti.
+ */
+function create_cards(){
+    // Inizializziamo una stringa vuota per contenere l'output HTML
+    $content = "";
+
+    // Recuperiamo tutti i record dalla tabella "Projects"
+    $table_rows = read("SELECT * FROM Projects");
+
+    // Iteriamo su ogni riga dei risultati del database
+    foreach ($table_rows as $data) {
+        // Creiamo una card HTML per ogni progetto con titolo, descrizione e link
+        $content .= "
+            <article class=\"project-card\">
+                <h2>{$data["Title"]}</h2>
+                <p>{$data["Arg_Desc"]}</p>
+                <a href=\"{$data["Link"]}\" target=\"_blank\" class=\"btn\">SEE MORE</a>
+            </article>        
+        ";
+    }
+
+    // Ritorniamo il contenuto HTML generato
+    return $content;
+}
+?>
+
+
+READ_DATABASE
+Si occupa di leggere e ritornare i dati dal database
+<?php
+
+/**
+ * Classe per memorizzare le credenziali di accesso al database.
+ * 
+ * Questa classe contiene le informazioni necessarie per connettersi al database MySQL,
+ * come il server, il nome utente, la password e il nome del database.
+ */
+class db_credentials {
+    public static $servername = "185.229.236.208"; // Indirizzo del server MySQL
+    public static $username = "sito";             // Nome utente per l'accesso al database
+    public static $password = "Sito2024_";        // Password dell'utente del database
+    public static $dbname = "DB_Sito";            // Nome del database da utilizzare
+}
+
+/**
+ * Funzione per eseguire query SQL di lettura sul database.
+ * 
+ * Questa funzione stabilisce una connessione con il database utilizzando PDO,
+ * esegue la query fornita e restituisce i risultati sotto forma di array associativo.
+ *
+ * @param string $query La query SQL da eseguire.
+ * @return array|string Un array contenente i risultati della query o un messaggio di errore.
+ */
+function read($query) {
+    try {
+        // Creazione della stringa DSN per la connessione al database
+        $dsn = "mysql:host=" . db_credentials::$servername . ";dbname=" . db_credentials::$dbname . ";charset=utf8";
+
+        // Creazione dell'oggetto PDO per la connessione al database
+        $pdo = new PDO($dsn, db_credentials::$username, db_credentials::$password);
+        
+        // Impostiamo PDO per lanciare eccezioni in caso di errore
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    } catch (PDOException $e) {
+        // Se si verifica un errore nella connessione, restituiamo un messaggio di errore
+        return "Errore lettura DB";
+    }
+
+    // Prepariamo ed eseguiamo la query SQL
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+
+    // Recuperiamo i risultati come array associativo
+    $table_rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Restituiamo i dati ottenuti dalla query
+    return $table_rows;
+}
+?>
+
+INDEX
+Si occupa di creare la pagina principale
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+    <!-- Titolo della pagina -->
+    <title>Gestione Impresa</title>
+
+    <!-- Collegamento al file CSS per lo stile della pagina -->
+    <link rel="stylesheet" href="CSS/style.css" />
+
+    <!-- Impostazione della codifica dei caratteri -->
+    <meta charset="UTF-8">
+    
+    <!-- Configurazione della viewport per garantire la responsività su dispositivi mobili -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+
+    <!-- Contenitore principale con sfondo -->
+    <div class="container_bg">
+        
+        <!-- Titolo principale con animazione di fade-in -->
+        <span class="title-up fade__in">GESTIONE IMPRESA</span>
+
+        <!-- Pulsante per scorrere all'indietro nel carosello -->
+        <button class="btn prev-btn">&#10094;</button>
+
+        <!-- Contenitore del carosello -->
+        <div class="carousel-container">
+
+            <!-- Sezione che conterrà le card generate dinamicamente -->
+            <div class="carousel">
+
+                <?php
+                    // Inclusione del file PHP che genera le card
+                    include "PHP_FUNCTIONS/main_cards.php";
+
+                    // Creazione delle card basate sulla tabella "Cards" del database
+                    $content = create_cards("Cards");
+
+                    // Stampa dell'output HTML generato
+                    echo $content;
+                ?>
+
+            </div>
+
+        </div>
+
+        <!-- Pulsante per scorrere in avanti nel carosello -->
+        <button class="btn next-btn">&#10095;</button>
+
+    </div>
+
+    <!-- Sezione "Chi siamo" con i nomi degli autori del progetto -->
+    <div class="who_we_are">
+        Made by<br>
+        Concaro Davide - Popa Sebastiano - Tridapali Leonardo<br>
+        5BIIN 2024-2025<br>
+    </div>
+
+    <!-- Collegamento al file JavaScript per gestire l'interattività della pagina -->
+    <script src="JS/main.js"></script>
+
+</body>
+
+</html>
+
+PAGE
+Si occupa di creare le varie pagine con gli argomenti
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <!-- Collegamento al file CSS per lo stile della pagina -->
+    <link rel="stylesheet" href="CSS/page.css">
+</head>
+
+<body>
+
+    <?php
+        // Inclusione del file che contiene la funzione per leggere i dati dal database
+        include "PHP_FUNCTIONS/read_database.php";
+
+        /**
+         * Funzione per creare la barra di navigazione dinamicamente
+         * Legge i titoli delle schede dalla tabella "Cards" e crea pulsanti di navigazione
+         */
+        function create_navbar() {
+            // Recupera i titoli delle schede dal database
+            $table_rows_main_arg = read("SELECT Title FROM Cards");
+
+            // Inizio della navbar con pulsante per scorrere indietro
+            $nav_bar_content  = "<nav class=\"menu\"><br>
+            <button class=\"prev-btn btn\">&#10094;</button>";
+
+            // Creazione dei pulsanti per ogni scheda
+            foreach ($table_rows_main_arg as $data) {
+                $form = "";
+                if ($data["Title"] == "Our Projects") {
+                    // Se il titolo è "Our Projects", reindirizza alla pagina "projects.php"
+                    $form = "
+                        <form action=\"projects.php\" method=\"POST\">
+                            <button type=\"submit\" class=\"menu_item_link\">{$data["Title"]}</button>
+                        </form>
+                    ";
+                } else {
+                    // Altrimenti, reindirizza a "page.php" passando il titolo come input nascosto
+                    $form = "
+                        <form action=\"page.php\" method=\"POST\">
+                            <input name=\"page_name\" value=\"{$data["Title"]}\" type=\"hidden\">
+                            <button type=\"submit\" class=\"menu_item_link\">{$data["Title"]}</button>
+                        </form>
+                    ";
+                }
+                // Aggiunge il pulsante alla navbar
+                $nav_bar_content .= "
+                    <div class=\"menu_item\">
+                        {$form}
+                    </div>
+                ";
+            }
+
+            // Aggiunta del pulsante per scorrere in avanti e chiusura della navbar
+            $nav_bar_content .= "<button class=\"next-btn btn\">&#10095;</button>
+            </nav><br><br>";
+            return $nav_bar_content;
+        }
+
+        /**
+         * Funzione per generare il contenuto dinamico della pagina
+         * @param string $title_search Titolo della scheda selezionata
+         * @return string Contenuto HTML generato dinamicamente
+         */
+        function create_content($title_search) {
+            // Recupera l'ID della scheda selezionata
+            $table_rows_cards = read("SELECT Id FROM Cards WHERE Title=\"{$title_search}\"");
+            $content = "<div class=\"content\">";
+
+            foreach ($table_rows_cards as $main_data) {
+                // Recupera gli argomenti relativi alla scheda selezionata
+                $table_rows_arguments = read("SELECT * FROM Args WHERE numero_pagina=\"{$main_data["Id"]}\"");
+
+                foreach ($table_rows_arguments as $subdata) {
+                    $content .= "<div class=\"row\">";
+
+                    $id = $subdata["numero_argomento"];
+                    $content_type = $subdata["Content_Type"];
+                    $direction = $id % 2; // Alterna la disposizione del contenuto
+
+                    switch ($content_type) {
+                        case "IMG":
+                            // Se il contenuto è un'immagine, la posiziona in modo alternato
+                            if ($direction == 1) {
+                                $content .= "
+                                    <div class=\"text left\">
+                                        <h2 class=\"arg_title\">{$subdata["titolo"]}</h2>
+                                        <p>{$subdata["testo"]}</p>
+                                    </div>
+                                    <div class=\"image right\">
+                                        <img src=\"{$subdata["link_immagine"]}\">
+                                    </div>
+                                ";
+                            } else {
+                                $content .= "
+                                    <div class=\"image left\">
+                                        <img src=\"{$subdata["link_immagine"]}\">
+                                    </div>
+                                    <div class=\"text right\">
+                                        <h2 class=\"arg_title\">{$subdata["titolo"]}</h2>
+                                        <p>{$subdata["testo"]}</p>
+                                    </div>
+                                ";
+                            }
+                            break;
+
+                        case "VOID":
+                            // Se il contenuto è vuoto, viene lasciato uno spazio vuoto
+                            if ($direction == 1) {
+                                $content .= "
+                                    <div class=\"text left\">
+                                        <h2 class=\"arg_title\">{$subdata["titolo"]}</h2>
+                                        <p>{$subdata["testo"]}</p>
+                                    </div>
+                                    <div class=\"void right\"></div>
+                                ";
+                            } else {
+                                $content .= "
+                                    <div class=\"void left\"></div>
+                                    <div class=\"text right\">
+                                        <h2 class=\"arg_title\">{$subdata["titolo"]}</h2>
+                                        <p>{$subdata["testo"]}</p>
+                                    </div>
+                                ";
+                            }
+                            break;
+
+                        case "CANVA":
+                            // Se il contenuto è una canvas, include lo script JavaScript per la gestione
+                            if ($direction == 1) {
+                                $content .= "
+                                    <div class=\"text left\">
+                                        <h2 class=\"arg_title\">{$subdata["titolo"]}</h2>
+                                        <p>{$subdata["testo"]}</p>
+                                    </div>
+                                    <div class=\"canva right\"></div>
+                                    <script src=\"JS/bep.js\"></script>
+                                ";
+                            } else {
+                                $content .= "
+                                    <div class=\"canva left\"></div>
+                                    <div class=\"text right\">
+                                        <h2 class=\"arg_title\">{$subdata["titolo"]}</h2>
+                                        <p>{$subdata["testo"]}</p>
+                                    </div>
+                                    <script src=\"JS/bep.js\"></script>
+                                ";
+                            }
+                            break;
+                    }
+
+                    $content .= "</div>";
+                }
+            }
+
+            $content .= "</div>";
+            return $content;
+        }
+
+        /**
+         * Funzione per ottenere il numero della pagina basato sul titolo
+         * @param string $page_title Titolo della pagina
+         * @return int Numero della pagina
+         */
+        function get_page_number($page_title) {
+            $table_rows_selection_id_page = read("SELECT Id FROM Cards WHERE Title=\"{$page_title}\"");
+            $number = $table_rows_selection_id_page[0]["Id"] - 1;
+            return $number;
+        }
+
+        // Recupera il titolo della pagina dalla richiesta POST
+        $page_title = $_POST["page_name"];
+
+        // Ottiene il numero della pagina corrispondente al titolo
+        $page_number = get_page_number($page_title);
+
+        // Stampa i link di navigazione
+        echo "
+        <div class=\"menu_link_div\">
+            <a href=\"index.php\" class=\"menu_link\">
+                HOME
+            </a>
+            <a number_page=\"{$page_number}\" class=\"page_number_anchor\" style=\"display:none;\"></a>
+        </div>            
+        ";
+
+        // Genera la navbar e il contenuto della pagina
+        $navbar = create_navbar();
+        $content = create_content($page_title);
+
+        // Stampa la navbar e il contenuto generato
+        echo $navbar;
+        echo $content;
+    ?>
+
+    <!-- Collegamento al file JavaScript per la gestione della pagina -->
+    <script src="JS/page.js"></script>
+
+</body>
+
+</html>
+
+PROJECTS
+Si occupa di creare la pagina contenente i nostri progetti
+<!DOCTYPE html>
+<html lang="it">
+    
+    <head>
+        <!-- Definizione della codifica dei caratteri e della visualizzazione per dispositivi mobili -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Titolo della pagina -->
+        <title>I nostri progetti GitHub</title>
+        
+        <!-- Link al file CSS per la formattazione della pagina -->
+        <link rel="stylesheet" href="CSS/projects.css">
+    </head>
+
+    <body>
+
+        <!-- Sezione Header: contiene il titolo e la descrizione della pagina -->
+        <header>
+            <h1>I nostri Progetti GitHub</h1>
+            <p>Esplora i nostri ultimi fantastici lavori.</p>
+
+            <!-- Form con bottone per tornare alla homepage -->
+            <form action="index.php" method="POST">
+                <button class="btn">HOME</button>
+            </form>
+
+        </header>
+
+        <!-- Sezione principale della pagina: visualizzazione dei progetti -->
+        <section class="projects-grid">
+
+            <?php
+                // Inclusione del file PHP contenente la funzione per generare i progetti
+                include "PHP_FUNCTIONS/projects_card.php";
+
+                // Chiamata alla funzione 'create_cards' per ottenere il contenuto HTML dei progetti
+                $content = create_cards();
+                
+                // Echo del contenuto generato dalla funzione per visualizzarlo nella pagina
+                echo $content;
+            ?>
+
+        </section>
+
+        <!-- Footer: informazioni sui creatori della pagina -->
+        <footer>
+            <p>Made by Concaro Davide - Popa Sebastiano - Tridapali Leonardo 5BIIN ITIS E. Fermi.</p>
+        </footer>
+
+    </body>
+</html>
 
 
 SQL

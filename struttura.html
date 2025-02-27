@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="it"><head>
+    <!-- Collegamento al file CSS per lo stile della pagina -->
+    <link rel="stylesheet" href="CSS/documentation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+
+<body>
+
+    
+        <div class="menu_link_div">
+            <a href="index.php" class="menu_link">
+                HOME
+            </a>
+            <a number_page="0" class="page_number_anchor" style="display:none;"></a>
+        </div>          
+
+        <nav class="menu"><button class="prev-btn btn">❮</button>
+            <div class="menu_item" style="filter: hue-rotate(0deg);">
+                <form action="page.php" method="POST">
+                    <input name="page_name" value="Impresa" type="hidden">
+                    <button type="submit" class="menu_item_link">Impresa</button>
+                </form>
+            </div>
+            
+            <div class="menu_item" style="filter: hue-rotate(36deg);">
+                <form action="page.php" method="POST">
+                    <input name="page_name" value="Progetto" type="hidden">
+                    <button type="submit" class="menu_item_link">Progetto</button>
+                </form>
+            </div>
+            
+            <div class="menu_item" style="filter: hue-rotate(72deg);">
+                <form action="page.php" method="POST">
+                    <input name="page_name" value="Leader" type="hidden">
+                    <button type="submit" class="menu_item_link">Leader</button>
+                </form>
+            </div>
+            
+            <button class="next-btn btn">❯</button>
+                
+        </nav>
+                
+        <div class="content">
+            <div class="row">
+                <div class="text left visible">
+                    <h2 class="arg_title" style="filter: hue-rotate(0deg);">STRUTTURA DEL SITO</h2>
+                    <pre>
+GPOI
+|
+├── CSS
+│   ├── page.css
+│   ├── projects.css
+│   └── style.css
+|
+├── IMG
+│   ├── DOMANDA_OFFERTA
+│   │   ├── domanda.jpeg
+│   │   ├── equilibrio.jpg
+│   │   └── offerta.jpeg
+|   |
+│   ├── GESTIONE_PROGETTO
+│   │   ├── projrct.jpg
+│   │   ├── schema_progetto.jpeg
+│   │   └── wbs.png
+|   |
+│   ├── IMPRESA
+│   │   ├── impresa_economica.jpg
+│   │   ├── impresa.jpg
+│   │   └── impresa_successo.png
+|   |
+│   ├── INFLAZIONE
+│   │   ├── effetti.jpeg
+│   │   └── inflazione.webp
+|   |
+│   ├── LEADER
+│   │   ├── leader_autorevole.jpeg
+│   │   ├── leader_autoritario.jpeg
+│   │   └── leader_pic.jpg
+|   |
+│   ├── PIL
+│   │   ├── calcolo_pil.jpg
+│   │   ├── criticità_pil.webp
+│   │   └── pil.jpg
+|   |
+│   ├── SCUOLA_IMPRESA
+│   │   ├── dibattito.jpeg
+│   │   └── scuola.png
+|   |
+│   └── STELLANTIS
+│       ├── 500e.jpg
+│       ├── mirafiori.jpg
+│       └── stellants.webp
+|
+├── JS
+│   ├── bep.js
+│   ├── documentazione.js
+│   ├── main.js
+│   └── page.js
+|
+├── PHP_FUNCTIONS
+│   ├── main_cards.php
+│   ├── projects_card.php
+│   └── read_database.php
+|
+├── index.php
+└── page.php
+                    </pre>
+                </div>
+
+            </div>
+            
+            <div class="row">
+
+                <div class="text right">
+                    <h2 class="arg_title" style="filter: hue-rotate(0deg);">HTML</h2>
+                    <p>
+                    Il nostro sito genera solamente 2 pagine html, una per la "home page" e una per la pagina degli argomenti.<br>
+                    Entrambe vengono generate attraverso dei file php, rispettivamente uno per la home page chiamato "index.php" e<br>
+                    uno per le pagine dei vari argomenti chiamata "page.php"
+                    </p>
+
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="text left">
+                    <h2 class="arg_title" style="filter: hue-rotate(0deg);">HOME PAGE</h2>
+                    <p>
+                    La home page è formata principalmente da due div, uno chiamato "container-bg" che contiente il titolo e il carosello, e un div chiamato "who we are", che utilizziamo come footer. <br>
+                    Il "container-bg" al suo interno contiene il titolo, i 2 bottoni per scorrere il carosello e il contenitore del caroselli, chiamato "carousel-container".<br>
+                    "Carousel Container" al suo interno contiene il vero e proprio div che gestisce il carosello, e al interno di esso le 3 carte che vengono rappresentate.<br> 
+                    Le carte sono a loro volta composte da 2 div, un "content-box" ed un "num-box. "Content-box" contiene  il titol dell'argomento, una piccola descrzione di esso<br>
+                    e il form per farsi generare la pagine dell'argomento. Mentre "num-box" contiene il numero dell'argomento.<br>
+                    </p>
+
+                    <pre>
+                        <code class="language-html">
+&lt;div class=&quot;container_bg&quot;&gt;
+  &lt;span class=&quot;title-up fade__in&quot;&gt;GESTIONE IMPRESA &lt;/span&gt;
+  &lt;button class=&quot;btn prev-btn&quot;&gt;❮&lt;/button&gt;
+  &lt;div class=&quot;carousel-container&quot;&gt;
+    &lt;div class=&quot;carousel&quot;&gt;
+      &lt;div class=&quot;parent fade__in&quot; style=&quot;filter: hue-rotate(72deg);&quot;&gt;
+        &lt;div class=&quot;card&quot;&gt;
+          &lt;div class=&quot;content-box&quot;&gt;
+            &lt;h1 class=&quot;card-title&quot;&gt;Leader&lt;/h1&gt;
+            &lt;p class=&quot;card-content&quot;&gt;
+              La figura più importante dell'impresa.<br>
+              Deve essere in grado di farsi seguire e deve guidare il proprio team<br>
+              alla buona riuscita del progetto.
+            &lt;/p&gt;  
+            &lt;form action=&quot;page.php&quot; method=&quot;POST&quot;&gt;
+              &lt;input name=&quot;page_name&quot; value=&quot;Leader&quot; type=&quot;hidden&quot;&gt;
+              &lt;button type=&quot;submit&quot; class=&quot;see-more&quot;&gt;MORE INFO&lt;/button&gt;
+            &lt;/form&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;num-box&quot;&gt;
+            &lt;span class=&quot;arg&quot;&gt;ARG&lt;/span&gt;
+            &lt;span class=&quot;num&quot;&gt;3&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button class=&quot;btn next-btn&quot;&gt;❯&lt;/button&gt;
+&lt;/div&gt;
+                       </code>
+                    </pre>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="text left">
+                    <h2 class="arg_title" style="filter: hue-rotate(0deg);">PAGES<</h2>
+                    <p>
+                    Le altre pagine invece sono formate da una navbar che permette navigare tra le varie pagine, e tornare alla home. Dopo la navbar sono presenti i vari paragrafi, ognuno<br> 
+                    contenuto in un div chiamato "row", formato da un div "text" che contiene il titolo e il testo del paragrafo, e da un div che varia tra "image", "canva", o "void".<br> 
+                    "image" server per contenere un immagine, "canva" per contenere un canvas per grafici dinamico (come per esempio quello del bep), mentre "void" indica che quello spazio<br> 
+                    deve essere tenuto vuoto. La navbar ha un sistema di carosello esattamente come le card della home page, e ne vengono sempre visualizzate tre alla volta.<br>
+                    </p>
+                    <pre>
+                        <code class="language-html">
+&lt;nav class=&quot;menu&quot;&gt;
+  &lt;button class=&quot;prev-btn btn&quot;&gt;❮&lt;/button&gt;
+  &lt;div class=&quot;menu_item&quot; style=&quot;filter: hue-rotate(0deg);&quot;&gt;
+    &lt;form action=&quot;page.php&quot; method=&quot;POST&quot;&gt;
+      &lt;input name=&quot;page_name&quot; value=&quot;Impresa&quot; type=&quot;hidden&quot;&gt;
+      &lt;button type=&quot;submit&quot; class=&quot;menu_item_link&quot;&gt;Impresa&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;menu_item&quot; style=&quot;filter: hue-rotate(36deg);&quot;&gt;              
+    &lt;form action=&quot;page.php&quot; method=&quot;POST&quot;&gt;
+      &lt;input name=&quot;page_name&quot; value=&quot;Progetto&quot; type=&quot;hidden&quot;&gt;
+      &lt;button type=&quot;submit&quot; class=&quot;menu_item_link&quot;&gt;Progetto&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;menu_item&quot; style=&quot;filter: hue-rotate(72deg);&quot;&gt;
+    &lt;form action=&quot;page.php&quot; method=&quot;POST&quot;&gt;
+      &lt;input name=&quot;page_name&quot; value=&quot;Leader&quot; type=&quot;hidden&quot;&gt;
+      &lt;button type=&quot;submit&quot; class=&quot;menu_item_link&quot;&gt;Leader&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+  &lt;button class=&quot;next-btn btn&quot;&gt;❯&lt;/button&gt;
+&lt;/nav&gt;
+                        </code>
+                    </pre>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="text left">
+                    <h2 class="arg_title" style="filter: hue-rotate(0deg);">PHP</h2>
+                    <p>
+                    Abbiamo deciso di generare il contenuto delle pagine in modo dinamico attraverso PHP<br>
+                    e la lettura dei dati da un database per rendere il tutto più efficiente nella<br>
+                    modifica, sia di eliminazione che di aggiunta.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="text left">
+                    <h2 class="arg_title" style="filter: hue-rotate(0deg);">MAIN CARDS</h2>
+                    <p>Si occupa di creare le carte per la home page.</p>
+                    <pre>
+                        <code class="language-php">
+&lt;?php
+  // Includiamo il file per la lettura del database
+  include &quot;read_database.php&quot;;
+
+  /**
+    * Funzione per generare le card HTML basate sui dati estratti dal database.
+    * 
+    * @param string $table_name Il nome della tabella da cui recuperare i dati.
+    * @return string Il contenuto HTML generato con le card.
+    */
+
+  function create_cards($table_name) {
+    // Inizializziamo una stringa vuota per contenere le card
+    $content = &quot;&quot;;
+
+    // Recuperiamo i dati dal database (Id, Title, Arg_Desc e Link) per la tabella specificata
+    $table_rows = read(&quot;SELECT Id, Title, Arg_Desc, Link FROM {$table_name}&quot;);
+
+    // Iteriamo su ogni riga dei risultati del database
+    foreach ($table_rows as $data) {
+      // Inizializziamo il form vuoto
+      $form = &quot;&quot;;
+
+      // Se il titolo della card è &quot;Our Projects&quot;, indirizziamo il form a &quot;projects.php&quot;
+      if ($data['Title'] == &quot;Our Projects&quot;) {
+        $form = &quot;
+          &lt;form action=&quot;projects.php&quot; method=&quot;POST&quot; &gt;
+            &lt;button type=&quot;submit&quot; class=&quot;see-more&quot;&gt;MORE INFO&lt;/button&gt;
+          &lt;/form&gt;
+        &quot;;
+      } else {
+        // Altrimenti, il form invierà i dati a &quot;page.php&quot;
+        $form = &quot;
+          &lt;form action=&quot;page.php&quot; method=&quot;POST&quot; &gt;
+            &lt;input name=&quot;page_name&quot; value=&quot;{$data['Title']}&quot; type=&quot;hidden&quot;&gt;
+            &lt;button type=&quot;submit&quot; class=&quot;see-more&quot;&gt;MORE INFO&lt;/button&gt;
+          &lt;/form&gt;
+        &quot;;
+      }
+
+      // Costruiamo il contenuto HTML della card con titolo, descrizione e form
+      $content .= &quot;
+        &lt;div class=&quot;parent fade__in&quot;&gt;
+          &lt;div class=&quot;card&quot;&gt;
+            &lt;div class=&quot;content-box&quot;&gt;
+              &lt;h1 class=&quot;card-title&quot;&gt;{$data['Title']}&lt;/h1&gt;
+
+              &lt;p class=&quot;card-content&quot;&gt;
+                {$data['Arg_Desc']}
+              &lt;/p&gt;
+
+              {$form}
+
+            &lt;/div&gt;
+            &lt;div class=&quot;date-box&quot;&gt;
+              &lt;span class=&quot;month&quot;&gt;ARG&lt;/span&gt;
+              &lt;span class=&quot;date&quot;&gt;{$data['Id']}&lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &quot;;
+    }
+
+    // Ritorniamo il contenuto HTML generato
+    return $content;
+  }
+?&gt;
+                        </code>
+                    </pre>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="text left">
+                    <h2 class="arg_title" style="filter: hue-rotate(0deg);">PROJECTSS_CARDS</h2>
+                    <p>Si occupa di creare le carte per i nostri progetti personali.</p>
+                    <pre>
+                        <code class="language-php">
+&lt;?php
+
+// Includiamo il file per la lettura del database
+include &quot;read_database.php&quot;;
+
+/**
+  * Funzione per generare card HTML basate sui dati della tabella &quot;Projects&quot;.
+  * 
+  * Questa funzione recupera tutti i record dalla tabella &quot;Projects&quot; e genera
+  * un blocco HTML per ciascun progetto, con titolo, descrizione e link esterno.
+  *
+  * @return string Il contenuto HTML generato con le card dei progetti.
+  */
+function create_cards(){
+  // Inizializziamo una stringa vuota per contenere l'output HTML
+  $content = &quot;&quot;;
+
+  // Recuperiamo tutti i record dalla tabella &quot;Projects&quot;
+  $table_rows = read(&quot;SELECT * FROM Projects&quot;);
+
+  // Iteriamo su ogni riga dei risultati del database
+  foreach ($table_rows as $data) {
+    // Creiamo una card HTML per ogni progetto con titolo, descrizione e link
+    $content .= &quot;
+      &lt;article class=&quot;project-card&quot;&gt;
+        &lt;h2&gt;{$data[&quot;Title&quot;]}&lt;/h2&gt;
+        &lt;p&gt;{$data[&quot;Arg_Desc&quot;]}&lt;/p&gt;
+        &lt;a href=&quot;{$data[&quot;Link&quot;]}&quot; target=&quot;_blank&quot; class=&quot;btn&quot;&gt;SEE MORE&lt;/a&gt;
+      &lt;/article&gt;    
+    &quot;;
+  }
+
+  // Ritorniamo il contenuto HTML generato
+  return $content;
+}
+?&gt;
+                        </code>
+                    </pre>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="text left">
+                    <h2 class="arg_title" style="filter: hue-rotate(0deg);">READ_DATABASE</h2>
+                    <p>Si occupa di leggere e ritornare i dati dal database</p>
+                    <pre>
+                        <code class="language-php">
+&lt;?php
+
+/**
+    * Classe per memorizzare le credenziali di accesso al database.
+    * 
+    * Questa classe contiene le informazioni necessarie per connettersi al database MySQL,
+    * come il server, il nome utente, la password e il nome del database.
+    */
+class db_credentials {
+    public static $servername = &quot; &quot;; // Indirizzo del server MySQL
+    public static $username = &quot; &quot;;             // Nome utente per l'accesso al database
+    public static $password = &quot; &quot;;        // Password dell'utente del database
+    public static $dbname = &quot; &quot;;            // Nome del database da utilizzare
+}
+
+/**
+  * Funzione per eseguire query SQL di lettura sul database.
+  * 
+  * Questa funzione stabilisce una connessione con il database utilizzando PDO,
+  * esegue la query fornita e restituisce i risultati sotto forma di array associativo.
+  *
+  * @param string $query La query SQL da eseguire.
+  * @return array|string Un array contenente i risultati della query o un messaggio di errore.
+  */
+function read($query) {
+  try {
+  // Creazione della stringa DSN per la connessione al database
+  $dsn = &quot;mysql:host=&quot; . db_credentials::$servername . &quot;;dbname=&quot; . db_credentials::$dbname . &quot;;charset=utf8&quot;;
+
+  // Creazione dell'oggetto PDO per la connessione al database
+  $pdo = new PDO($dsn, db_credentials::$username, db_credentials::$password);
+  
+  // Impostiamo PDO per lanciare eccezioni in caso di errore
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+  } catch (PDOException $e) {
+  // Se si verifica un errore nella connessione, restituiamo un messaggio di errore
+  return &quot;Errore lettura DB&quot;;
+  }
+
+  // Prepariamo ed eseguiamo la query SQL
+  $stmt = $pdo->prepare($query);
+  $stmt->execute();
+
+  // Recuperiamo i risultati come array associativo
+  $table_rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+  // Restituiamo i dati ottenuti dalla query
+  return $table_rows;
+}
+      
+                        </code>
+                    </pre>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="text left">
+                    <h2 class="arg_title" style="filter: hue-rotate(0deg);">INDEX</h2>
+                    <p>Si occupa di creare la pagina principale</p>
+                    <pre>
+                        <code class="language-php">
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;it&quot;&gt;
+
+&lt;head&gt;
+
+  &lt;!-- Titolo della pagina --&gt;
+  &lt;title&gt;Gestione Impresa&lt;/title&gt;
+
+  &lt;!-- Collegamento al file CSS per lo stile della pagina --&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;CSS/style.css&quot; /&gt;
+
+  &lt;!-- Impostazione della codifica dei caratteri --&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  
+  &lt;!-- Configurazione della viewport per garantire la responsività su dispositivi mobili --&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+  &lt;!-- Contenitore principale con sfondo --&gt;
+  &lt;div class=&quot;container_bg&quot;&gt;
+    
+    &lt;!-- Titolo principale con animazione di fade-in --&gt;
+    &lt;span class=&quot;title-up fade__in&quot;&gt;GESTIONE IMPRESA&lt;/span&gt;
+
+    &lt;!-- Pulsante per scorrere all'indietro nel carosello --&gt;
+    &lt;button class=&quot;btn prev-btn&quot;&gt;&#10094;&lt;/button&gt;
+
+    &lt;!-- Contenitore del carosello --&gt;
+    &lt;div class=&quot;carousel-container&quot;&gt;
+
+      &lt;!-- Sezione che conterrà le card generate dinamicamente --&gt;
+      &lt;div class=&quot;carousel&quot;&gt;
+
+        &lt;?php
+          // Inclusione del file PHP che genera le card
+          include &quot;PHP_FUNCTIONS/main_cards.php&quot;;
+
+          // Creazione delle card basate sulla tabella &quot;Cards&quot; del database
+          $content = create_cards(&quot;Cards&quot;);
+
+          // Stampa dell'output HTML generato
+          echo $content;
+        ?&gt;
+
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;!-- Pulsante per scorrere in avanti nel carosello --&gt;
+    &lt;button class=&quot;btn next-btn&quot;&gt;&#10095;&lt;/button&gt;
+
+  &lt;/div&gt;
+
+  &lt;!-- Sezione &quot;Chi siamo&quot; con i nomi degli autori del progetto --&gt;
+  &lt;div class=&quot;who_we_are&quot;&gt;
+    Made by&lt;br&gt;
+    Concaro Davide - Popa Sebastiano - Tridapali Leonardo&lt;br&gt;
+    5BIIN 2024-2025&lt;br&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Collegamento al file JavaScript per gestire l'interattività della pagina --&gt;
+  &lt;script src=&quot;JS/main.js&quot;&gt;&lt;/script&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;
+                        </code>
+                    </pre>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="text left">
+                    <h2 class="arg_title" style="filter: hue-rotate(0deg);">PAGES</h2>
+                    <p>Si occupa di creare le varie pagine con gli argomenti</p>
+                    <pre>
+                        <code>
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;it&quot;&gt;
+
+&lt;head&gt;
+  &lt;!-- Collegamento al file CSS per lo stile della pagina --&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;CSS/page.css&quot;&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+  &lt;?php
+    // Inclusione del file che contiene la funzione per leggere i dati dal database
+    include &quot;PHP_FUNCTIONS/read_database.php&quot;;
+
+    /**
+      * Funzione per creare la barra di navigazione dinamicamente
+      * Legge i titoli delle schede dalla tabella &quot;Cards&quot; e crea pulsanti di navigazione
+      */
+    function create_navbar() {
+      // Recupera i titoli delle schede dal database
+      $table_rows_main_arg = read(&quot;SELECT Title FROM Cards&quot;);
+
+      // Inizio della navbar con pulsante per scorrere indietro
+      $nav_bar_content  = &quot;&lt;nav class=\&quot;menu\&quot;&gt;&lt;br&gt;
+      &lt;button class=\&quot;prev-btn btn\&quot;&gt;&#10094;&lt;/button&gt;&quot;;
+
+      // Creazione dei pulsanti per ogni scheda
+      foreach ($table_rows_main_arg as $data) {
+        $form = &quot;&quot;;
+        if ($data[&quot;Title&quot;] == &quot;Our Projects&quot;) {
+          // Se il titolo è &quot;Our Projects&quot;, reindirizza alla pagina &quot;projects.php&quot;
+          $form = &quot;
+            &lt;form action=\&quot;projects.php\&quot; method=\&quot;POST\&quot;&gt;
+              &lt;button type=\&quot;submit\&quot; class=\&quot;menu_item_link\&quot;&gt;{$data[&quot;Title&quot;]}&lt;/button&gt;
+            &lt;/form&gt;
+          &quot;;
+        } else {
+          // Altrimenti, reindirizza a &quot;page.php&quot; passando il titolo come input nascosto
+          $form = &quot;
+            &lt;form action=\&quot;page.php\&quot; method=\&quot;POST\&quot;&gt;
+              &lt;input name=\&quot;page_name\&quot; value=\&quot;{$data[&quot;Title&quot;]}\&quot; type=\&quot;hidden\&quot;&gt;
+              &lt;button type=\&quot;submit\&quot; class=\&quot;menu_item_link\&quot;&gt;{$data[&quot;Title&quot;]}&lt;/button&gt;
+            &lt;/form&gt;
+          &quot;;
+        }
+        // Aggiunge il pulsante alla navbar
+        $nav_bar_content .= &quot;
+          &lt;div class=\&quot;menu_item\&quot;&gt;
+            {$form}
+          &lt;/div&gt;
+        &quot;;
+      }
+
+      // Aggiunta del pulsante per scorrere in avanti e chiusura della navbar
+      $nav_bar_content .= &quot;&lt;button class=\&quot;next-btn btn\&quot;&gt;&#10095;&lt;/button&gt;
+      &lt;/nav&gt;&lt;br&gt;&lt;br&gt;&quot;;
+      return $nav_bar_content;
+    }
+
+    /**
+      * Funzione per generare il contenuto dinamico della pagina
+      * @param string $title_search Titolo della scheda selezionata
+      * @return string Contenuto HTML generato dinamicamente
+      */
+    function create_content($title_search) {
+      // Recupera l'ID della scheda selezionata
+      $table_rows_cards = read(&quot;SELECT Id FROM Cards WHERE Title=\&quot;{$title_search}\&quot;&quot;);
+      $content = &quot;&lt;div class=\&quot;content\&quot;&gt;&quot;;
+
+      foreach ($table_rows_cards as $main_data) {
+        // Recupera gli argomenti relativi alla scheda selezionata
+        $table_rows_arguments = read(&quot;SELECT * FROM Args WHERE numero_pagina=\&quot;{$main_data[&quot;Id&quot;]}\&quot;&quot;);
+
+        foreach ($table_rows_arguments as $subdata) {
+          $content .= &quot;&lt;div class=\&quot;row\&quot;&gt;&quot;;
+
+          $id = $subdata[&quot;numero_argomento&quot;];
+          $content_type = $subdata[&quot;Content_Type&quot;];
+          $direction = $id % 2; // Alterna la disposizione del contenuto
+
+          switch ($content_type) {
+            case &quot;IMG&quot;:
+              // Se il contenuto è un'immagine, la posiziona in modo alternato
+              if ($direction == 1) {
+                $content .= &quot;
+                  &lt;div class=\&quot;text left\&quot;&gt;
+                    &lt;h2 class=\&quot;arg_title\&quot;&gt;{$subdata[&quot;titolo&quot;]}&lt;/h2&gt;
+                    &lt;p&gt;{$subdata[&quot;testo&quot;]}&lt;/p&gt;
+                  &lt;/div&gt;
+                  &lt;div class=\&quot;image right\&quot;&gt;
+                    &lt;img src=\&quot;{$subdata[&quot;link_immagine&quot;]}\&quot;&gt;
+                  &lt;/div&gt;
+                &quot;;
+              } else {
+                $content .= &quot;
+                  &lt;div class=\&quot;image left\&quot;&gt;
+                    &lt;img src=\&quot;{$subdata[&quot;link_immagine&quot;]}\&quot;&gt;
+                  &lt;/div&gt;
+                  &lt;div class=\&quot;text right\&quot;&gt;
+                    &lt;h2 class=\&quot;arg_title\&quot;&gt;{$subdata[&quot;titolo&quot;]}&lt;/h2&gt;
+                    &lt;p&gt;{$subdata[&quot;testo&quot;]}&lt;/p&gt;
+                  &lt;/div&gt;
+                &quot;;
+              }
+              break;
+
+            case &quot;VOID&quot;:
+              // Se il contenuto è vuoto, viene lasciato uno spazio vuoto
+              if ($direction == 1) {
+                $content .= &quot;
+                  &lt;div class=\&quot;text left\&quot;&gt;
+                    &lt;h2 class=\&quot;arg_title\&quot;&gt;{$subdata[&quot;titolo&quot;]}&lt;/h2&gt;
+                    &lt;p&gt;{$subdata[&quot;testo&quot;]}&lt;/p&gt;
+                  &lt;/div&gt;
+                  &lt;div class=\&quot;void right\&quot;&gt;&lt;/div&gt;
+                &quot;;
+              } else {
+                $content .= &quot;
+                  &lt;div class=\&quot;void left\&quot;&gt;&lt;/div&gt;
+                  &lt;div class=\&quot;text right\&quot;&gt;
+                    &lt;h2 class=\&quot;arg_title\&quot;&gt;{$subdata[&quot;titolo&quot;]}&lt;/h2&gt;
+                    &lt;p&gt;{$subdata[&quot;testo&quot;]}&lt;/p&gt;
+                  &lt;/div&gt;
+                &quot;;
+              }
+              break;
+
+            case &quot;CANVA&quot;:
+              // Se il contenuto è una canvas, include lo script JavaScript per la gestione
+              if ($direction == 1) {
+                $content .= &quot;
+                  &lt;div class=\&quot;text left\&quot;&gt;
+                    &lt;h2 class=\&quot;arg_title\&quot;&gt;{$subdata[&quot;titolo&quot;]}&lt;/h2&gt;
+                    &lt;p&gt;{$subdata[&quot;testo&quot;]}&lt;/p&gt;
+                  &lt;/div&gt;
+                  &lt;div class=\&quot;canva right\&quot;&gt;&lt;/div&gt;
+                  &lt;script src=\&quot;JS/bep.js\&quot;&gt;&lt;/script&gt;
+                &quot;;
+              } else {
+                $content .= &quot;
+                  &lt;div class=\&quot;canva left\&quot;&gt;&lt;/div&gt;
+                  &lt;div class=\&quot;text right\&quot;&gt;
+                    &lt;h2 class=\&quot;arg_title\&quot;&gt;{$subdata[&quot;titolo&quot;]}&lt;/h2&gt;
+                    &lt;p&gt;{$subdata[&quot;testo&quot;]}&lt;/p&gt;
+                  &lt;/div&gt;
+                  &lt;script src=\&quot;JS/bep.js\&quot;&gt;&lt;/script&gt;
+                &quot;;
+              }
+              break;
+          }
+
+          $content .= &quot;&lt;/div&gt;&quot;;
+        }
+      }
+
+      $content .= &quot;&lt;/div&gt;&quot;;
+      return $content;
+    }
+
+    /**
+      * Funzione per ottenere il numero della pagina basato sul titolo
+      * @param string $page_title Titolo della pagina
+      * @return int Numero della pagina
+      */
+    function get_page_number($page_title) {
+      $table_rows_selection_id_page = read(&quot;SELECT Id FROM Cards WHERE Title=\&quot;{$page_title}\&quot;&quot;);
+      $number = $table_rows_selection_id_page[0][&quot;Id&quot;] - 1;
+      return $number;
+    }
+
+    // Recupera il titolo della pagina dalla richiesta POST
+    $page_title = $_POST[&quot;page_name&quot;];
+
+    // Ottiene il numero della pagina corrispondente al titolo
+    $page_number = get_page_number($page_title);
+
+    // Stampa i link di navigazione
+    echo &quot;
+    &lt;div class=\&quot;menu_link_div\&quot;&gt;
+      &lt;a href=\&quot;index.php\&quot; class=\&quot;menu_link\&quot;&gt;
+        HOME
+      &lt;/a&gt;
+      &lt;a number_page=\&quot;{$page_number}\&quot; class=\&quot;page_number_anchor\&quot; style=\&quot;display:none;\&quot;&gt;&lt;/a&gt;
+    &lt;/div&gt;      
+    &quot;;
+
+    // Genera la navbar e il contenuto della pagina
+    $navbar = create_navbar();
+    $content = create_content($page_title);
+
+    // Stampa la navbar e il contenuto generato
+    echo $navbar;
+    echo $content;
+  ?&gt;
+
+  &lt;!-- Collegamento al file JavaScript per la gestione della pagina --&gt;
+  &lt;script src=&quot;JS/page.js&quot;&gt;&lt;/script&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;
+                        </code>
+                    </pre>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="text left">
+                    <h2 class="arg_title" style="filter: hue-rotate(0deg);">PROJECTS</h2>
+                    <p>Si occupa di creare le varie pagine con gli argomenti</p>
+                    <pre>
+                        <code class="language-php">
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;it&quot;&gt;
+    
+  &lt;head&gt;
+    &lt;!-- Definizione della codifica dei caratteri e della visualizzazione per dispositivi mobili --&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    
+    &lt;!-- Titolo della pagina --&gt;
+    &lt;title&gt;I nostri progetti GitHub&lt;/title&gt;
+    
+    &lt;!-- Link al file CSS per la formattazione della pagina --&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;CSS/projects.css&quot;&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+
+    &lt;!-- Sezione Header: contiene il titolo e la descrizione della pagina --&gt;
+    &lt;header&gt;
+      &lt;h1&gt;I nostri Progetti GitHub&lt;/h1&gt;
+      &lt;p&gt;Esplora i nostri ultimi fantastici lavori.&lt;/p&gt;
+
+      &lt;!-- Form con bottone per tornare alla homepage --&gt;
+      &lt;form action=&quot;index.php&quot; method=&quot;POST&quot;&gt;
+        &lt;button class=&quot;btn&quot;&gt;HOME&lt;/button&gt;
+      &lt;/form&gt;
+
+    &lt;/header&gt;
+
+    &lt;!-- Sezione principale della pagina: visualizzazione dei progetti --&gt;
+    &lt;section class=&quot;projects-grid&quot;&gt;
+
+      &lt;?php
+        // Inclusione del file PHP contenente la funzione per generare i progetti
+        include &quot;PHP_FUNCTIONS/projects_card.php&quot;;
+
+        // Chiamata alla funzione 'create_cards' per ottenere il contenuto HTML dei progetti
+        $content = create_cards();
+        
+        // Echo del contenuto generato dalla funzione per visualizzarlo nella pagina
+        echo $content;
+      ?&gt;
+
+    &lt;/section&gt;
+
+    &lt;!-- Footer: informazioni sui creatori della pagina --&gt;
+    &lt;footer&gt;
+      &lt;p&gt;Made by Concaro Davide - Popa Sebastiano - Tridapali Leonardo 5BIIN ITIS E. Fermi.&lt;/p&gt;
+    &lt;/footer&gt;
+
+  &lt;/body&gt;
+&lt;/html&gt;               
+                        </code>
+                    </pre>
+                </div>
+            </div>
+        
+            <div class="row">
+                <div class="text left">
+                    <h2 class="arg_title" style="filter: hue-rotate(0deg);">SQL</h2>
+                    <p>
+                        SQL<br>
+                        Utilizziamo un database gestito con MySQL in modo da rendere più facile la creazione di nuove pagine o di nuovi paragrafi perché dobbiamo solamente<br> 
+                        inserire i dati all'interno del database e poi penserà alla creazione di tutte le pagine in modo dinamico e in tempo reale i file .php, che leggono<br>
+                        i dati dal database (di cui ne esistono 2 copie, una in locale sul computer di Tridapali Leonardo e una su un server pubblico, in modo da poter<br> 
+                        visualizzare il sito qualora non si abbia a disposizione una connessione ad internet).<br>
+                    
+                        Il database contiene due tabelle: Cards e Args, strutturati come segue:<br>
+                    </p>
+
+                    <pre>
+                        <code class="language-sql">
+-- Tabella Cards
+CREATE TABLE Cards (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Title VARCHAR(255) NOT NULL,
+    Link VARCHAR(255) NOT NULL
+);
+
+-- Tabella Args
+CREATE TABLE Args (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    numero_pagina INT NOT NULL,
+    numero_argomento INT NOT NULL,
+    titolo VARCHAR(255) NOT NULL,
+    testo TEXT NOT NULL,
+    Content_Type ENUM('IMG', 'VOID', 'CANVA') NOT NULL,
+    link_immagine VARCHAR(255),
+    FOREIGN KEY (numero_pagina) REFERENCES Cards(Id)
+);
+                        </code>
+                    </pre>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="text left">
+                    <h2 class="arg_title" style="filter: hue-rotate(0deg);">CARDS</h2>
+                    <pre>
+
+<!-- Descrizione della tabella "Cards" nel database MySQL -->
+
+CARDS:
++----------+------+------+-----+---------+----------------+
+| Field    | Type | Null | Key | Default | Extra          |
++----------+------+------+-----+---------+----------------+
+| Id       | int  | NO   | PRI | NULL    | auto_increment |
+| Title    | text | NO   |     | NULL    |                |
+| Arg_Desc | text | NO   |     | NULL    |                |
+| Link     | text | NO   |     | NULL    |                |
++----------+------+------+-----+---------+----------------+
+
+Descrizione dei campi della tabella &quot;Cards&quot;:
+
+- Id: 
+    Indica il numero della carta ed il numero dell'argomento all'interno del carosello dinamico.
+
+- Title: 
+    Indica il titolo dell'argomento e di cosa si parlerà all'interno della pagina.
+
+- Arg_Desc: 
+    È una piccola descrizione generale che spiega di cosa si parla nell'immagine, in modo che l'utente 
+    non debba per forza aprire la pagina per capire se gli interessa. L'utente può decidere semplicemente
+    leggendo una breve descrizione di qualche riga.
+
+- Link: 
+    Rappresenta a quale pagina bisogna collegarsi. È un campo che viene utilizzato per la creazione dei form con all'interno i 
+    bottoni che chiamano il file &quot;page.php&quot; per fargli capire quali dati deve andare a prelevare dal database.
+                    </pre>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="text left">
+                    <h2 class="arg_title" style="filter: hue-rotate(0deg);">CARDS</h2>
+                    <pre>
+
+<!-- Descrizione della tabella "Args" nel database MySQL -->
+
+ARGS:
++------------------+------+------+-----+---------+-------+
+| Field            | Type | Null | Key | Default | Extra |
++------------------+------+------+-----+---------+-------+
+| numero_argomento | int  | NO   |     | NULL    |       |
+| numero_pagina    | int  | NO   |     | NULL    |       |
+| titolo           | text | NO   |     | NULL    |       |
+| testo            | text | NO   |     | NULL    |       |
+| link_immagine    | text | NO   |     | NULL    |       |
+| Content_Type     | text | YES  |     | NULL    |       |
++------------------+------+------+-----+---------+-------+
+
+Descrizione dei campi della tabella &quot;Args&quot;:
+
+- numero_argomento: 
+    Indica la posizione dell'argomento di cui si andrà a parlare all'interno della pagina. Ad esempio, 
+    il numero 1 sarà il primo paragrafo, mentre il numero 2 sarà il secondo e così via. Viene anche utilizzato 
+    per determinare se il testo deve essere posizionato a sinistra con un'immagine a destra o viceversa. Se il numero è 
+    dispari, sarà &quot;testo immagine&quot;, mentre se il numero è pari sarà &quot;immagine testo&quot;.
+
+- numero_pagina: 
+    Indica il numero della pagina, riprendendo gli Id presenti nella tabella `Cards`, per associare l'argomento alla pagina a cui appartiene.
+
+- titolo: 
+    Rappresenta il titolo del paragrafo.
+
+- testo: 
+    Rappresenta il contenuto del paragrafo. Dentro al testo sono già presenti i tag HTML `&lt;b&gt;` e `&lt;br&gt;` per 
+    applicare il grassetto e andare a capo dove necessario, quindi non deve essere gestito dinamicamente in PHP.
+
+- link_immagine: 
+    Indica il path relativo per trovare l'immagine all'interno della cartella del sito, associata al paragrafo specifico.
+
+- Content_Type: 
+    Indica il tipo di contenuto e può essere uno dei seguenti:
+    - &quot;IMG&quot;:    Seleziona un'immagine da posizionare accanto al testo.
+    - &quot;CANVA&quot;:  Indica un canvas (ad esempio per un grafico dinamico come il BEP), con il PHP che crea solo un div con 
+                la classe &quot;canva&quot; per il posizionamento dinamico del canvas tramite JavaScript.
+    - &quot;VOID&quot;:   Indica uno spazio vuoto.
+                    </pre>
+
+                </div>
+            </div>
+        
+        
+        
+            
+        
+        
+            
+        
+
+            
+        </div>
+
+
+
+        <script>
+            hljs.highlightAll();
+        </script>
+
+
+        <script src="JS/page.js"></script>
+
+    </body>
+
+</html>

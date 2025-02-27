@@ -112,11 +112,11 @@
                                         <h2 class=\"arg_title\">{$subdata["titolo"]}</h2>
                                         <p>{$subdata["testo"]}</p>
                                     </div>
-                                    <div class=\"image right\"></div>
+                                    <div class=\"void right\"></div>
                                 ";
                             } else {
                                 $content .= "
-                                    <div class=\"image left\"></div>
+                                    <div class=\"void left\"></div>
                                     <div class=\"text right\">
                                         <h2 class=\"arg_title\">{$subdata["titolo"]}</h2>
                                         <p>{$subdata["testo"]}</p>
