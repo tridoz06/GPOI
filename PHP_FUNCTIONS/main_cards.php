@@ -1,21 +1,38 @@
 <?php
+    // Includiamo il file per la lettura del database
     include "read_database.php";
+
+/**
+ * Funzione per generare le card HTML basate sui dati estratti dal database.
+ * 
+ * @param string $table_name Il nome della tabella da cui recuperare i dati.
+ * @return string Il contenuto HTML generato con le card.
+ */
+
+ 
 function create_cards($table_name) {
 
+    // Inizializziamo una stringa vuota per contenere le card
     $content = "";
 
+    // Recuperiamo i dati dal database (Id, Title, Arg_Desc e Link) per la tabella specificata
     $table_rows = read("SELECT Id, Title, Arg_Desc, Link FROM {$table_name}");
 
-    foreach( $table_rows as $data){
-        //prova 2
+    // Iteriamo su ogni riga dei risultati del database
+    foreach ($table_rows as $data) {
+        
+        // Inizializziamo il form vuoto
         $form = "";
-        if( $data['Title'] == "Our Projects"){
+
+        // Se il titolo della card è "Our Projects", indirizziamo il form a "projects.php"
+        if ($data['Title'] == "Our Projects") {
             $form = "
                 <form action=\"projects.php\" method=\"POST\" >
                     <button type=\"submit\" class=\"see-more\">MORE INFO</button>
                 </form>            
             ";
-        }else{
+        } else {
+            // Altrimenti, il form invierà i dati a "page.php"
             $form = "
                 <form action=\"page.php\" method=\"POST\" >
                     <input name=\"page_name\" value=\"{$data['Title']}\" type=\"hidden\">
@@ -24,7 +41,7 @@ function create_cards($table_name) {
             ";
         }
 
-
+        // Costruiamo il contenuto HTML della card con titolo, descrizione e form
         $content .= "
             <div class=\"parent fade__in\">
                 <div class=\"card\">
@@ -47,5 +64,7 @@ function create_cards($table_name) {
         ";
     }
     
+    // Ritorniamo il contenuto HTML generato
     return $content;
 }
+?>

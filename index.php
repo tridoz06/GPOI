@@ -1,54 +1,69 @@
 <!DOCTYPE html>
+<html lang="it">
 
-    <head>
+<head>
 
-        <title>Gestione Impresa</title>
-		<link rel="stylesheet" href="CSS/style.css" />
-		
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		   
-    </head>
+    <!-- Titolo della pagina -->
+    <title>Gestione Impresa</title>
 
-    <body>
+    <!-- Collegamento al file CSS per lo stile della pagina -->
+    <link rel="stylesheet" href="CSS/style.css" />
 
-        <div class="container_bg">
-            
-			<span class="title-up fade__in">GESTIONE IMPRESA </span>
+    <!-- Impostazione della codifica dei caratteri -->
+    <meta charset="UTF-8">
+    
+    <!-- Configurazione della viewport per garantire la responsività su dispositivi mobili -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-            <button class="btn prev-btn">&#10094;</button>
+</head>
 
-			<div class="carousel-container">
-			
-				<div class="carousel">
+<body>
 
-					<?php
+    <!-- Contenitore principale con sfondo -->
+    <div class="container_bg">
+        
+        <!-- Titolo principale con animazione di fade-in -->
+        <span class="title-up fade__in">GESTIONE IMPRESA</span>
 
-                        include "PHP_FUNCTIONS/main_cards.php";
+        <!-- Pulsante per scorrere all'indietro nel carosello -->
+        <button class="btn prev-btn">&#10094;</button>
 
+        <!-- Contenitore del carosello -->
+        <div class="carousel-container">
 
-                        $content = create_cards("Cards");
+            <!-- Sezione che conterrà le card generate dinamicamente -->
+            <div class="carousel">
 
-                        echo $content;
-                        
-                    ?>
-                
-                </div>
+                <?php
+                    // Inclusione del file PHP che genera le card
+                    include "PHP_FUNCTIONS/main_cards.php";
 
-			</div>
+                    // Creazione delle card basate sulla tabella "Cards" del database
+                    $content = create_cards("Cards");
 
-            <button class="btn next-btn">&#10095;</button>
+                    // Stampa dell'output HTML generato
+                    echo $content;
+                ?>
 
-		</div>
+            </div>
 
-        <div class="who_we_are">
-                Made by<br>
-                Concaro Davide - Popa Sebastiano - Tridapali Leonardo<br>
-                5BIIN 2024-2025<br>
         </div>
 
-		<script src="JS/main.js"></script>
+        <!-- Pulsante per scorrere in avanti nel carosello -->
+        <button class="btn next-btn">&#10095;</button>
 
-    </body>
+    </div>
+
+    <!-- Sezione "Chi siamo" con i nomi degli autori del progetto -->
+    <div class="who_we_are">
+        Made by<br>
+        Concaro Davide - Popa Sebastiano - Tridapali Leonardo<br>
+        5BIIN 2024-2025<br>
+    </div>
+
+    <!-- Collegamento al file JavaScript per gestire l'interattività della pagina -->
+    <script src="JS/main.js"></script>
+
+</body>
 
 </html>
